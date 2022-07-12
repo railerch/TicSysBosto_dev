@@ -1,0 +1,27 @@
+[
+    {
+        "user": "root",
+        "salt": "T!k3t$y&t3m",
+        "pass": "root_"
+    },
+    {
+        "host": "localhost",
+        "database": "TicSys",
+        "user": "root",
+        "pass": ""
+    },
+    {
+        "logo": "assets/img/logo.png",
+        "favicon": "assets/img/favicon.ico",
+        "fondo": "assets/img/background.jpg",
+        "titulo": "Nombre Empresa"
+    },
+    {
+        "mainBg": "",
+        "sideBarBg": "",
+        "topBarBg": "",
+        "iconHoverColor": "",
+        "linkColor": "",
+        "linkHoverColor": ""
+    }
+]

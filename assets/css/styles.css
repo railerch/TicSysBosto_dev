@@ -1,0 +1,165 @@
+@media (min-width: 768px) {
+    #sidebar>* {
+        margin-bottom: 3.5vh;
+    }
+}
+
+#sidebar a:hover {
+    color: #ce02f2 !important;
+}
+
+@media (max-width: 767px) {
+    #sidebar>* {
+        margin-bottom: 0.6em;
+    }
+    #sidebar i {
+        font-size: 3vw !important;
+    }
+    table {
+        font-size: 0.8em !important;
+    }
+}
+
+#usuariosRegistrados {
+    overflow-y: scroll;
+}
+
+#edicionUsuario fieldset * {
+    margin-bottom: 0.3em;
+}
+
+#contenido {
+    overflow-y: hidden;
+}
+
+hr {
+    background: #07def3 !important;
+}
+
+@keyframes pulso {
+    0% {
+        text-shadow: 0 0 0px yellow;
+        color: gray;
+    }
+    50% {
+        text-shadow: 0 0 15px yellow;
+        color: #fff;
+    }
+    100% {
+        text-shadow: 0 0 0px yellow;
+        color: gray;
+    }
+}
+
+.pulso {
+    animation-name: pulso;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+}
+
+tbody tr {
+    user-select: none;
+}
+
+#usuariosConectados {
+    min-width: 20vw;
+    min-height: 250px;
+    max-height: 250px;
+    padding: 10px;
+    background-color: #545354;
+    border-radius: 0 0 1em 1em;
+    font-size: 1em;
+    z-index: 999999;
+    position: absolute;
+    top: 11vh;
+    left: 9vw;
+}
+
+#conectadosScroll {
+    overflow-y: auto;
+}
+
+#usuariosConectados table {
+    text-align: left !important;
+}
+
+#usuariosConectados div {
+    display: flex;
+    justify-content: space-around;
+    border-top: 1px solid gray;
+    padding-top: 0.1em;
+}
+
+#usuariosConectados div span {
+    font-size: 0.6em;
+    text-align: center;
+}
+
+div[class*="archivoAdjunto"] {
+    display: none;
+}
+
+#misceForms {
+    display: flex;
+}
+
+#misceForms form {
+    margin-right: 15px;
+}
+
+#help {
+    display: none;
+    font-size: 2em;
+    cursor: pointer;
+}
+
+#help a {
+    color: #fff;
+    text-decoration: none;
+}
+
+#help i {
+    color: #07def3;
+}
+
+#tiempoSesion {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 4px;
+    border-radius: 5px;
+    min-width: 3em;
+    height: 100%;
+    margin-right: 10px;
+    background-color: red;
+    font-size: 30%;
+    text-align: center;
+    overflow: hidden;
+}
+
+/*********************************** INTERCHAT */
+.usuario {
+    cursor: pointer;
+}
+
+.usuario:hover {
+    background-color: gray;
+}
+
+.usuario td {
+    padding: 5px;
+}
+
+#msjCant {
+    min-width: 15px;
+    visibility: hidden;
+    position: relative;
+    top: -1.5em;
+    left: 12.5em;
+    padding: 2px 4px;
+    font-size: 0.3em;
+    text-align: center;
+    background-color: red;
+    border-radius: 5px;
+}

@@ -1,0 +1,9 @@
+
+.gris01 { color: #1c1c1c}
+.gris02 { color: #353535}
+.gris03 { color: #545354}
+.gris04 { color: #7e7e7e}
+.gris05 { color: #969696}
+.morado { color: #520060}
+.fucsia { color: #ce02f2}
+.cyan { color: #07def3}
