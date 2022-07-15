@@ -69,19 +69,19 @@ $stmt->execute();
     }
 </style>
 
-<div style="background: #5b5b5b;padding: 0.5em;border-radius: 1em;box-shadow: 0px 0px 10px rgb(0,0,0);border-width: 1px;border-style: none;border-top-style: none;border-right-style: none;border-bottom-style: none;color: #d7d7d7;">
+<div style="background: #505050;padding: 0.5em;border-radius: 1em;box-shadow: 0px 0px 10px rgb(0,0,0);border-width: 1px;border-style: none;border-top-style: none;border-right-style: none;border-bottom-style: none;color: #d7d7d7;">
     <i class="fa fa-ticket" style="font-size: 5vw;margin-right: 0.3em;"></i>
     <h1 class="d-inline-block">Tickets abiertos</h1>
     <hr style="background: #969696;">
     <div class="table-striped" style="background: #ffffff;margin-bottom: 1em;width: 100%;margin-top: 1em;padding:0.5em; overflow:scroll">
         <table class="table table-bordered" style="text-align:center">
             <thead>
-                <tr style="background: #353535;color: rgb(255,255,255);">
+                <tr style="background: #505050;color: rgb(255,255,255);">
                     <th>ID</th>
                     <th>Fecha</th>
                     <th>Solicitud</th>
                     <th>Prioridad</th>
-                    <th>Técnico</th>
+                    <th>Analista</th>
                     <th>Estatus</th>
                     <th>Acciones</th>
                 </tr>
@@ -115,7 +115,7 @@ $stmt->execute();
 
                         ?>
                         <td <?php echo $style ?>><?php echo $ticket['prioridad'] ?></td>
-                        <td><?php echo $ticket['tecnico'] ?></td>
+                        <td><?php echo $ticket['analista'] ?></td>
                         <?php switch ($ticket['estatus']) {
                             case 'abierto':
                                 $color = 'color: #007bff';
@@ -137,7 +137,7 @@ $stmt->execute();
                                     </button>
 
                                     <?php if ($ticket['estatus'] != 'precierre' && $ticket['estatus'] != 'cerrado') {
-                                        if ($ticket['tecnico'] == NULL) {
+                                        if ($ticket['analista'] == NULL) {
                                             $disable = 'disabled';
                                         } else {
                                             $disable = NULL;
@@ -229,7 +229,7 @@ ocultar_aviso();
         $(".enviarMensaje").click(function() {
 
             // VARIABLES
-            var locacion = $(this).attr("data-loc");
+            var empresa = $(this).attr("data-loc");
             var id_ticket = $(this).attr("data-tic");
             var remitente = $(this).attr("data-usr");
 
@@ -237,7 +237,7 @@ ocultar_aviso();
             var data = new FormData();
 
             // ADJUNTAR ARCHIVO AL FORMDATA
-            data.append("locacion", locacion);
+            data.append("empresa", empresa);
             data.append("id_ticket", id_ticket);
             data.append("remitente", remitente);
             data.append("mensaje", $(`input[data-msj=${id_ticket}]`).val());
@@ -274,7 +274,7 @@ ocultar_aviso();
         $("input[name=mensaje]").keypress(function(e) {
             if (e.keyCode == 13) {
                 // VARIABLES
-                var locacion = $(this).attr("data-loc");
+                var empresa = $(this).attr("data-loc");
                 var id_ticket = $(this).attr("data-tic");
                 var remitente = $(this).attr("data-usr");
 
@@ -282,7 +282,7 @@ ocultar_aviso();
                 var data = new FormData();
 
                 // ADJUNTAR ARCHIVO AL FORMDATA
-                data.append("locacion", locacion);
+                data.append("empresa", empresa);
                 data.append("id_ticket", id_ticket);
                 data.append("remitente", remitente);
                 data.append("mensaje", $(`input[data-msj=${id_ticket}]`).val());
@@ -329,20 +329,20 @@ ocultar_aviso();
 
             // IDENTIFICADOR UNICO DEL TICKET A CERRAR
             var id = $(this).attr("data-cerrar-id");
-            var tecnico = $(this).attr("data-tecnico");
+            var analista = $(this).attr("data-analista");
             var nombreUsr = $(this).attr("data-nombre-usuario");
 
             // ESTABLECER EL COMENTARIO SEGUN EL TIPO DE SESION
             var comentarioTxt = "El usuario dio por finalizado el soporte";
 
             // ENVIAR MENSAJE DE CIERRE DE TICKET POR EL USUARIO
-            var locacion = $(this).attr("data-locacion");
+            var empresa = $(this).attr("data-empresa");
             var remitente = $(this).attr("data-usuario");
             var mensaje = "Ticket cerrado por el usuario!";
 
             // PREPARAR DATOS PARA EL ENVIO
             var datos = new FormData();
-            datos.append("locacion", locacion);
+            datos.append("empresa", empresa);
             datos.append("id_ticket", id);
             datos.append("remitente", remitente);
             datos.append("mensaje", mensaje);
@@ -361,7 +361,7 @@ ocultar_aviso();
             // EJECUTAR PRECIERRE DEL TICKET
             $.ajax({
                 type: "GET",
-                url: `main_controller.php?id=${id}&nombreUsr=${nombreUsr}&tecnico=${tecnico}&solucion=${comentarioTxt}&agregarBitacora=true&preCierre=true`,
+                url: `main_controller.php?id=${id}&nombreUsr=${nombreUsr}&analista=${analista}&solucion=${comentarioTxt}&agregarBitacora=true&preCierre=true`,
                 success: function(data) {
                     setTimeout(function() {
                         $("#contenido").load("views/ticketsUsuario.php");
@@ -432,9 +432,9 @@ ocultar_aviso();
                 url: `main_controller.php?actualizarTecnico=true&id_ticket=${id_ticket}`,
                 success: function(data) {
                     if (data != null) {
-                        $("#tecnico" + id_ticket).html(data);
+                        $("#analista" + id_ticket).html(data);
                     } else {
-                        console.log("Sin técnico asignado");
+                        console.log("Sin analista asignado");
                     }
                 }
             });

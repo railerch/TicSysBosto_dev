@@ -1,7 +1,7 @@
 .login-dark form {
     max-width: 320px;
     width: 90%;
-    background-color: #1e2833;
+    background-color: lightgray;
     padding: 40px;
     border-radius: 4px;
     transform: translate(-50%, -50%);
@@ -30,7 +30,8 @@
 }
 
 .login-dark form .btn-primary {
-    background: #07def3;
+    background: #3c7161;
+    color: #fff;
     border: none;
     border-radius: 4px;
     padding: 11px;
@@ -42,7 +43,8 @@
 
 .login-dark form .btn-primary:hover,
 .login-dark form .btn-primary:active {
-    background: #ce02f2;
+    background: gray;
+    color: lightgray;
     outline: none;
 }
 

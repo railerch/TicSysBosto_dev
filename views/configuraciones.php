@@ -9,8 +9,8 @@ if (!$conn) {
     Log::registrar_log($conexion->error);
 }
 
-// MOSTRAR DEPARTAMENTOS Y LOCACIONES PARA EL FORMULARIO DE REGISTRO
-$stmt = $conn->prepare("SELECT * FROM miscelaneos WHERE tipo = 'locacion'");
+// MOSTRAR DEPARTAMENTOS Y EMPRESAS PARA EL FORMULARIO DE REGISTRO
+$stmt = $conn->prepare("SELECT * FROM miscelaneos WHERE tipo = 'empresa'");
 $stmt->setFetchMode(PDO::FETCH_ASSOC);
 $stmt->execute();
 
@@ -18,8 +18,8 @@ $stmt_2 = $conn->prepare("SELECT * FROM miscelaneos WHERE tipo = 'depto' ORDER B
 $stmt_2->setFetchMode(PDO::FETCH_ASSOC);
 $stmt_2->execute();
 
-// VOLVER A SOLICITAR DEPARTAMENTOS Y LOCACIONES PARA LA VENTANA MODAL
-$stmt_4 = $conn->prepare("SELECT * FROM miscelaneos WHERE tipo = 'locacion'");
+// VOLVER A SOLICITAR DEPARTAMENTOS Y EMPRESAS PARA LA VENTANA MODAL
+$stmt_4 = $conn->prepare("SELECT * FROM miscelaneos WHERE tipo = 'empresa'");
 $stmt_4->setFetchMode(PDO::FETCH_ASSOC);
 $stmt_4->execute();
 
@@ -48,12 +48,12 @@ $stmt_3->execute();
     <div class="tab-content">
         <!-- PESTAÑA 01 -->
         <div class="tab-pane active" role="tabpanel" id="tab-1">
-            <div style="background: #5b5b5b;padding: 0.5em;border-radius: 0 0 1em 1em;box-shadow: 0px 0px 10px rgb(0,0,0);border-width: 1px;border-style: none;border-top-style: none;border-right-style: none;border-bottom-style: none;color: #d7d7d7;">
+            <div style="background: #505050;padding: 0.5em;border-radius: 0 0 1em 1em;box-shadow: 0px 0px 10px rgb(0,0,0);border-width: 1px;border-style: none;border-top-style: none;border-right-style: none;border-bottom-style: none;color: #d7d7d7;">
                 <i class="fa fa-user-o" style="font-size: 5vw;margin-right: 0.3em;"></i>
                 <h1 class="d-inline-block">Usuarios</h1>
                 <hr style="background: #969696;">
                 <div id="formulario">
-                    <form id="regForm" class="form-inline" style="background: #353535;border-radius: 10px;padding: 1em;">
+                    <form id="regForm" class="form-inline" style="background: #7c7c7c;border-radius: 10px;padding: 1em;">
                         <h3>Registro de usuario<br></h3>
                         <div class="table-responsive table-borderless">
                             <table class="table table-bordered">
@@ -64,11 +64,11 @@ $stmt_3->execute();
                                     </tr>
                                     <tr>
                                         <td>
-                                            <select class="form-control" name="locacion" id="locacion">
-                                                <option style="color:#aaa">Seleccione la ubicación</option>
-                                                <!-- UBICACIONES -->
-                                                <?php while ($locacion = $stmt->fetch()) {
-                                                    echo "<option value='{$locacion["descripcion"]}' style='color:#555'>{$locacion['descripcion']}</option>";
+                                            <select class="form-control" name="empresa" id="empresa">
+                                                <option style="color:#aaa">Seleccione la empresa</option>
+                                                <!-- EMPRESA -->
+                                                <?php while ($empresa = $stmt->fetch()) {
+                                                    echo "<option value='{$empresa["descripcion"]}' style='color:#555'>{$empresa['descripcion']}</option>";
                                                 } ?>
                                             </select>
                                         </td>
@@ -87,9 +87,9 @@ $stmt_3->execute();
                                             <select id="nivel" class="form-control" name="nivel" required>
                                                 <option style="color:#aaa" value="Nivel de usuario" selected>Nivel de
                                                     usuario</option>
-                                                <option value="tecnico">Técnico</option>
-                                                <option value="gerente">Gerente</option>
-                                                <option value="usuario">Usuario</option>
+                                                <option value="admin">Admin</option>
+                                                <option value="analista">Analista</option>
+                                                <option value="analista">Analista</option>
                                             </select>
                                         </td>
                                         <td><input id="clave" class="form-control" type="password" name="clave" placeholder="Clave">
@@ -108,7 +108,7 @@ $stmt_3->execute();
                 <div class="text-light table-striped" style="background: #ffffff;margin-bottom: 1em;width: 100%;margin-top: 1em;padding:0.5em">
                     <table id="usReg" class="table table-bordered">
                         <thead>
-                            <tr style="text-align: center;background: #353535;color: rgb(255,255,255);">
+                            <tr style="text-align: center;background: #505050;color: rgb(255,255,255);">
                                 <th>ID</th>
                                 <th>Nombre</th>
                                 <th>Usuario</th>
@@ -126,7 +126,7 @@ $stmt_3->execute();
                                         <td><?php echo $usuario['id_usuario'] ?></td>
                                         <td><?php echo $usuario['nombre'] ?></td>
                                         <td><?php echo $usuario['usuario'] ?></td>
-                                        <td><?php echo $usuario['locacion'] ?></td>
+                                        <td><?php echo $usuario['empresa'] ?></td>
                                         <td><?php echo $usuario['depto'] ?></td>
                                         <td><?php echo $usuario['nivel'] ?></td>
                                         <td>
@@ -158,33 +158,33 @@ $stmt_3->execute();
         </div>
         <!-- PESTAÑA 02 -->
         <div class="tab-pane" role="tabpanel" id="tab-2">
-            <div style="background: #5b5b5b;padding: 0.5em;border-radius: 0 0 1em 1em;box-shadow: 0px 0px 10px rgb(0,0,0);border-width: 1px;border-style: none;border-top-style: none;border-right-style: none;border-bottom-style: none;color: #d7d7d7;">
+            <div style="background: #505050;padding: 0.5em;border-radius: 0 0 1em 1em;box-shadow: 0px 0px 10px rgb(0,0,0);border-width: 1px;border-style: none;border-top-style: none;border-right-style: none;border-bottom-style: none;color: #d7d7d7;">
                 <i class="fa fa-paperclip" style="font-size: 5vw;margin-right: 0.3em;"></i>
                 <h1 class="d-inline-block">Miscelaneos</h1>
                 <hr style="background: #969696;">
                 <div id="misceForms">
-                    <!-- CREAR LOCACION -->
-                    <form id="crearLocacion" class="form-block" style="background: #353535;border-radius: 10px;padding: 1em; min-width: 30%">
-                        <h3>Crear locación</h3>
-                        <input id="locacion_2" class="form-control" type="text" name="locacion" data-tabla=miscelaneos data-tipo="locacion" placeholder="Indique locación">
+                    <!-- CREAR EMPRESA -->
+                    <form id="crearEmpresa" class="form-block" style="background: #7c7c7c;border-radius: 10px;padding: 1em; min-width: 30%">
+                        <h3>Crear empresa</h3>
+                        <input id="empresa_2" class="form-control" type="text" name="empresa" data-tabla=miscelaneos data-tipo="empresa" placeholder="Nombre empresa">
                         <span id="aviso" style="color:lightgreen"></span>
                         <br>
-                        <button class="btn btn-primary btn-inline crearLocacion">Confirmar locación</button>
+                        <button class="btn btn-primary btn-inline crearEmpresa">Confirmar empresa</button>
                     </form>
 
                     <!-- CREAR DEPARTAMENTO -->
-                    <form id="crearDepto" class="form-block" style="background: #353535;border-radius: 10px;padding: 1em; min-width: 30%">
+                    <form id="crearDepto" class="form-block" style="background: #7c7c7c;border-radius: 10px;padding: 1em; min-width: 30%">
                         <h3>Crear departamento</h3>
-                        <input id="departamento" class="form-control" type="text" name="departamento" data-tabla=miscelaneos data-tipo="depto" placeholder="Indique depto">
+                        <input id="departamento" class="form-control" type="text" name="departamento" data-tabla=miscelaneos data-tipo="depto" placeholder="Nombre depto">
                         <span id="avisoDpt" style="color:lightgreen"></span>
                         <br>
                         <button class="btn btn-primary btn-inline crearDepto">Confirmar departamento</button>
                     </form>
 
                     <!-- RESPALDAR BD -->
-                    <form id="respaldarBd" class="form-block d-flex flex-column" style="background: #353535;border-radius: 10px;padding: 1em; min-width: 30%"">
+                    <form id="respaldarBd" class="form-block d-flex flex-column" style="background: #7c7c7c;border-radius: 10px;padding: 1em; min-width: 30%"">
                         <h3>Respaldar Base de Datos<br></h3>
-                        <span id="avisoBD" style="color:lightgreen; height:2vh"></span>
+                        <span id=" avisoBD" style="color:lightgreen; height:2vh"></span>
                         <br>
                         <button class="btn btn-primary btn-inline respaldarBD">Respaldar BD</button>
                         <button class="btn btn-primary btn-inline verRespaldos" data-toggle="modal" data-target="#listaRespaldos" style="margin-top: 10px;">Lista de respaldos</button>
@@ -193,7 +193,7 @@ $stmt_3->execute();
 
                 <br>
 
-                <div style="background: #353535;border-radius: 10px;padding: 1em;">
+                <div style="background: #505050;border-radius: 10px;padding: 1em;">
                     <button id="desconectarUsuarios" class="btn btn-danger btn-inline">Desconectar todos los
                         usuarios</button>
                     <span id="avisoDelUsr" style="color:lightgreen; margin-left: 1em;"></span>
@@ -202,7 +202,7 @@ $stmt_3->execute();
         </div>
         <!-- PESTAÑA 03 -->
         <div class="tab-pane" role="tabpanel" id="tab-3">
-            <div style="background: #5b5b5b;padding: 0.5em;border-radius: 0 0 1em 1em;box-shadow: 0px 0px 10px rgb(0,0,0);border-width: 1px;border-style: none;border-top-style: none;border-right-style: none;border-bottom-style: none;color: #d7d7d7;">
+            <div style="background: #505050;padding: 0.5em;border-radius: 0 0 1em 1em;box-shadow: 0px 0px 10px rgb(0,0,0);border-width: 1px;border-style: none;border-top-style: none;border-right-style: none;border-bottom-style: none;color: #d7d7d7;">
                 <i class="fa fa-edit" style="font-size: 5vw;margin-right: 0.3em;"></i>
                 <h1 class="d-inline-block">Registro de actividad</h1>
                 <hr style="background: #969696;">
@@ -312,7 +312,7 @@ ocultar_aviso();
                     }
                 })
             } else if (val == "") {
-                $(this).attr("placeholder", `Indique ${tipo.toLowerCase()}`);
+                $(this).attr("placeholder", `Nombre ${tipo.toLowerCase()}`);
                 $(this).css("color", "#333");
                 $(`input[data-tipo=${tipo}]`).css("background", "#fff");
             }
@@ -328,7 +328,7 @@ ocultar_aviso();
             // VALIDAR SELECCIONES
             <?php echo validar_selecciones("nombre", "") ?>
             <?php echo validar_selecciones("usuario", "") ?>
-            <?php echo validar_selecciones("locacion", "Seleccione la ubicación") ?>
+            <?php echo validar_selecciones("empresa", "Seleccione la ubicación") ?>
             <?php echo validar_selecciones("depto", "Seleccione el departamento") ?>
             <?php echo validar_selecciones("nivel", "Nivel de usuario") ?>
             <?php echo validar_selecciones("clave", "") ?>
@@ -430,27 +430,27 @@ ocultar_aviso();
 
         })
 
-        // CREAR LOCACION
-        $(".crearLocacion").click(function() {
+        // CREAR EMPRESA
+        $(".crearEmpresa").click(function() {
 
             // VALIDAR SELECCIONES
-            <?php echo validar_selecciones("locacion_2", "") ?>
+            <?php echo validar_selecciones("empresa_2", "") ?>
 
             event.preventDefault();
 
             if (localStorage.getItem("inputOK") == 1) {
                 $.ajax({
                     type: "POST",
-                    url: "main_controller.php?crearLocacion=true",
-                    data: $("#crearLocacion").serialize(),
+                    url: "main_controller.php?crearEmpresa=true",
+                    data: $("#crearEmpresa").serialize(),
                     success: function(data) {
                         console.log(data);
 
-                        $("#locacion_2").val("");
+                        $("#empresa_2").val("");
 
                         $("#aviso").text(data);
 
-                        $("#crearLocacion input").css("color", "#333");
+                        $("#crearEmpresa input").css("color", "#333");
 
                         setTimeout(function() {
                             $("#aviso").text("");
@@ -558,9 +558,9 @@ ocultar_aviso();
                 url: "main_controller.php?verRespaldos=true",
                 success: function(data) {
                     console.log(data);
-                    if(data == "<ul></ul>"){
-                        $("#listaRespaldos .modal-body").html("<p>Sin respaldos que mostrar</p>");    
-                    }else{
+                    if (data == "<ul></ul>") {
+                        $("#listaRespaldos .modal-body").html("<p>Sin respaldos que mostrar</p>");
+                    } else {
                         $("#listaRespaldos .modal-body").html(data);
                     }
                 }

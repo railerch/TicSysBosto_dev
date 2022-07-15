@@ -1,6 +1,6 @@
 <table id="sysLogs" class="table table-bordered align-middle" style="text-align:center; width:100% !important; font-family:monospace; font-size:0.8em;">
     <thead>
-        <tr style="background: #353535;color: rgb(255,255,255);">
+        <tr style="background: #505050;color: rgb(255,255,255);">
             <td>ID</td>
             <th>Fecha</th>
             <th >IP</th>

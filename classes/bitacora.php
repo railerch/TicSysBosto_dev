@@ -43,12 +43,12 @@ class Bitacora
             $fecha     = date("Y-m-d H:i:s");
             $id_ticket = $this->info['id'];
             $usuario   = $this->info['nombreUsr'];
-            $tecnico   = $this->info['tecnico'];
+            $analista   = $this->info['analista'];
             $solucion  = $this->info['solucion'];
 
             try {
 
-                $stmt_bit = $conn->prepare("INSERT INTO bitacora (id, fecha, id_ticket, usuario, tecnico, solucion) VALUES (NULL, '$fecha', '$id_ticket', '$usuario', '$tecnico', '$solucion')");
+                $stmt_bit = $conn->prepare("INSERT INTO bitacora (id, fecha, id_ticket, usuario, analista, solucion) VALUES (NULL, '$fecha', '$id_ticket', '$usuario', '$analista', '$solucion')");
                 $stmt_bit->execute();
 
                 $this->estatus = true;

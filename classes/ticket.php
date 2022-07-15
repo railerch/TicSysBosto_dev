@@ -23,10 +23,10 @@ class Ticket
         global $conn;
 
         try {
-            $stmt       = $conn->prepare("INSERT INTO tickets (id_ticket, fecha, locacion, persona, usuario, area, solicitud, descripcion, prioridad, tecnico, estatus, comentarios) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt       = $conn->prepare("INSERT INTO tickets (id_ticket, fecha, empresa, persona, usuario, area, solicitud, descripcion, prioridad, analista, estatus, comentarios) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             $id_ticket  = NULL;
             $fecha      = date('Y-m-d H:i:s');
-            $locacion   = isset($this->info['locacion']) ? $this->info['locacion'] : $_SESSION['locacion'];
+            $empresa   = isset($this->info['empresa']) ? $this->info['empresa'] : $_SESSION['empresa'];
             $persona    = isset($this->info['persona']) ? $this->info['persona'] : $_SESSION['nombre'];
 
             if (isset($this->info['persona'])) {
@@ -49,21 +49,21 @@ class Ticket
             }
 
             $prioridad = $this->info['prioridad'];
-            $tecnico   = NULL;
+            $analista   = NULL;
 
             $estatus     = 'abierto';
             $comentarios = NULL;
 
             $stmt->bindParam(1, $id_ticket);
             $stmt->bindParam(2, $fecha);
-            $stmt->bindParam(3, $locacion);
+            $stmt->bindParam(3, $empresa);
             $stmt->bindParam(4, $persona);
             $stmt->bindParam(5, $usuario);
             $stmt->bindParam(6, $area);
             $stmt->bindParam(7, $solicitud);
             $stmt->bindParam(8, $descripcion);
             $stmt->bindParam(9, $prioridad);
-            $stmt->bindParam(10, $tecnico);
+            $stmt->bindParam(10, $analista);
             $stmt->bindParam(11, $estatus);
             $stmt->bindParam(12, $comentarios);
 
@@ -78,12 +78,12 @@ class Ticket
         }
     }
 
-    public function asignar_ticket(string $tecnico): void
+    public function asignar_ticket(string $analista): void
     {
         global $conn;
 
         try {
-            $stmt = $conn->prepare("UPDATE tickets SET tecnico = '$tecnico' WHERE id_ticket = '{$this->info['id_ticket']}'");
+            $stmt = $conn->prepare("UPDATE tickets SET analista = '$analista' WHERE id_ticket = '{$this->info['id_ticket']}'");
             $stmt->execute();
 
             $this->estatus = true;
@@ -95,20 +95,20 @@ class Ticket
         }
     }
 
-    public function tecnico_asignado(): string
+    public function analista_asignado(): string
     {
         global $conn;
-        $tecnico = 'Test';
+        $analista = 'Test';
         try {
-            $stmt = $conn->prepare("SELECT tecnico FROM tickets WHERE id_ticket = '{$this->info['id_ticket']}'");
+            $stmt = $conn->prepare("SELECT analista FROM tickets WHERE id_ticket = '{$this->info['id_ticket']}'");
             $stmt->execute();
-            $tecnico = $stmt->fetch(PDO::FETCH_ASSOC);
+            $analista = $stmt->fetch(PDO::FETCH_ASSOC);
 
             $this->estatus = true;
-        return isset($tecnico['tecnico']) ? $tecnico['tecnico'] : '<span style="color:orange">Aun sin atender!</span>';
+        return isset($analista['analista']) ? $analista['analista'] : '<span style="color:orange">Aun sin atender!</span>';
         } catch (PDOException $e) {
 
-            return '<span style="color: red">ERROR, al consultar el técnico asignado!</span>';
+            return '<span style="color: red">ERROR, al consultar el analista asignado!</span>';
             $this->exception = $e->getMessage();
             Log::registrar_log('ERROR: Metodo: ' . __FUNCTION__ . ' | Clase: ' . __CLASS__ . ' | ' . $this->exception);
         }
@@ -200,12 +200,12 @@ class Ticket
         global $conn;
 
         try {
-            $tecnico    = $this->info['tecnico'];
+            $analista    = $this->info['analista'];
             $estatus    = isset($this->info['estatus']) ? $this->info['estatus'] : "estatus";
             $comentario = $this->info['comentario'];
             $id         = $this->info['id'];
 
-            $stmt = $conn->prepare("UPDATE tickets SET tecnico = '$tecnico', estatus = '$estatus', comentarios = '$comentario' WHERE id_ticket = '$id'");
+            $stmt = $conn->prepare("UPDATE tickets SET analista = '$analista', estatus = '$estatus', comentarios = '$comentario' WHERE id_ticket = '$id'");
             $stmt->execute();
 
             $this->estatus = true;
@@ -221,8 +221,8 @@ class Ticket
     {
         global $conn;
 
-        if ($_SESSION['nivel'] == 'tecnico') {
-            $coment = "Ticket eliminado por el técnico";
+        if ($_SESSION['nivel'] == 'analista') {
+            $coment = "Ticket eliminado por el analista";
         } else {
             $coment = "Ticket eliminado por el usuario";
         }

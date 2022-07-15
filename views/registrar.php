@@ -5,8 +5,8 @@ include('../main_functions.php');
 $conexion = new Connection('../config/config.json');
 $conn = $conexion->db_conn();
 
-// MOSTRAR DEPARTAMENTOS Y LOCACIONES
-$stmt = $conn->prepare("SELECT * FROM miscelaneos WHERE tipo = 'locacion'");
+// MOSTRAR DEPARTAMENTOS Y EMPRESAS
+$stmt = $conn->prepare("SELECT * FROM miscelaneos WHERE tipo = 'empresa'");
 $stmt->setFetchMode(PDO::FETCH_ASSOC);
 $stmt->execute();
 
@@ -23,14 +23,14 @@ $config = cargar_config(true);
     <form method="POST" action="<?php echo htmlspecialchars("main_controller.php?registrarUsuario=true") ?>" style="padding: 1em;padding-bottom: 1em;">
         <h2 class="sr-only">Login Form</h2>
         <div class="illustration" style="padding-top: 0;padding-bottom: 0;"><img class="img-fluid" src="<?php echo $config[2]->logo ?>" style="height:20vh;">
-            <h5 style="color: rgb(255,255,255);">Registro de usuario<br></h5>
+            <h5 style="color: #333;">Registro de usuario<br></h5>
         </div>
         <div class="form-group">
-            <select class="form-control" name="locacion" id="locacion">
-                <option style="color:#555" selected>Seleccione su ubicación</option>
+            <select class="form-control" name="empresa" id="empresa">
+                <option style="color:#555" selected>Empresa</option>
                 <!-- UBICACIONES -->
-                <?php while ($locacion = $stmt->fetch()) {
-                    echo "<option value='{$locacion["descripcion"]}' style='color:#555'>{$locacion['descripcion']}</option>";
+                <?php while ($empresa = $stmt->fetch()) {
+                    echo "<option value='{$empresa["descripcion"]}' style='color:#555'>{$empresa['descripcion']}</option>";
                 } ?>
             </select>
         </div>
@@ -41,7 +41,7 @@ $config = cargar_config(true);
         <!-- DEPARTAMENTOS -->
         <div class="form-group">
             <select class="form-control" name="depto" id="depto">
-                <option style="color:#555" selected>Seleccione su departamento</option>
+                <option style="color:#555" selected>Departamento</option>
                 <?php while ($depto = $stmt_2->fetch()) {
                     echo "<option value='{$depto["descripcion"]}' style='color:#555'>{$depto['descripcion']}</option>";
                 } ?>
@@ -130,7 +130,7 @@ $config = cargar_config(true);
 
         // VALIDAR SELECCIONES
         $("button[type=submit]").click(function() {
-            <?php echo validar_selecciones("locacion", "Seleccione su ubicación") ?>
+            <?php echo validar_selecciones("empresa", "Seleccione su ubicación") ?>
             <?php echo validar_selecciones("depto", "Seleccione su departamento") ?>
         })
 

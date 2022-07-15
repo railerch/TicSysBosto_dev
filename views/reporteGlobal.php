@@ -17,7 +17,7 @@ $fechaInicial = isset($_POST['fechaInicial']) ? $_POST['fechaInicial'].' 00:00:0
 $fechaFinal   = isset($_POST['fechaFinal']) ? $_POST['fechaFinal'].' 23:59:59' : date("Y-m-d 23:59:59");
 
 // CONSULTAR TICKETS GLOBALES DEL PERIODO
-$stmt_st = $conn->prepare("SELECT tecnico, estatus FROM tickets WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' AND area = 'Sistemas' AND estatus <> 'eliminado'");
+$stmt_st = $conn->prepare("SELECT analista, estatus FROM tickets WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' AND area = 'Sistemas' AND estatus <> 'eliminado'");
 $stmt_st->execute();
 
 $abiertosG = $esperaG = $preCierreG = $cerradosG = 0;
@@ -26,9 +26,9 @@ $sinTecnico = NULL;
 while($ticket = $stmt_st->fetch(PDO::FETCH_ASSOC)){
     
     // OMITIR LOS TICKETS DEL ROOT
-    if($ticket['tecnico'] != 'root'){
+    if($ticket['analista'] != 'root'){
         
-        if($ticket['tecnico'] == NULL){
+        if($ticket['analista'] == NULL){
             $sinTecnico++;
         }
         
@@ -54,7 +54,7 @@ while($ticket = $stmt_st->fetch(PDO::FETCH_ASSOC)){
 $ticketsGlobales = $abiertosG + $esperaG + $preCierreG + $cerradosG;
 
 // CONSULTAR TAREAS GLOBALES DEL PERIODO
-$stmt_stats = $conn->prepare("SELECT tecnico, estatus FROM tareas WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal'");
+$stmt_stats = $conn->prepare("SELECT analista, estatus FROM tareas WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal'");
 $stmt_stats->execute();
 
 $pendienteG = $colaG = $procesandoG = $finalizadaG = $verificadaG = 0;
@@ -62,7 +62,7 @@ $sinAsignar = NULL;
 
 while($tarea = $stmt_stats->fetch(PDO::FETCH_ASSOC)){
 
-    if($tarea['tecnico'] == 'Sin asignar'){
+    if($tarea['analista'] == 'Sin asignar'){
         $sinAsignar++;
     }
 
@@ -186,7 +186,7 @@ $totaltareas = $pendienteG + $colaG + $procesandoG + $finalizadaG + $verificadaG
         <?php echo '<b>Periodo:</b> '.$_POST['fechaInicial'].' <b>al</b> '.$_POST['fechaFinal'] ?></p>
 
     <!-- ESTADISTICAS DE TICKETS POR TECNICO -->
-    <h3>Estadistica de tickets por técnico</h3>
+    <h3>Estadistica de tickets por analista</h3>
     <hr style="background: #969696; margin-top:1em;">
     <div id="datosTecnico">
         <table>
@@ -226,9 +226,9 @@ $totaltareas = $pendienteG + $colaG + $procesandoG + $finalizadaG + $verificadaG
         style="background: #ffffff;margin-bottom: 1em;width: 100%;margin-top: 1em;padding:0.5em; overflow:scroll">
         <table class="table table-bordered">
             <thead>
-                <tr style="text-align: center;background: #353535;color: rgb(255,255,255);">
+                <tr style="text-align: center;background: lightgray;color: rgb(255,255,255);">
                     <th>ID</th>
-                    <th>Técnico</th>
+                    <th>Analista</th>
                     <th>T/abiertos</th>
                     <th>T/espera</th>
                     <th>T/Pre-cierre</th>
@@ -240,19 +240,19 @@ $totaltareas = $pendienteG + $colaG + $procesandoG + $finalizadaG + $verificadaG
             <tbody>
                 <?php
                 // CONSULTAR TECNICOS
-                $stmt_tck = $conn->prepare("SELECT * FROM usuarios WHERE nivel = 'tecnico' ORDER BY nombre");
+                $stmt_tck = $conn->prepare("SELECT * FROM usuarios WHERE nivel = 'analista' ORDER BY nombre");
                 $stmt_tck->execute();
 
                 // ID DE FILA EN TABLA
                 $cont = 1;
                 
-                while($tecnico = $stmt_tck->fetch(PDO::FETCH_ASSOC)){ 
+                while($analista = $stmt_tck->fetch(PDO::FETCH_ASSOC)){ 
                 //*******************************************************************************
                     // TECNICO EN CURSO
-                    $nombre = $tecnico['nombre'];
+                    $nombre = $analista['nombre'];
 
                     // CONSULTAR TICKETS ESTADISTICAS
-                    $stmt_st = $conn->prepare("SELECT estatus FROM tickets WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' AND tecnico = '$nombre'");
+                    $stmt_st = $conn->prepare("SELECT estatus FROM tickets WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' AND analista = '$nombre'");
                     $stmt_st->execute();
 
                     $abiertosT = $esperaT = $preCierreT = $cerradosT = 0;
@@ -305,7 +305,7 @@ $totaltareas = $pendienteG + $colaG + $procesandoG + $finalizadaG + $verificadaG
     </div>
 
     <!-- ESTADISTICAS DE TAREAS -->
-    <h3>Estadistica de tareas por técnico</h3>
+    <h3>Estadistica de tareas por analista</h3>
     <hr style="background: #969696; margin-top:1em;">
     <div id="datosTecnico">
         <table>
@@ -351,9 +351,9 @@ $totaltareas = $pendienteG + $colaG + $procesandoG + $finalizadaG + $verificadaG
         style="background: #ffffff;margin-bottom: 1em;width: 100%;margin-top: 1em;padding:0.5em; overflow:scroll">
         <table class="table table-bordered">
             <thead>
-                <tr style="text-align: center;background: #353535;color: rgb(255,255,255);">
+                <tr style="text-align: center;background: lightgray;color: rgb(255,255,255);">
                     <th>ID</th>
-                    <th>Técnico</th>
+                    <th>Analista</th>
                     <th>T/pendientes</th>
                     <th>T/en cola</th>
                     <th>T/en proceso</th>
@@ -366,19 +366,19 @@ $totaltareas = $pendienteG + $colaG + $procesandoG + $finalizadaG + $verificadaG
             <tbody>
                 <?php
                 // CONSULTAR TECNICOS
-                $stmt_tsk = $conn->prepare("SELECT * FROM usuarios WHERE nivel = 'tecnico' AND usuario <> 'root' ORDER BY nombre");
+                $stmt_tsk = $conn->prepare("SELECT * FROM usuarios WHERE nivel = 'analista' AND usuario <> 'root' ORDER BY nombre");
                 $stmt_tsk->execute();
 
                 // ID DE FILA EN TABLA
                 $cont = 1;
                 
-                while($tecnico = $stmt_tsk->fetch(PDO::FETCH_ASSOC)){ 
+                while($analista = $stmt_tsk->fetch(PDO::FETCH_ASSOC)){ 
                 //*******************************************************************************
                     // TECNICO EN CURSO
-                    $nombre = $tecnico['nombre'];
+                    $nombre = $analista['nombre'];
 
                     // CONSULTAR TAREAS ESTADISTICAS
-                    $stmt_stats = $conn->prepare("SELECT valoracion, estatus FROM tareas WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' AND tecnico = '$nombre'");
+                    $stmt_stats = $conn->prepare("SELECT valoracion, estatus FROM tareas WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' AND analista = '$nombre'");
                     $stmt_stats->execute();
 
                     $pendiente = $cola = $procesando = $finalizada = $verificada = $efectividad = $puntaje = 0;
@@ -438,15 +438,15 @@ $totaltareas = $pendienteG + $colaG + $procesandoG + $finalizadaG + $verificadaG
         </table>
     </div>
 
-    <!-- ESTADITISCAS DE TICKETS POR LOCACION -->
-    <h3>Estadistica de tickets por locaciones</h3>
+    <!-- ESTADITISCAS DE TICKETS POR EMPRESA -->
+    <h3>Estadistica de tickets por empresaes</h3>
     <div id="historial" class="table-striped"
         style="background: #ffffff;margin-bottom: 1em;width: 100%;margin-top: 1em;padding:0.5em; overflow:scroll">
         <table class="table table-bordered">
             <thead>
-                <tr style="text-align: center;background: #353535;color: rgb(255,255,255);">
+                <tr style="text-align: center;background: lightgray;color: rgb(255,255,255);">
                     <th>ID</th>
-                    <th>Locación</th>
+                    <th>Empresa</th>
                     <th>T/abiertos</th>
                     <th>T/espera</th>
                     <th>T/Pre-cierre</th>
@@ -457,20 +457,20 @@ $totaltareas = $pendienteG + $colaG + $procesandoG + $finalizadaG + $verificadaG
             </thead>
             <tbody>
                 <?php
-                // CONSULTAR LOCACIONES
-                $stmt_L = $conn->prepare("SELECT descripcion FROM miscelaneos WHERE tipo = 'locacion' ORDER BY 'locacion' ");
+                // CONSULTAR EMPRESAS
+                $stmt_L = $conn->prepare("SELECT descripcion FROM miscelaneos WHERE tipo = 'empresa' ORDER BY 'empresa' ");
                 $stmt_L->execute();
 
                 // ID DE FILA EN TABLA
                 $cont = 1;
                 
-                while($locacion = $stmt_L->fetch(PDO::FETCH_ASSOC)){ 
+                while($empresa = $stmt_L->fetch(PDO::FETCH_ASSOC)){ 
                 //*******************************************************************************
-                    // LOCACION EN CURSO
-                    $locacion = $locacion['descripcion'];
+                    // EMPRESA EN CURSO
+                    $empresa = $empresa['descripcion'];
 
                     // CONSULTAR TICKETS DEL PERIODO
-                    $stmtLoc = $conn->prepare("SELECT tecnico, estatus FROM tickets WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' AND estatus <> 'eliminado' AND locacion = '$locacion' AND area = 'Sistemas'");
+                    $stmtLoc = $conn->prepare("SELECT analista, estatus FROM tickets WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' AND estatus <> 'eliminado' AND empresa = '$empresa' AND area = 'Sistemas'");
                     $stmtLoc->execute();
 
                     $abiertosL = $esperaL = $preCierreL = $cerradosL = 0;
@@ -478,7 +478,7 @@ $totaltareas = $pendienteG + $colaG + $procesandoG + $finalizadaG + $verificadaG
                     while($ticket = $stmtLoc->fetch(PDO::FETCH_ASSOC)){
 
                         // OMITIR LOS TICKETS DEL ROOT
-                        if($ticket['tecnico'] != 'root'){
+                        if($ticket['analista'] != 'root'){
                             $estatusL = $ticket['estatus'];
                             
                             switch($estatusL){
@@ -511,7 +511,7 @@ $totaltareas = $pendienteG + $colaG + $procesandoG + $finalizadaG + $verificadaG
 
                 <tr class="ticketRow" style="text-align:center">
                     <td><?php echo $cont?></td>
-                    <td><?php echo $locacion?></td>
+                    <td><?php echo $empresa?></td>
                     <td><?php echo $abiertosL?></td>
                     <td><?php echo $esperaL?></td>
                     <td><?php echo $preCierreL?></td>

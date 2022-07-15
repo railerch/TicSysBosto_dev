@@ -20,7 +20,7 @@ class Log
         // Datos
         $fecha      = date('Y-m-d h:i:s');
         $user_addr  = $_SERVER['REMOTE_ADDR'];
-        $user_name  = $_SESSION['nombre'] . ' (' . $_SESSION['locacion'] . ')';
+        $user_name  = $_SESSION['nombre'] . ' (' . $_SESSION['empresa'] . ')';
         $user_agent = $_SERVER['HTTP_USER_AGENT'];
         $uri        = explode('?', $_SERVER['REQUEST_URI']);
 

@@ -10,7 +10,7 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button></div>
-                        <div class="modal-body"><i class="fa fa-users" style="font-size: 3em;color: #07def3;"></i>
+                        <div class="modal-body"><i class="fa fa-users" style="font-size: 3em;color: gray;"></i>
                             <h5 class="modal-title" style="text-align: center;color: #333;">Sistema de&nbsp;
                                 Gestión de Requerimientos v2.0<br></h5>
                             <p style="text-align: center;color: #333; display: none"><strong>Diseño, maquetación y

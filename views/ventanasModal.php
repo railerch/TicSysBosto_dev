@@ -7,7 +7,7 @@
                     <h5 class="modal-title" style="color: #333;"><strong>TICKET:
                             #<?php echo $ticket['id_ticket'] ?></strong>
                         <br>
-                        <?php echo $ticket['persona'] ?> (<?php echo $ticket['locacion'] ?>)
+                        <?php echo $ticket['persona'] ?> (<?php echo $ticket['empresa'] ?>)
                     </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                 </div>
@@ -19,9 +19,9 @@
 
                     <hr>
 
-                    <p style="margin: 0;color: #fff;background: #353535;padding: 2px;padding-left: 0.5em;padding-right: 0.5em;padding-top: 0.2em;padding-bottom: 0.2em;">
+                    <p style="margin: 0;color: #fff;background: lightgray;padding: 2px;padding-left: 0.5em;padding-right: 0.5em;padding-top: 0.2em;padding-bottom: 0.2em;">
                         <i class="fa fa-wechat"></i>&nbsp;
-                        <strong style='color:#07def3'>Chat directo</strong> - Técnico asignado: <span id="tecnico<?php echo $ticket['id_ticket'] ?>"></span>
+                        <strong style='color:gray'>Chat directo</strong> - Analista asignado: <span id="analista<?php echo $ticket['id_ticket'] ?>"></span>
                         <br>
                         <!-- ALERTA DE USUARIO PARA QUE CIERRE EL TICKET -->
                         <?php
@@ -47,19 +47,19 @@
                     </div>
 
                     <!-- NO SE PODRA ESCRIBIR EN EL CHAT SI EL TICKET NO TIENE TECNICO ASIGNADO O SI EL QUE LO VISUALICE NO ES EL ASIGNADO -->
-                    <?php if ($ticket['estatus'] != "cerrado" && $_SESSION['nombre'] === $ticket['tecnico']) { ?>
+                    <?php if ($ticket['estatus'] != "cerrado" && $_SESSION['nombre'] === $ticket['analista']) { ?>
                         <div id="mensaje" class="md-form text-nowrap">
 
                             <!-- MENSAJES -->
                             <div class="input-group">
-                                <input id="inputMensaje" class="form-control" data-msj="<?php echo $ticket['id_ticket'] ?>" data-tic="<?php echo $ticket['id_ticket'] ?>" data-usr="<?php echo $_SESSION['usuario'] ?>" data-loc="<?php echo $ticket['locacion'] ?>" data-tec="<?php echo $_SESSION['usuario'] ?>" name="mensaje" type="text" placeholder="Escribir mensaje..." autocomplete="off">
+                                <input id="inputMensaje" class="form-control" data-msj="<?php echo $ticket['id_ticket'] ?>" data-tic="<?php echo $ticket['id_ticket'] ?>" data-usr="<?php echo $_SESSION['usuario'] ?>" data-loc="<?php echo $ticket['empresa'] ?>" data-tec="<?php echo $_SESSION['usuario'] ?>" name="mensaje" type="text" placeholder="Escribir mensaje..." autocomplete="off">
 
                                 <div class="input-group-append">
                                     <button class="adjuntarArchivo btn btn-dark" type="button" title="Adjuntar archivo" data-tic="<?php echo $ticket['id_ticket'] ?>">
                                         <i class="fa fa-plus"></i>
                                     </button>
 
-                                    <button class="enviarMensaje btn btn-primary" data-tic="<?php echo $ticket['id_ticket'] ?>" data-usr="<?php echo $ticket['usuario'] ?>" data-loc="<?php echo $ticket['locacion'] ?>" data-tec="<?php echo $_SESSION['usuario'] ?>" data-toggle="tooltip" data-bs-tooltip="" type="button" title="Enviar mensaje">
+                                    <button class="enviarMensaje btn btn-primary" data-tic="<?php echo $ticket['id_ticket'] ?>" data-usr="<?php echo $ticket['usuario'] ?>" data-loc="<?php echo $ticket['empresa'] ?>" data-tec="<?php echo $_SESSION['usuario'] ?>" data-toggle="tooltip" data-bs-tooltip="" type="button" title="Enviar mensaje">
                                         ENVIAR
                                     </button>
                                 </div>
@@ -87,7 +87,7 @@
                     <textarea id="bitacora<?php echo $ticket['id_ticket'] ?>" class="form-control" name="bitacora" style="min-width:100%; max-width:100%; min-height:150px; max-height:15px;" placeholder="Indique una breve descripción de la solucion..."></textarea>
                 </div>
                 <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">CANCELAR</button>
-                    <button class="btn btn-danger cerrarConfirmacion" type="button" data-cerrar-id="<?php echo $ticket['id_ticket'] ?>" data-tecnico="<?php echo $ticket['tecnico'] ?>" data-nombre-usuario="<?php echo $ticket['persona'] ?>" data-dismiss="modal">CERRAR
+                    <button class="btn btn-danger cerrarConfirmacion" type="button" data-cerrar-id="<?php echo $ticket['id_ticket'] ?>" data-analista="<?php echo $ticket['analista'] ?>" data-nombre-usuario="<?php echo $ticket['persona'] ?>" data-dismiss="modal">CERRAR
                         TICKET</button>
                 </div>
             </div>
@@ -120,7 +120,7 @@
                     <h5 class="modal-title" style="color: #333;"><strong>TICKET:
                             #<?php echo $ticket['id_ticket'] ?></strong>
                         <br>
-                        <?php echo $ticket['persona'] ?> (<?php echo $ticket['locacion'] ?>)
+                        <?php echo $ticket['persona'] ?> (<?php echo $ticket['empresa'] ?>)
                     </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                 </div>
@@ -130,9 +130,9 @@
                         <li><strong>Descripción: </strong><?php echo $ticket['descripcion'] ?></li>
                     </ul>
                     <hr>
-                    <p style="margin: 0;color: #fff;background: #353535;padding: 2px;padding-left: 0.5em;padding-right: 0.5em;padding-top: 0.2em;padding-bottom: 0.2em;">
+                    <p style="margin: 0;color: #fff;background: lightgray;padding: 2px;padding-left: 0.5em;padding-right: 0.5em;padding-top: 0.2em;padding-bottom: 0.2em;">
                         <i class="fa fa-wechat"></i>&nbsp;
-                        <strong style='color:#07def3'>Chat directo</strong> - Técnico asignado: <span id="tecnico<?php echo $ticket['id_ticket'] ?>"></span>
+                        <strong style='color:gray'>Chat directo</strong> - Analista asignado: <span id="analista<?php echo $ticket['id_ticket'] ?>"></span>
 
                     </p>
 
@@ -150,7 +150,7 @@
                     if ($solucion) {
                         echo "<p>{$solucion['solucion']}</p>";
                     } else {
-                        echo "Solución no especificada por el técnico";
+                        echo "Solución no especificada por el analista";
                     }
                     ?>
 
@@ -167,7 +167,7 @@
                     <h5 class="modal-title" style="color: #333;"><strong>TICKET:
                             #<?php echo $ticket['id_ticket'] ?></strong>
                         <br>
-                        <?php echo $ticket['persona'] ?> (<?php echo $ticket['locacion'] ?>)
+                        <?php echo $ticket['persona'] ?> (<?php echo $ticket['empresa'] ?>)
                     </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                 </div>
@@ -207,7 +207,7 @@
                     <h5 class="modal-title" style="color: #333;"><strong>TICKET:
                             #<?php echo $ticket['id_ticket'] ?></strong>
                         <br>
-                        <?php echo $ticket['persona'] ?> (<?php echo $ticket['locacion'] ?>)
+                        <?php echo $ticket['persona'] ?> (<?php echo $ticket['empresa'] ?>)
                     </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                 </div>
@@ -217,13 +217,13 @@
                         <li><strong>Descripción: </strong><?php echo $ticket['descripcion'] ?></li>
                     </ul>
                     <hr>
-                    <p style="margin: 0;color: #fff;background: #353535;padding: 2px;padding-left: 0.5em;padding-right: 0.5em;padding-top: 0.2em;padding-bottom: 0.2em;">
+                    <p style="margin: 0;color: #fff;background: lightgray;padding: 2px;padding-left: 0.5em;padding-right: 0.5em;padding-top: 0.2em;padding-bottom: 0.2em;">
                         <i class="fa fa-wechat"></i>&nbsp;
                         <?php
                         if ($ticket['estatus'] == "cerrado") {
-                            echo "<strong style='color:#07def3'>Historial de chat</strong> - Técnico asignado: <span id='tecnico{$ticket['id_ticket']}'></span>";
+                            echo "<strong style='color:gray'>Historial de chat</strong> - Analista asignado: <span id='analista{$ticket['id_ticket']}'></span>";
                         } else {
-                            echo "<strong style='color:#07def3'>Chat directo</strong> - Técnico asignado: <span id='tecnico{$ticket['id_ticket']}'></span>";
+                            echo "<strong style='color:gray'>Chat directo</strong> - Analista asignado: <span id='analista{$ticket['id_ticket']}'></span>";
                         }
                         ?><br>
                     </p>
@@ -239,14 +239,14 @@
 
                             <!-- MENSAJES -->
                             <div class="input-group">
-                                <input id="inputMensaje" class="form-control" data-msj="<?php echo $ticket['id_ticket'] ?>" data-tic="<?php echo $ticket['id_ticket'] ?>" data-usr="<?php echo $ticket['usuario'] ?>" data-loc="<?php echo $ticket['locacion'] ?>" data-tec="<?php echo $ticket['tecnico'] ?>" name="mensaje" type="text" placeholder="Escribir mensaje..." autocomplete="off">
+                                <input id="inputMensaje" class="form-control" data-msj="<?php echo $ticket['id_ticket'] ?>" data-tic="<?php echo $ticket['id_ticket'] ?>" data-usr="<?php echo $ticket['usuario'] ?>" data-loc="<?php echo $ticket['empresa'] ?>" data-tec="<?php echo $ticket['analista'] ?>" name="mensaje" type="text" placeholder="Escribir mensaje..." autocomplete="off">
 
                                 <div class="input-group-append">
                                     <button class="adjuntarArchivo btn btn-dark" type="button" title="Adjuntar archivo" data-tic="<?php echo $ticket['id_ticket'] ?>">
                                         <i class="fa fa-plus"></i>
                                     </button>
 
-                                    <button class="enviarMensaje btn btn-primary" data-tic="<?php echo $ticket['id_ticket'] ?>" data-usr="<?php echo $ticket['usuario'] ?>" data-loc="<?php echo $ticket['locacion'] ?>" data-tec="<?php echo $ticket['tecnico'] ?>" data-toggle="tooltip" data-bs-tooltip="" type="button" title="Enviar mensaje">
+                                    <button class="enviarMensaje btn btn-primary" data-tic="<?php echo $ticket['id_ticket'] ?>" data-usr="<?php echo $ticket['usuario'] ?>" data-loc="<?php echo $ticket['empresa'] ?>" data-tec="<?php echo $ticket['analista'] ?>" data-toggle="tooltip" data-bs-tooltip="" type="button" title="Enviar mensaje">
                                         ENVIAR
                                     </button>
                                 </div>
@@ -271,11 +271,11 @@
                     <h4 class="modal-title"><i class="fa fa-check"></i>&nbsp;Cerrar ticket<br></h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                 </div>
                 <div class="modal-body">
-                    <p>Esta a punto de cerrar el ticket seleccionado, <b>confirma que el técnico a cargo
+                    <p>Esta a punto de cerrar el ticket seleccionado, <b>confirma que el analista a cargo
                             soluciono su problema</b>?</p>
                 </div>
                 <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">NO</button>
-                    <button class="btn btn-danger cerrarConfirmacion" type="button" data-cerrar-id="<?php echo $ticket['id_ticket'] ?>" data-tecnico="<?php echo $ticket['tecnico'] ?>" data-nombre-usuario="<?php echo $_SESSION['nombre'] ?>" data-locacion="<?php echo $ticket['locacion'] ?>" data-usuario="<?php echo $ticket['usuario'] ?>" data-dismiss="modal">SI</button>
+                    <button class="btn btn-danger cerrarConfirmacion" type="button" data-cerrar-id="<?php echo $ticket['id_ticket'] ?>" data-analista="<?php echo $ticket['analista'] ?>" data-nombre-usuario="<?php echo $_SESSION['nombre'] ?>" data-empresa="<?php echo $ticket['empresa'] ?>" data-usuario="<?php echo $ticket['usuario'] ?>" data-dismiss="modal">SI</button>
                 </div>
             </div>
         </div>
@@ -310,9 +310,9 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                 </div>
                 <div class="modal-body" style="color: #333;">
-                    <p style="margin: 0;color: #fff;background: #353535;padding: 2px;padding-left: 0.5em;padding-right: 0.5em;padding-top: 0.2em;padding-bottom: 0.2em;text-align:left">
+                    <p style="margin: 0;color: #fff;background: lightgray;padding: 2px;padding-left: 0.5em;padding-right: 0.5em;padding-top: 0.2em;padding-bottom: 0.2em;text-align:left">
                         <i class="fa fa-wechat"></i>&nbsp;
-                        <span id="chatUser" style='color:#07def3'>
+                        <span id="chatUser" style='color:gray'>
                             <!-- USUARIO -->
                         </span>
                     </p>
@@ -358,7 +358,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" style="color: #353535;"><i class="fa fa-user-o"></i>&nbsp;Editar datos de
+                    <h4 class="modal-title" style="color: lightgray;"><i class="fa fa-user-o"></i>&nbsp;Editar datos de
                         usuario</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                 </div>
                 <div class="modal-body">
@@ -370,15 +370,15 @@
                             <!-- NIVEL DE USUARIO -->
                             <select class="form-control" name="nivel">
                                 <option style="color:#aaa" value="NULL">Nivel de usuario</option>
-                                <option value="tecnico">Técnico</option>
+                                <option value="analista">Analista</option>
                                 <option value="gerente">Gerente</option>
                                 <option value="usuario">Usuario</option>
                             </select>
-                            <select class="form-control" name="locacion">
+                            <select class="form-control" name="empresa">
                                 <option style="color:#555" value="NULL">Seleccione nueva ubicación</option>
                                 <!-- UBICACIONES -->
-                                <?php while ($locacion = $stmt_4->fetch()) {
-                                    echo "<option value='{$locacion["descripcion"]}' style='color:#555'>{$locacion['descripcion']}</option>";
+                                <?php while ($empresa = $stmt_4->fetch()) {
+                                    echo "<option value='{$empresa["descripcion"]}' style='color:#555'>{$empresa['descripcion']}</option>";
                                 } ?>
                             </select>
                             <select class="form-control" name="depto">

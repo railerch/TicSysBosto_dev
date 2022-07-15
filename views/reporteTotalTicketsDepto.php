@@ -18,7 +18,7 @@ $fechaFinal   = isset($_POST['fechaFinal']) ? $_POST['fechaFinal'].' 23:59:59' :
 
 // CONSULTAR TICKETS GLOBALES DEL PERIODO
 $depto = $_SESSION['depto'];
-$stmt_st = $conn->prepare("SELECT tecnico, estatus FROM tickets WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' AND estatus <> 'eliminado' AND area = '$depto'");
+$stmt_st = $conn->prepare("SELECT analista, estatus FROM tickets WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' AND estatus <> 'eliminado' AND area = '$depto'");
 $stmt_st->execute();
 
 $abiertos = $espera = $preCierre = $cerrados = 0;
@@ -26,7 +26,7 @@ $sinTecnico = NULL;
 
 while($ticket = $stmt_st->fetch(PDO::FETCH_ASSOC)){
 
-    if($ticket['tecnico'] == NULL){
+    if($ticket['analista'] == NULL){
         $sinTecnico++;
     }
     
@@ -145,7 +145,7 @@ $ticketsTotales = $abiertos + $espera + $preCierre + $cerrados;
         <?php echo '<b>Periodo:</b> '.$_POST['fechaInicial'].' <b>al</b> '.$_POST['fechaFinal'] ?></p>
     
     <!-- ESTADISTICAS DE TICKETS POR TECNICO -->
-    <h3>Historial de tickets por locaciones</h3>
+    <h3>Historial de tickets por empresaes</h3>
     <hr style="background: #969696; margin-top:1em;">
     <div id="datosTecnico">
         <table>
@@ -181,14 +181,14 @@ $ticketsTotales = $abiertos + $espera + $preCierre + $cerrados;
         </table>
     </div>
     <hr>
-    <!-- ESTADITISCAS DE TICKETS POR LOCACION -->
+    <!-- ESTADITISCAS DE TICKETS POR EMPRESA -->
     <div id="historial" class="table-striped"
         style="background: #ffffff;margin-bottom: 1em;width: 100%;margin-top: 1em;padding:0.5em; overflow:scroll">
         <table class="table table-bordered">
             <thead>
-                <tr style="text-align: center;background: #353535;color: rgb(255,255,255);">
+                <tr style="text-align: center;background: lightgray;color: rgb(255,255,255);">
                     <th>ID</th>
-                    <th>Locación</th>
+                    <th>Empresa</th>
                     <th>T/abiertos</th>
                     <th>T/espera</th>
                     <th>T/Pre-cierre</th>
@@ -199,21 +199,21 @@ $ticketsTotales = $abiertos + $espera + $preCierre + $cerrados;
             </thead>
             <tbody>
                 <?php
-                // CONSULTAR LOCACIONES
-                $stmt_L = $conn->prepare("SELECT descripcion FROM miscelaneos WHERE tipo = 'locacion' ORDER BY 'locacion' ");
+                // CONSULTAR EMPRESAS
+                $stmt_L = $conn->prepare("SELECT descripcion FROM miscelaneos WHERE tipo = 'empresa' ORDER BY 'empresa' ");
                 $stmt_L->execute();
 
                 // ID DE FILA EN TABLA
                 $cont = 1;
                 
-                while($locacion = $stmt_L->fetch(PDO::FETCH_ASSOC)){ 
+                while($empresa = $stmt_L->fetch(PDO::FETCH_ASSOC)){ 
                 //*******************************************************************************
-                    // LOCACION EN CURSO
-                    $locacion = $locacion['descripcion'];
+                    // EMPRESA EN CURSO
+                    $empresa = $empresa['descripcion'];
 
                     // CONSULTAR TICKETS DEL PERIODO
                     $depto = $_SESSION['depto'];
-                    $stmtLoc = $conn->prepare("SELECT tecnico, estatus FROM tickets WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' AND locacion = '$locacion' AND estatus <> 'eliminado' AND area = '$depto'");
+                    $stmtLoc = $conn->prepare("SELECT analista, estatus FROM tickets WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' AND empresa = '$empresa' AND estatus <> 'eliminado' AND area = '$depto'");
                     $stmtLoc->execute();
 
                     $abiertosL = $esperaL = $preCierreL = $cerradosL = 0;
@@ -253,7 +253,7 @@ $ticketsTotales = $abiertos + $espera + $preCierre + $cerrados;
 
                 <tr class="ticketRow" style="text-align:center">
                     <td><?php echo $cont?></td>
-                    <td><?php echo $locacion?></td>
+                    <td><?php echo $empresa?></td>
                     <td><?php echo $abiertosL?></td>
                     <td><?php echo $esperaL?></td>
                     <td><?php echo $preCierreL?></td>

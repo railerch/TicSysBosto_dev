@@ -28,7 +28,7 @@ $config = cargar_config();
     <div>
         <div class="container-fluid" style="color: #d7d7d7;">
             <div class="row" style="height: 100vh;">
-                <div class="col-xl-12 d-flex flex-row justify-content-between" id="topBar" style="background: #545354;color: rgb(255,255,255);text-align: right;padding-top: 2vh;height: 10%;padding-left: 2vw;padding-right: 4vw;padding-bottom: 2vh;">
+                <div class="col-xl-12 d-flex flex-row justify-content-between" id="topBar" style="background: #505050;color: rgb(255,255,255);text-align: right;padding-top: 2vh;height: 10%;padding-left: 2vw;padding-right: 4vw;padding-bottom: 2vh;">
 
                     <!-- AYUDA
                     <div id="help">
@@ -47,7 +47,7 @@ $config = cargar_config();
                             Tiempo de sesón <br><span id="timer"></span>
                         </div>
 
-                        <i id="userIcon" class="fa fa-user-o" style="margin-right:0.2em;color:#07def3;cursor:pointer;" data-query="yes"></i>
+                        <i id="userIcon" class="fa fa-user-o" style="margin-right:0.2em;color:gray;cursor:pointer;" data-query="yes"></i>
 
                         <span id="nombreUsuario" class="d-inline-block"><?php echo $_SESSION['nombre'] . ' - ' . $_SESSION['depto'] ?></span>
 
@@ -72,7 +72,7 @@ $config = cargar_config();
                                     <span id="usuariosInactivos"></span>
                                 </span>
                                 <span>
-                                    <i class="fa fa-users" style="margin-right:0.2em;color:#07def3"></i>
+                                    <i class="fa fa-users" style="margin-right:0.2em;color:gray"></i>
                                     <span id="usuariosTotales"></span>
                                 </span>
                             </div>
@@ -89,12 +89,12 @@ $config = cargar_config();
                     </div>
 
                     <div id="logo" style="width:fit-content;display:flex;align-items:center;">
-                        <img class="img-fluid float-left" src="<?php echo $config[2]->logo ?>" style="height: 3.5vw;">
+                        <img class="img-fluid float-left" src="<?php echo $config[2]->logo2 ?>" style="height: 3.5vw;">
                     </div>
 
                 </div>
 
-                <div class="col-1 col-lg-1 col-xl-1 d-flex flex-column align-items-center" id="sidebar" style="background: #353535;padding-top: 1.5em;height: 90%;border-width: 2px;border-style: solid;border-top-style: none;border-right-width: 1px;border-right-style: none;border-bottom-style: none;border-left-style: none;">
+                <div class="col-1 col-lg-1 col-xl-1 d-flex flex-column align-items-center" id="sidebar" style="background: lightgray;padding-top: 1.5em;height: 90%;border-width: 2px;border-style: solid;border-top-style: none;border-right-width: 1px;border-right-style: none;border-bottom-style: none;border-left-style: none;">
 
                     <a class="text-muted sidebtn" data-toggle="tooltip" data-bs-tooltip="" data-placement="right" id="dashboard" href="#/" title="Dashboard" data-btn="dashboardStats"><i class="fa fa-dashboard" id="dashboardbtn" style="font-size: 2.3vw;"></i></a>
 
@@ -114,7 +114,7 @@ $config = cargar_config();
 
                     <a class="text-muted cerrarSesion" data-toggle="tooltip" data-bs-tooltip="" data-placement="right" id="logout" href="main_controller.php?logout=true" title="Cerrar sesion"><i class="fa fa-sign-out" style="font-size: 2.3vw;"></i></a>
                 </div>
-                <div class="col-11 col-sm-11 col-md-11 col-lg-11 col-xl-11 flex-row justify-content-center align-items-center" id="contenido" style="background: #1c1c1c;padding-top: 2em;padding-bottom: 15px; max-height:90%;overflow-y:scroll;" data-page='tecnico'></div>
+                <div class="col-11 col-sm-11 col-md-11 col-lg-11 col-xl-11 flex-row justify-content-center align-items-center" id="contenido" style="background: #333333;padding-top: 2em;padding-bottom: 15px; max-height:90%;overflow-y:scroll;" data-page='analista'></div>
                 <!-- CONTENIDO -->
             </div>
         </div>
@@ -257,7 +257,7 @@ $config = cargar_config();
                                             $("#ticketsEntrantes i").removeClass("pulso");
                                         }
                                     } else if (sessionStorage.getItem("totalTickets") > data) {
-                                        // ACTUALIZAR SI SE ELIMINAN ALGUN TICKET EN OTRA LOCACION
+                                        // ACTUALIZAR SI SE ELIMINAN ALGUN TICKET EN OTRA EMPRESA
                                         sessionStorage.setItem("totalTickets", data);
 
                                         $("#openTicket").html(data);

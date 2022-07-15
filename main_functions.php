@@ -27,7 +27,7 @@ function avisos($aviso)
     $mensaje = isset($aviso) ? $aviso : NULL;
 
     if ($mensaje != NULL) {
-        echo "<div id='avisos' style='width:100vw;position:fixed;top:45%;left:0;padding:0.5em;background-color:#000;color:#07def3;text-align:center'><h3>{$mensaje}</h3></div>";
+        echo "<div id='avisos' style='width:100vw;position:fixed;top:45%;left:0;padding:0.5em;background-color:#000;color:gray;text-align:center'><h3>{$mensaje}</h3></div>";
 
         // REINICIAR LA VARIABLE DE AVISOS
         $_SESSION['avisos'] = NULL;
@@ -90,7 +90,7 @@ function estatus_de_sesion()
         $estatus = $stmt_sesion->fetch(PDO::FETCH_ASSOC);
 
         switch ($estatus['nivel']) {
-            case 'tecnico':
+            case 'analista':
                 $token = $_SESSION['tec_token'];
                 break;
             case 'gerente':
@@ -211,7 +211,7 @@ function procesar_mensajes($mensajes, $id_ticket)
 
         // ESTILOS PARA MENSAJES
 
-        $stmt_t = $conn->prepare("SELECT usuario, tecnico FROM tickets WHERE id_ticket = '$id_ticket' ");
+        $stmt_t = $conn->prepare("SELECT usuario, analista FROM tickets WHERE id_ticket = '$id_ticket' ");
         $stmt_t->execute();
         $usr = $stmt_t->fetch(PDO::FETCH_ASSOC);
         $usuario_ticket = @$usr['usuario'];
@@ -364,7 +364,7 @@ function filtrar_depto()
             echo '<span style="background-color:red; padding:10px; border-radius:5px;">ERROR: el nivel de usuario GERENTE no corresponde con el departamento asignado.</span>';
             exit();
         }
-    } else if ($_SESSION['nivel'] == 'tecnico') {
+    } else if ($_SESSION['nivel'] == 'analista') {
         if ($_SESSION['depto'] == 'Sistemas') {
             return "WHERE area = '{$_SESSION['depto']}'";
         } else {

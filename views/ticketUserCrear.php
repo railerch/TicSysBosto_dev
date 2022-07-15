@@ -42,7 +42,7 @@ if (@$_SESSION['avisos'] != "Ticket creado exitosamente!") {
 
 ?>
 
-<div style="background: #5b5b5b;border-radius: 1em;box-shadow: 0px 0px 10px rgb(0,0,0);border-width: 1px;border-style: none;border-top-style: none;border-right-style: none;border-bottom-style: none;color: #d7d7d7;padding: 0.5em;">
+<div style="background: #505050;border-radius: 1em;box-shadow: 0px 0px 10px rgb(0,0,0);border-width: 1px;border-style: none;border-top-style: none;border-right-style: none;border-bottom-style: none;color: #d7d7d7;padding: 0.5em;">
     <i class="fa fa-ticket" style="font-size: 5vw;margin-right: 0.3em;"></i>
     <h1 class="d-inline-block">Crear Ticket</h1>
     <hr>

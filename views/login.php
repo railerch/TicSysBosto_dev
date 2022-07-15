@@ -9,8 +9,8 @@ $config = cargar_config(true);
 <div class="login-dark" style="height:100vh;">
     <form method="POST" action="<?php echo htmlspecialchars('main_controller.php?login=true') ?>" style="padding: 1em;padding-bottom: 1em;">
         <h2 class="sr-only">Login Form</h2>
-        <div class="illustration"><img class="img-fluid" src="<?php echo $config[2]->logo ?>" style="height:20vh;">
-            <h5 style="color: rgb(255,255,255);">Ingreso de usuario</h5>
+        <div class="illustration"><img class="img-fluid" src="<?php echo $config[2]->logo ?>" style="height:25vh;">
+            <h5 style="color: #333;">Ingreso de usuario</h5>
         </div>
         <div class="form-group"><input class="form-control" type="text" name="usuario" placeholder="Nombre de usuario" autocomplete="off" required></div>
         <div class="form-group"><input class="form-control" type="password" name="clave" placeholder="Clave" autocomplete="off" required></div>

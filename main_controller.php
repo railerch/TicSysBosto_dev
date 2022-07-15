@@ -97,7 +97,7 @@ if (@$_GET['registrarUsuario']) {
     if ($usuario->estatus) {
         $_SESSION['avisos'] = "Usuario registrado exitosamente!";
 
-        if ($_SESSION['nivel'] != 'tecnico') {
+        if ($_SESSION['nivel'] != 'analista') {
             header("Location: index.php");
             echo '<meta http-equiv="refresh" content="3;url=index.php">';
         }
@@ -113,7 +113,7 @@ if (@$_GET['registrarUsuario']) {
 // ACTUALIZAR CLAVE 
 if (@$_GET['actUsuario']) {
 
-    if ($_POST['clave'] == '' && $_POST['locacion'] == 'NULL') {
+    if ($_POST['clave'] == '' && $_POST['empresa'] == 'NULL') {
         $_SESSION['avisos'] = "Los campos no pueden estar vacios";
         exit();
     }
@@ -169,13 +169,13 @@ if (@$_GET['eliminarCuenta']) {
 
     if ($cuenta->estatus) {
         $_SESSION['avisos'] = "Usuario eliminado correctamente!";
-        if ($_SESSION['nivel'] != 'tecnico') {
+        if ($_SESSION['nivel'] != 'analista') {
             header("Location: index.php");
         }
     } else if ($cuenta->exception) {
         $_SESSION['avisos'] = "Error al momento de eliminar el usuario, intente nuevamente!";
     } else {
-        if ($_SESSION['nivel'] != 'tecnico') {
+        if ($_SESSION['nivel'] != 'analista') {
             // CERRAR LAS SESIÓN
             header("Location: logout.php");
         }
@@ -273,7 +273,7 @@ if (@$_GET['eliminarTicket']) {
 
         if ($ticket->exception) {
             $_SESSION['avisos'] = "Error al momento de eliminar el ticket, intente nuevamente!";
-        } else if ($ticket->estatus && $_SESSION['nivel'] == 'tecnico') {
+        } else if ($ticket->estatus && $_SESSION['nivel'] == 'analista') {
             $_SESSION['avisos'] = "Ticket enviado a la papelera";
         } else {
             $_SESSION['avisos'] = "Ticket eliminado";
@@ -313,7 +313,7 @@ if (@$_GET['asignarTicket']) {
 if (@$_GET['actualizarTecnico']) {
 
     $ticket = new Ticket($_GET);
-    echo $ticket->tecnico_asignado();
+    echo $ticket->analista_asignado();
 
     exit();
 }
@@ -394,7 +394,7 @@ if (@$_GET['recuperarMensajes']) {
 if (@$_GET['actualizarMsjTecnico']) {
     $user  = $_SESSION['nombre'];
     $remit = $_SESSION['usuario'];
-    $col   = "tecnico";
+    $col   = "analista";
 
     echo comprobar_no_leidos($col, $user, $remit);
 }
@@ -612,7 +612,7 @@ if (@$_GET['revisarTareas']) {
 //////////////////////////// MISCELANEOS
 //---------------------------------------------------------------------------------------------
 
-// COMPROBAR EXISTENCIA DE LOCACION/DEPTO/AREA
+// COMPROBAR EXISTENCIA DE EMPRESA/DEPTO/AREA
 if (@$_GET['comprobarMiscelaneo']) {
 
     try {
@@ -635,19 +635,19 @@ if (@$_GET['comprobarMiscelaneo']) {
     exit();
 }
 
-// CREAR LOCACION
-if (@$_GET['crearLocacion']) {
+// CREAR EMPRESA
+if (@$_GET['crearEmpresa']) {
 
     try {
 
-        $locacion = trim($_POST['locacion']);
-        $stmt_loc = $conn->prepare("INSERT INTO miscelaneos (id, descripcion, tipo) VALUES (NULL, '$locacion', 'locacion')");
+        $empresa = trim($_POST['empresa']);
+        $stmt_loc = $conn->prepare("INSERT INTO miscelaneos (id, descripcion, tipo) VALUES (NULL, '$empresa', 'empresa')");
         $stmt_loc->execute();
 
-        echo 'Locación creada exitosamente!';
+        echo 'Empresa creada exitosamente!';
 
         // CREAR LOG
-        Log::registrar_log("Nueva locación registrada: {$locacion} ");
+        Log::registrar_log("Nueva empresa registrada: {$empresa} ");
     } catch (PDOException $e) {
 
         echo 'ERROR: ' . $e;
@@ -728,15 +728,15 @@ if (@$_GET['verRespaldos']) {
 // DESCONECTAR A TODOS LOS USUARIOS
 if (@$_GET['desconectarUsuarios']) {
 
-    $tecnico = $_SESSION['nivel'];
+    $analista = $_SESSION['nivel'];
 
     // CONSULTAR SI HAY USUARIOS CONECTADOS
-    $stmt_con = $conn->prepare("SELECT COUNT(estatus) AS conectados FROM usuarios WHERE estatus = 1 AND nivel <> '$tecnico'");
+    $stmt_con = $conn->prepare("SELECT COUNT(estatus) AS conectados FROM usuarios WHERE estatus = 1 AND nivel <> '$analista'");
     $stmt_con->execute();
     $res = $stmt_con->fetch(PDO::FETCH_ASSOC);
 
     if ($res['conectados'] > 0) {
-        $stmt = $conn->prepare("UPDATE usuarios SET estatus = 0 WHERE estatus = 1 AND nivel <> '$tecnico'");
+        $stmt = $conn->prepare("UPDATE usuarios SET estatus = 0 WHERE estatus = 1 AND nivel <> '$analista'");
         $stmt->execute();
         echo 'Todos los usuarios han sido desconectados.';
 

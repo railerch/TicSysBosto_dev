@@ -7,6 +7,6 @@
     <title>Seven's Support Tickets | Manual de usuario</title>
 </head>
 <body>
-    <h1>Hola técnico</h1>
+    <h1>Hola analista</h1>
 </body>
 </html>

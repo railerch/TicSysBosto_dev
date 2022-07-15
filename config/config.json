@@ -7,14 +7,15 @@
     {
         "host": "localhost",
         "database": "TicSys",
-        "user": "root",
-        "pass": ""
+        "user": "TicSys",
+        "pass": "qNJA7xf8@C6rVGIg"
     },
     {
         "logo": "assets/img/logo.png",
-        "favicon": "assets/img/favicon.ico",
+        "logo2": "assets/img/logo02.png",
+        "favicon": "assets/img/favicon.png",
         "fondo": "assets/img/background.jpg",
-        "titulo": "Nombre Empresa"
+        "titulo": "Grupo Bosto"
     },
     {
         "mainBg": "",

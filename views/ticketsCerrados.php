@@ -17,20 +17,20 @@ $stmt->execute();
 
 ?>
 
-<div style="background: #5b5b5b;padding: 0.5em;border-radius: 1em;box-shadow: 0px 0px 10px rgb(0,0,0);border-width: 1px;border-style: none;border-top-style: none;border-right-style: none;border-bottom-style: none;color: #d7d7d7;">
+<div style="background: #505050;padding: 0.5em;border-radius: 1em;box-shadow: 0px 0px 10px rgb(0,0,0);border-width: 1px;border-style: none;border-top-style: none;border-right-style: none;border-bottom-style: none;color: #d7d7d7;">
     <i class="fa fa-check" style="font-size: 5vw;margin-right: 0.3em;"></i>
     <h1 class="d-inline-block">Tickets Cerrados</h1>
     <hr style="background: #969696;">
     <div class="table-striped" style="background: #ffffff;margin-bottom: 1em;width: 100%;margin-top: 1em;padding:0.5em; overflow:scroll">
         <table class="table table-bordered" style="text-align:center">
             <thead>
-                <tr style="background: #353535;color: rgb(255,255,255);">
+                <tr style="background: #505050;color: rgb(255,255,255);">
                     <th>ID</th>
                     <th>Fecha</th>
-                    <th>Locación</th>
+                    <th>Empresa</th>
                     <th>Usuario</th>
                     <th>Prioridad</th>
-                    <th>Técnico</th>
+                    <th>Analista</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -40,7 +40,7 @@ $stmt->execute();
                     <tr id="<?php echo $ticket['id_ticket'] ?>" class="ticketRow">
                         <td><?php echo $ticket['id_ticket'] ?></td>
                         <td><?php echo $ticket['fecha'] ?></td>
-                        <td><?php echo $ticket['locacion'] ?></td>
+                        <td><?php echo $ticket['empresa'] ?></td>
                         <td><?php echo $ticket['persona'] ?></td>
                         <?php
                         switch ($ticket['prioridad']) {
@@ -60,7 +60,7 @@ $stmt->execute();
 
                         ?>
                         <td <?php echo $style ?>><?php echo $ticket['prioridad'] ?></td>
-                        <td><?php echo $ticket['tecnico'] ?></td>
+                        <td><?php echo $ticket['analista'] ?></td>
                         <td>
                             <div class="btn-toolbar d-flex flex-row justify-content-center">
                                 <div class="btn-group" role="group">
@@ -120,9 +120,9 @@ $stmt->execute();
                 url: `main_controller.php?actualizarTecnico=true&id_ticket=${id_ticket}`,
                 success: function(data) {
                     if (data != null) {
-                        $("#tecnico" + id_ticket).html(data);
+                        $("#analista" + id_ticket).html(data);
                     } else {
-                        console.log("Sin técnico asignado");
+                        console.log("Sin analista asignado");
                     }
                 }
             });

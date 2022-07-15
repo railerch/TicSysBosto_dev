@@ -17,20 +17,20 @@ $stmt->execute();
 
 ?>
 
-<div style="background: #5b5b5b;padding: 0.5em;border-radius: 1em;box-shadow: 0px 0px 10px rgb(0,0,0);border-width: 1px;border-style: none;border-top-style: none;border-right-style: none;border-bottom-style: none;color: #d7d7d7;">
+<div style="background: #505050;padding: 0.5em;border-radius: 1em;box-shadow: 0px 0px 10px rgb(0,0,0);border-width: 1px;border-style: none;border-top-style: none;border-right-style: none;border-bottom-style: none;color: #d7d7d7;">
     <i class="fa fa-hand-stop-o" style="font-size: 5vw;margin-right: 0.3em;"></i>
     <h1 class="d-inline-block">Tickets en espera</h1>
     <hr style="background: #969696;">
     <div class="table-striped" style="background: #ffffff;margin-bottom: 1em;width: 100%;margin-top: 1em;padding:0.5em; overflow:scroll">
         <table class="table table-bordered" style="text-align:center">
             <thead>
-                <tr style="background: #353535;color: rgb(255,255,255);">
+                <tr style="background: #505050;color: rgb(255,255,255);">
                     <th>ID</th>
                     <th>Fecha</th>
-                    <th>Locación</th>
+                    <th>Empresa</th>
                     <th>Usuario</th>
                     <th>Prioridad</th>
-                    <th>Técnico</th>
+                    <th>Analista</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -38,7 +38,7 @@ $stmt->execute();
                 <?php while ($ticket = $stmt->fetch()) {
                     // PONER EN VERDE SI EL TICKET NO TIENEN UN TECNICO ASIGNADO
                     $color = 'transparent';
-                    if (!$ticket['tecnico']) {
+                    if (!$ticket['analista']) {
                         $color   = "#aeffae";
                         $pointer = 'cursor:pointer;';
                         $title   = "Doble clic para tomar el ticket";
@@ -52,7 +52,7 @@ $stmt->execute();
                     <tr id="<?php echo $ticket['id_ticket'] ?>" class="ticketRow" style="<?php echo $pointer ?>background-color:<?php echo $color ?>" title="<?php echo $title ?>">
                         <td><?php echo $ticket['id_ticket'] ?></td>
                         <td><?php echo $ticket['fecha'] ?></td>
-                        <td><?php echo $ticket['locacion'] ?></td>
+                        <td><?php echo $ticket['empresa'] ?></td>
                         <td><?php echo $ticket['persona'] ?></td>
                         <?php
                         switch ($ticket['prioridad']) {
@@ -72,7 +72,7 @@ $stmt->execute();
 
                         ?>
                         <td <?php echo $style ?>><?php echo $ticket['prioridad'] ?></td>
-                        <td><?php echo $ticket['tecnico'] ?></td>
+                        <td><?php echo $ticket['analista'] ?></td>
                         <td>
                             <div class="btn-toolbar d-flex flex-row justify-content-center">
                                 <div class="btn-group" role="group">
@@ -87,7 +87,7 @@ $stmt->execute();
                                         </button>
 
                                         <?php if ($ticket['estatus'] == 'precierre') { ?>
-                                            <button class="btn btn-outline-success btn-sm cerrarTicket" data-toggle="modal" type="button" data-bs-tooltip="" title="Cerrar ticket" data-tecnico="<?php echo $ticket['tecnico'] ?>" data-id-ticket="<?php echo $ticket['id_ticket'] ?>" data-sesion="<?php echo $_SESSION['nombre'] ?>" data-target="#cerrar<?php echo $ticket['id_ticket'] ?>">
+                                            <button class="btn btn-outline-success btn-sm cerrarTicket" data-toggle="modal" type="button" data-bs-tooltip="" title="Cerrar ticket" data-analista="<?php echo $ticket['analista'] ?>" data-id-ticket="<?php echo $ticket['id_ticket'] ?>" data-sesion="<?php echo $_SESSION['nombre'] ?>" data-target="#cerrar<?php echo $ticket['id_ticket'] ?>">
                                                 <i class="fa fa-check"></i>
                                             </button>
                                         <?php } ?>
@@ -169,9 +169,9 @@ ocultar_aviso();
                 url: `main_controller.php?actualizarTecnico=true&id_ticket=${id_ticket}`,
                 success: function(data) {
                     if (data != null) {
-                        $("#tecnico" + id_ticket).html(data);
+                        $("#analista" + id_ticket).html(data);
                     } else {
-                        console.log("Sin técnico asignado");
+                        console.log("Sin analista asignado");
                     }
                 }
             });
@@ -201,7 +201,7 @@ ocultar_aviso();
         $(".enviarMensaje").click(function() {
 
             // VARIABLES
-            var locacion = $(this).attr("data-loc");
+            var empresa = $(this).attr("data-loc");
             var id_ticket = $(this).attr("data-tic");
             var remitente = $(this).attr("data-tec");
 
@@ -209,7 +209,7 @@ ocultar_aviso();
             var data = new FormData();
 
             // ADJUNTAR ARCHIVO AL FORMDATA
-            data.append("locacion", locacion);
+            data.append("empresa", empresa);
             data.append("id_ticket", id_ticket);
             data.append("remitente", remitente);
             data.append("mensaje", $(`input[data-msj=${id_ticket}]`).val());
@@ -246,7 +246,7 @@ ocultar_aviso();
         $("input[name=mensaje]").keypress(function(e) {
             if (e.keyCode == 13) {
                 // VARIABLES
-                var locacion = $(this).attr("data-loc");
+                var empresa = $(this).attr("data-loc");
                 var id_ticket = $(this).attr("data-tic");
                 var remitente = $(this).attr("data-tec");
 
@@ -254,7 +254,7 @@ ocultar_aviso();
                 var data = new FormData();
 
                 // ADJUNTAR ARCHIVO AL FORMDATA
-                data.append("locacion", locacion);
+                data.append("empresa", empresa);
                 data.append("id_ticket", id_ticket);
                 data.append("remitente", remitente);
                 data.append("mensaje", $(`input[data-msj=${id_ticket}]`).val());
@@ -308,14 +308,14 @@ ocultar_aviso();
 
         // CERRAR TICKET
         $(".cerrarTicket").click(function() {
-            var tecnico = $(this).attr("data-tecnico");
+            var analista = $(this).attr("data-analista");
             var sesion = $(this).attr("data-sesion");
             var id_ticket = $(this).attr("data-target").substring(7);
 
             // SI NO TIENE TECNICO A CARGO O NO SE POSEE EL TICKET
-            if (tecnico == "" || sesion !== tecnico) {
+            if (analista == "" || sesion !== analista) {
                 $(`#cerrar${id_ticket} .modal-body`).html(
-                    "ATENCIÓN: no se puede cerrar el ticket. <br>Razones:<br> 1. El mismo no tiene un técnico a cargo<br>2. El técnico a cargo no es usted."
+                    "ATENCIÓN: no se puede cerrar el ticket. <br>Razones:<br> 1. El mismo no tiene un analista a cargo<br>2. El analista a cargo no es usted."
                 );
                 $(`#cerrar${id_ticket} .modal-footer button`).hide();
             } else {
@@ -331,14 +331,14 @@ ocultar_aviso();
 
                     // IDENTIFICADOR UNICO DEL TICKET A CERRAR
                     var id = $(this).attr("data-cerrar-id");
-                    var tecnico = $(this).attr("data-tecnico");
+                    var analista = $(this).attr("data-analista");
                     var nombreUsr = $(this).attr("data-nombre-usuario");
 
                     // ESTABLECER EL COMENTARIO SEGUN EL TIPO DE SESION
                     if (sessionStorage.getItem("tipoSesion") == "usuario") {
                         var comentarioTxt = "Ticket cerrado por el usuario";
                     } else if (sessionStorage.getItem("tipoSesion") == "admin") {
-                        var comentarioTxt = "Ticket cerrado por el técnico";
+                        var comentarioTxt = "Ticket cerrado por el analista";
                     };
 
                     // AGREGAR BITACORA DE TECNICO
@@ -348,7 +348,7 @@ ocultar_aviso();
                     }
                     $.ajax({
                         type: "GET",
-                        url: `main_controller.php?id=${id}&tecnico=${tecnico}&nombreUsr=${nombreUsr}&solucion=${solucion}&agregarBitacora=true&cierreTec=true`,
+                        url: `main_controller.php?id=${id}&analista=${analista}&nombreUsr=${nombreUsr}&solucion=${solucion}&agregarBitacora=true&cierreTec=true`,
                         success: function(data) {
                             console.log(data)
                         }
@@ -357,7 +357,7 @@ ocultar_aviso();
                     // EJECUTAR CIERRE
                     $.ajax({
                         type: "GET",
-                        url: `main_controller.php?id=${id}&estatus=cerrado&tecnico=${tecnico}&comentario=${comentarioTxt}&cerrarTicket=true`,
+                        url: `main_controller.php?id=${id}&estatus=cerrado&analista=${analista}&comentario=${comentarioTxt}&cerrarTicket=true`,
                         success: function(data) {
                             setTimeout(function() {
                                 $("#contenido").load("views/ticketsEspera.php");

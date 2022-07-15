@@ -23,10 +23,10 @@ class Usuario
         global $conn;
 
         try {
-            $stmt = $conn->prepare("INSERT INTO usuarios (id_usuario, nombre, locacion, depto, usuario, nivel, clave, clave_enc, estatus, ult_sesion) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt = $conn->prepare("INSERT INTO usuarios (id_usuario, nombre, empresa, depto, usuario, nivel, clave, clave_enc, estatus, ult_sesion) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             $id_usuario = NULL;
             $nombre     = filter_var($this->info['nombre'], FILTER_SANITIZE_STRING);
-            $locacion   = $this->info['locacion'];
+            $empresa   = $this->info['empresa'];
             $depto      = $this->info['depto'];
             $usuario    = filter_var($this->info['usuario'], FILTER_SANITIZE_STRING);
             $nivel      = isset($this->info['nivel']) ? $this->info['nivel'] : "usuario";
@@ -37,7 +37,7 @@ class Usuario
 
             $stmt->bindParam(1, $id_usuario);
             $stmt->bindParam(2, $nombre);
-            $stmt->bindParam(3, $locacion);
+            $stmt->bindParam(3, $empresa);
             $stmt->bindParam(4, $depto);
             $stmt->bindParam(5, $usuario);
             $stmt->bindParam(6, $nivel);
@@ -64,13 +64,13 @@ class Usuario
 
         $id = $this->info['id'];
 
-        if (isset($this->info['locacion']) and $this->info['locacion'] != 'NULL') {
-            $locacion = "locacion = '{$this->info['locacion']}',";
-            if ($_SESSION['nivel'] != 'tecnico') {
-                $_SESSION['locacion'] = $this->info['locacion'];
+        if (isset($this->info['empresa']) and $this->info['empresa'] != 'NULL') {
+            $empresa = "empresa = '{$this->info['empresa']}',";
+            if ($_SESSION['nivel'] != 'analista') {
+                $_SESSION['empresa'] = $this->info['empresa'];
             }
         } else {
-            $locacion = NULL;
+            $empresa = NULL;
         }
 
         if (isset($this->info['depto']) and $this->info['depto'] != 'NULL') {
@@ -93,7 +93,7 @@ class Usuario
         }
 
         try {
-            $stmt = $conn->prepare("UPDATE usuarios SET $locacion $depto $nivel $clave WHERE id_usuario = '$id'");
+            $stmt = $conn->prepare("UPDATE usuarios SET $empresa $depto $nivel $clave WHERE id_usuario = '$id'");
             $stmt->execute();
 
             $this->estatus = true;
@@ -198,7 +198,7 @@ class Usuario
             $usuario = [];
             $usuario['nombre']   = $user['nombre'];
             $usuario['usuario']  = $user['usuario'];
-            $usuario['locacion'] = $user['locacion'];
+            $usuario['empresa'] = $user['empresa'];
             $usuario['depto']    = $user['depto'];
             $usuario['estatus']  = isset($usrDesc) ? $usrDesc : $user['estatus'];
             $usuario['noLeidos'] = $msjsNoLeidos;

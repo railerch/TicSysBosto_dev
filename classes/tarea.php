@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /* CLASE TAREA
-Gestion de Tareas asignadas a los técnicos de sistemas
+Gestion de Tareas asignadas a los analistas de sistemas
 */
 
 class Tarea
@@ -22,12 +22,12 @@ class Tarea
         global $conn;
 
         try {
-            $stmt        = $conn->prepare("INSERT INTO tareas (id_tarea, fecha, descripcion, adjunto, tecnico, valoracion, estatus) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            $stmt        = $conn->prepare("INSERT INTO tareas (id_tarea, fecha, descripcion, adjunto, analista, valoracion, estatus) VALUES (?, ?, ?, ?, ?, ?, ?)");
             $id_tarea    = NULL;
             $fecha       = date('Y-m-d H:i:s');
             $descripcion = htmlspecialchars($this->info['descripcion']);
             $adjunto     = $this->info[0];
-            $tecnico     = $this->info['tecnico'];
+            $analista     = $this->info['analista'];
             $valoracion  = $this->info['valoracion'];
             $estatus     = 'Pendiente';
 
@@ -35,7 +35,7 @@ class Tarea
             $stmt->bindParam(2, $fecha);
             $stmt->bindParam(3, $descripcion);
             $stmt->bindParam(4, $adjunto);
-            $stmt->bindParam(5, $tecnico);
+            $stmt->bindParam(5, $analista);
             $stmt->bindParam(6, $valoracion);
             $stmt->bindParam(7, $estatus);
 
@@ -90,28 +90,28 @@ class Tarea
         }
     }
 
-    public function tomar_tarea(mixed $tecnico, mixed $id_tarea)
+    public function tomar_tarea(mixed $analista, mixed $id_tarea)
     {
         /*
-        Tomar o liberar una tarea desde el dashboard de tecnico mediante doble clic
+        Tomar o liberar una tarea desde el dashboard de analista mediante doble clic
         */
 
         global $conn;
 
         try {
 
-            $stmt_chk = $conn->prepare("SELECT tecnico FROM tareas WHERE id_tarea = '$id_tarea'");
+            $stmt_chk = $conn->prepare("SELECT analista FROM tareas WHERE id_tarea = '$id_tarea'");
             $stmt_chk->execute();
             $tec = $stmt_chk->fetch(PDO::FETCH_ASSOC);
 
-            if ($tec['tecnico'] == 'Sin asignar') {
-                $stmt = $conn->prepare("UPDATE tareas SET tecnico = '$tecnico' WHERE id_tarea = '$id_tarea'");
+            if ($tec['analista'] == 'Sin asignar') {
+                $stmt = $conn->prepare("UPDATE tareas SET analista = '$analista' WHERE id_tarea = '$id_tarea'");
                 $stmt->execute();
 
                 $this->estatus = true;
                 return 'tareaTomada';
             } else {
-                $stmt = $conn->prepare("UPDATE tareas SET tecnico = 'Sin asignar' WHERE id_tarea = '$id_tarea'");
+                $stmt = $conn->prepare("UPDATE tareas SET analista = 'Sin asignar' WHERE id_tarea = '$id_tarea'");
                 $stmt->execute();
 
                 $this->estatus = true;

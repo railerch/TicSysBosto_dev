@@ -41,8 +41,8 @@ class Sesion
                 $_SESSION['id_sesion']      = uniqid();
                 $_SESSION['nombre']         = 'Root Admin';
                 $_SESSION['usuario']        = 'root';
-                $_SESSION['nivel']          = 'tecnico';
-                $_SESSION['locacion']       = 'Global';
+                $_SESSION['nivel']          = 'analista';
+                $_SESSION['empresa']       = 'Global';
                 $_SESSION['depto']          = 'Sistemas';
                 $_SESSION['sesion_estatus'] = 1;
 
@@ -74,7 +74,7 @@ class Sesion
                     $_SESSION['nombre']         = $datos['nombre'];
                     $_SESSION['usuario']        = $datos['usuario'];
                     $_SESSION['nivel']          = $datos['nivel'];
-                    $_SESSION['locacion']       = $datos['locacion'];
+                    $_SESSION['empresa']       = $datos['empresa'];
                     $_SESSION['depto']          = $datos['depto'];
                     $_SESSION['sesion_estatus'] = 1;
 
@@ -98,7 +98,7 @@ class Sesion
 
                         $_SESSION['tec_token'] = md5(uniqid());
                         header('Location: dashboardTech.php?token=' . $_SESSION['tec_token']);
-                    } else if ($datos['nivel'] == 'gerente') {
+                    } else if ($datos['nivel'] == 'gerente' || $datos['nivel'] == 'analista') {
 
                         $_SESSION['grt_token'] = md5(uniqid());
                         header('Location: dashboardDpto.php?token=' . $_SESSION['grt_token']);
@@ -165,7 +165,7 @@ class Sesion
             $_SESSION['nombre']         = NULL;
             $_SESSION['usuario']        = NULL;
             $_SESSION['nivel']          = NULL;
-            $_SESSION['locacion']       = NULL;
+            $_SESSION['empresa']       = NULL;
             $_SESSION['depto']          = NULL;
             $_SESSION['sesion_estatus'] = NULL;
             $_SESSION['usr_token']      = NULL;

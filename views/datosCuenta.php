@@ -16,8 +16,8 @@ $stmt->setFetchMode(PDO::FETCH_ASSOC);
 $stmt->execute();
 $datos = $stmt->fetch();
 
-// CONSULTAR DEPARTAMENTOS Y LOCACIONES PARA LA VENTANA MODAL
-$stmt_loc = $conn->prepare("SELECT * FROM miscelaneos WHERE tipo = 'locacion'");
+// CONSULTAR DEPARTAMENTOS Y EMPRESAS PARA LA VENTANA MODAL
+$stmt_loc = $conn->prepare("SELECT * FROM miscelaneos WHERE tipo = 'empresa'");
 $stmt_loc->setFetchMode(PDO::FETCH_ASSOC);
 $stmt_loc->execute();
 ?>
@@ -31,7 +31,7 @@ $stmt_loc->execute();
         style="background: #ffffff;margin-bottom: 1em;width: 100%;margin-top: 1em;padding:0.5em; overflow:scroll">
         <table class="table">
             <thead>
-                <tr style="text-align: center;background: #353535;color: rgb(255,255,255);">
+                <tr style="text-align: center;background: lightgray;color: rgb(255,255,255);">
                     <th>ID</th>
                     <th>Nombre</th>
                     <th>Usuario</th>
@@ -45,7 +45,7 @@ $stmt_loc->execute();
                     <td><?php echo $datos['id_usuario']?></td>
                     <td><?php echo $datos['nombre']?></td>
                     <td><?php echo $datos['usuario']?></td>
-                    <td><?php echo $datos['locacion']?></td>
+                    <td><?php echo $datos['empresa']?></td>
                     <td><?php echo $datos['depto']?></td>
                     <td>
                         <div class="btn-toolbar d-flex flex-row justify-content-center">
@@ -67,7 +67,7 @@ $stmt_loc->execute();
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" style="color: #353535;"><i class="fa fa-user-o"></i>&nbsp;Cambiar datos de cuenta</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                    <h4 class="modal-title" style="color: lightgray;"><i class="fa fa-user-o"></i>&nbsp;Cambiar datos de cuenta</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">×</span></button>
                 </div>
                 <div class="modal-body">
@@ -77,12 +77,12 @@ $stmt_loc->execute();
                             <label for="clave" style="color: #333;">Definir nueva clave</label>
                             <input class="form-control" type="password" name="clave" placeholder="Definir una nueva clave" value="<?php echo $datos['clave'] ?>">
                             <br>
-                            <label for="locacion" style="color: #333;">Definir nueva ubicación</label>
-                            <select class="form-control" name="locacion">
+                            <label for="empresa" style="color: #333;">Definir nueva ubicación</label>
+                            <select class="form-control" name="empresa">
                                 <option style="color:#555" value="NULL">Seleccione nueva ubicación</option>
                                 <!-- UBICACIONES -->
-                                <?php while($locacion = $stmt_loc->fetch()){
-                                    echo "<option value='{$locacion["descripcion"]}' style='color:#555'>{$locacion['descripcion']}</option>";
+                                <?php while($empresa = $stmt_loc->fetch()){
+                                    echo "<option value='{$empresa["descripcion"]}' style='color:#555'>{$empresa['descripcion']}</option>";
                                 }?>
                             </select>
                             <button id="actualizar" class="btn btn-primary float-right" type="submit" data-dismiss="modal">ACTUALIZAR</button>

@@ -9,8 +9,8 @@ if (!$conn) {
     Log::registrar_log($conexion->error);
 }
 
-// MOSTRAR DEPARTAMENTOS, LOCACIONES E INCIDENCIAS REGULARES
-$stmt_1 = $conn->prepare("SELECT * FROM miscelaneos WHERE tipo = 'locacion'");
+// MOSTRAR DEPARTAMENTOS, EMPRESAS E INCIDENCIAS REGULARES
+$stmt_1 = $conn->prepare("SELECT * FROM miscelaneos WHERE tipo = 'empresa'");
 $stmt_1->setFetchMode(PDO::FETCH_ASSOC);
 $stmt_1->execute();
 
@@ -29,7 +29,7 @@ $stmt_3->execute();
     }
 </style>
 
-<div style="background: #5b5b5b;border-radius: 1em;box-shadow: 0px 0px 10px rgb(0,0,0);border-width: 1px;border-style: none;border-top-style: none;border-right-style: none;border-bottom-style: none;color: #d7d7d7;padding: 0.5em;">
+<div style="background: #505050;border-radius: 1em;box-shadow: 0px 0px 10px rgb(0,0,0);border-width: 1px;border-style: none;border-top-style: none;border-right-style: none;border-bottom-style: none;color: #d7d7d7;padding: 0.5em;">
     <i class="fa fa-ticket" style="font-size: 5vw;margin-right: 0.3em;"></i>
     <h1 class="d-inline-block">Crear Ticket</h1>
     <hr>
@@ -37,8 +37,8 @@ $stmt_3->execute();
         <div class="form-group">
             <h4>Datos de usuario</h4>
             <div class="d-inline-flex" style="flex-wrap: wrap;">
-                <select id="locacion" class="form-control" name="locacion" style="min-width:200px;max-width:23%;margin: 0 0.5em 0.5em 0;">
-                    <option style="color:#aaa" selected>Locacion</option>
+                <select id="empresa" class="form-control" name="empresa" style="min-width:200px;max-width:23%;margin: 0 0.5em 0.5em 0;">
+                    <option style="color:#aaa" selected>Empresa</option>
                     <?php while ($loc = $stmt_1->fetch()) { ?>
                         <option style='color:#555' value="<?php echo $loc['descripcion'] ?>"><?php echo $loc['descripcion'] ?>
                         </option>
@@ -101,7 +101,7 @@ ocultar_aviso();
 
             // VALIDAR CAMPOS Y SELECCIONES
             <?php
-            echo validar_selecciones("locacion", "Locacion");
+            echo validar_selecciones("empresa", "Empresa");
             echo validar_selecciones("persona", "Usuario");
             echo validar_selecciones("area", "Departamento al que va dirigida la solicitud");
             echo validar_selecciones("solicitud", "");

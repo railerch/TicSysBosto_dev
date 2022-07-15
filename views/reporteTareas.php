@@ -10,24 +10,24 @@ if(!$conn){
 }
 
 // CREAR LOG
-Log::registrar_log('Reporte de tareas: ' . $_POST['tecnico']);
+Log::registrar_log('Reporte de tareas: ' . $_POST['analista']);
 
 // DATOS PARA EL REPORTE
-$nombre       = isset($_POST['tecnico']) ? $_POST['tecnico'] : NULL;
+$nombre       = isset($_POST['analista']) ? $_POST['analista'] : NULL;
 $fechaInicial = isset($_POST['fechaInicial']) ? $_POST['fechaInicial'].' 00:00:00' : "2020-01-01 00:00:00";
 $fechaFinal   = isset($_POST['fechaFinal']) ? $_POST['fechaFinal'].' 23:59:59' : date("Y-m-d 23:59:59");
 
 // CONSULTAR POR DATOS DEL USUARIO
 $stmt_0 = $conn->prepare("SELECT nombre FROM usuarios WHERE nombre = '$nombre' ");
 $stmt_0->execute();
-$tecnico = $stmt_0->fetch(PDO::FETCH_ASSOC);
+$analista = $stmt_0->fetch(PDO::FETCH_ASSOC);
 
 // CONSULTA PARA LA TABLA DE TAREAS ASIGNADAS
-$stmt_tareas = $conn->prepare("SELECT * FROM tareas WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' AND tecnico = '$nombre'");
+$stmt_tareas = $conn->prepare("SELECT * FROM tareas WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' AND analista = '$nombre'");
 $stmt_tareas->execute();
 
 // CONSULTA DE TAREAS PARA ENCABEZADO DE ESTADISTICAS
-$stmt_stats = $conn->prepare("SELECT tecnico, valoracion, estatus FROM tareas WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' AND tecnico = '$nombre'");
+$stmt_stats = $conn->prepare("SELECT analista, valoracion, estatus FROM tareas WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' AND analista = '$nombre'");
 $stmt_stats->execute();
 
 $pendiente = $cola = $procesando = $finalizada = $verificada = $efectividad = $puntaje = 0;
@@ -149,7 +149,7 @@ if($totalTareas > 0){
     style="background: #5b5b5b; padding: 0.5em; border-radius: 1em; box-shadow: 0px 0px 10px rgb(0,0,0);border-width: 1px;border-style: none;border-top-style: none;border-right-style: none;border-bottom-style: none;color: #d7d7d7;">
     <div id="locDiv">
         <i class="fa fa-user-circle-o" style="font-size: 5vw;margin-right: 0.3em;"></i>
-        <h1 class="d-inline-block">Reporte: <span style="font-weight:lighter"><?php echo $tecnico['nombre']?></span></h1>
+        <h1 class="d-inline-block">Reporte: <span style="font-weight:lighter"><?php echo $analista['nombre']?></span></h1>
     </div>
     <h5 id="fechaReporte">
         <!-- FECHA DEL REPORTE -->
@@ -203,7 +203,7 @@ if($totalTareas > 0){
         style="background: #ffffff;margin-bottom: 1em;width: 100%;margin-top: 1em;padding:0.5em; overflow:scroll">
         <table class="table table-bordered">
             <thead>
-                <tr style="text-align: center;background: #353535;color: rgb(255,255,255);">
+                <tr style="text-align: center;background: lightgray;color: rgb(255,255,255);">
                     <th style="width: 5%;">ID</th>
                     <th style="width: 15%;">Fecha</th>
                     <th style="width: 25%;">Tarea</th>

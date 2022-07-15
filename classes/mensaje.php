@@ -26,18 +26,18 @@ class Mensaje implements metodos_chats
 
         $id         = NULL;
         $fecha      = date('Y-m-d H:i:s');
-        $locacion   = $this->info['locacion'];
+        $empresa   = $this->info['empresa'];
         $id_ticket  = $this->info['id_ticket'];
         $remitente  = $this->info['remitente'];
         $mensaje    = filter_var($this->info[1], FILTER_SANITIZE_STRING);
         $leido      =  "0";
 
         try {
-            $stmt = $conn->prepare("INSERT INTO chats (id, fecha, locacion, id_ticket, remitente, mensaje, leido) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            $stmt = $conn->prepare("INSERT INTO chats (id, fecha, empresa, id_ticket, remitente, mensaje, leido) VALUES (?, ?, ?, ?, ?, ?, ?)");
 
             $stmt->bindParam(1, $id);
             $stmt->bindParam(2, $fecha);
-            $stmt->bindParam(3, $locacion);
+            $stmt->bindParam(3, $empresa);
             $stmt->bindParam(4, $id_ticket);
             $stmt->bindParam(5, $remitente);
             $stmt->bindParam(6, $mensaje);
