@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 15-07-2022 a las 18:03:52
+-- Tiempo de generación: 15-07-2022 a las 19:58:38
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 8.1.6
 
@@ -77,7 +77,7 @@ CREATE TABLE `interchat` (
 CREATE TABLE `miscelaneos` (
   `id` int(11) NOT NULL,
   `descripcion` varchar(100) COLLATE utf8_spanish2_ci NOT NULL,
-  `tipo` varchar(15) COLLATE utf8_spanish2_ci NOT NULL COMMENT 'Departamento = depto | Empresa = emp'
+  `tipo` varchar(15) COLLATE utf8_spanish2_ci NOT NULL COMMENT 'Departamento = depto | Empresa = empresa'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 -- --------------------------------------------------------
@@ -129,7 +129,7 @@ CREATE TABLE `usuarios` (
   `empresa` varchar(30) COLLATE utf8_spanish2_ci NOT NULL,
   `depto` varchar(30) COLLATE utf8_spanish2_ci NOT NULL,
   `usuario` varchar(30) COLLATE utf8_spanish2_ci NOT NULL,
-  `nivel` varchar(15) COLLATE utf8_spanish2_ci NOT NULL COMMENT 'Admin, analista, analista',
+  `nivel` varchar(15) COLLATE utf8_spanish2_ci NOT NULL COMMENT 'tecnico, gerente, analista, usuario',
   `clave` varchar(25) COLLATE utf8_spanish2_ci NOT NULL,
   `clave_enc` varchar(100) COLLATE utf8_spanish2_ci NOT NULL,
   `estatus` tinyint(1) NOT NULL,
