@@ -33,6 +33,7 @@ class Log
 
         // Registro
         $log = $fecha . ' | ' . $user_addr . ' | ' . $user_name . ' | ' . $user_agent . ' | ' . $actividad . "\n";
+        file_put_contents('../log.md', $log, FILE_APPEND);
 
         if (strpos($uri[0], 'reporte')) {
             file_put_contents('../log.md', $log, FILE_APPEND);

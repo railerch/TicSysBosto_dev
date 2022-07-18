@@ -10,7 +10,7 @@ if (!$conn) {
 }
 
 // CONSULTAR NOMBRES DE ADMINISTRADORES
-$stmt_admin = $conn->prepare("SELECT nombre FROM usuarios WHERE nivel = 'analista'");
+$stmt_admin = $conn->prepare("SELECT nombre FROM usuarios WHERE nivel = 'admin'");
 $stmt_admin->execute();
 
 // CONSULTAR EMPRESAS
@@ -28,7 +28,7 @@ $stmt_loc->execute();
         <div class="d-lg-flex justify-content-lg-" style="margin-bottom: 1em;">
             <fieldset>
                 <legend>Tipo de reporte</legend>
-                <?php if ($_SESSION['nivel'] == 'analista') { ?>
+                <?php if ($_SESSION['nivel'] == 'admin') { ?>
                     <div class="form-check"><input class="form-check-input reporte" type="radio" name="reporte" value="analista"><label class="form-check-label" for="formCheck-1">Tickets por analista</label>
                     </div>
                     <div class="form-check"><input class="form-check-input reporte" type="radio" name="reporte" value="tareas"><label class="form-check-label" for="formCheck-1">Tareas por analista</label>
@@ -37,12 +37,11 @@ $stmt_loc->execute();
                     </div>
                     <div class="form-check"><input class="form-check-input reporte" type="radio" name="reporte" value="global"><label class="form-check-label" for="formCheck-2">Reporte general</label>
                     </div>
-                <?php } else if ($_SESSION['nivel'] == 'gerente') { ?>
+                <?php } else if ($_SESSION['nivel'] == 'gerente' || $_SESSION['nivel'] == 'analista') { ?>
                     <div class="form-check"><input class="form-check-input reporte" type="radio" name="reporte" value="TotalTicketsDepto"><label class="form-check-label" for="formCheck-1">Tickets
                             totales</label>
                     </div>
-                    <div class="form-check"><input class="form-check-input reporte" type="radio" name="reporte" value="empresa"><label class="form-check-label" for="formCheck-1">Tickets por
-                            tienda</label>
+                    <div class="form-check"><input class="form-check-input reporte" type="radio" name="reporte" value="empresa"><label class="form-check-label" for="formCheck-1">Tickets por empresa</label>
                     </div>
                 <?php } ?>
             </fieldset>

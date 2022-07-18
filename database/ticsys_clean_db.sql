@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 15-07-2022 a las 19:58:38
+-- Tiempo de generación: 18-07-2022 a las 21:45:45
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 8.1.6
 
@@ -77,7 +77,7 @@ CREATE TABLE `interchat` (
 CREATE TABLE `miscelaneos` (
   `id` int(11) NOT NULL,
   `descripcion` varchar(100) COLLATE utf8_spanish2_ci NOT NULL,
-  `tipo` varchar(15) COLLATE utf8_spanish2_ci NOT NULL COMMENT 'Departamento = depto | Empresa = empresa'
+  `tipo` varchar(15) COLLATE utf8_spanish2_ci NOT NULL COMMENT 'Departamento = depto | Empresa = empresa | categoria = cat'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 -- --------------------------------------------------------
@@ -106,10 +106,12 @@ CREATE TABLE `tickets` (
   `id_ticket` int(11) NOT NULL,
   `fecha` datetime NOT NULL,
   `empresa` varchar(30) COLLATE utf8_spanish2_ci NOT NULL,
+  `depto` varchar(50) COLLATE utf8_spanish2_ci NOT NULL,
   `persona` varchar(30) COLLATE utf8_spanish2_ci NOT NULL,
   `usuario` varchar(15) COLLATE utf8_spanish2_ci NOT NULL,
   `area` varchar(50) COLLATE utf8_spanish2_ci NOT NULL,
-  `solicitud` varchar(50) COLLATE utf8_spanish2_ci NOT NULL,
+  `categoria` varchar(50) COLLATE utf8_spanish2_ci NOT NULL,
+  `asunto` varchar(50) COLLATE utf8_spanish2_ci NOT NULL,
   `descripcion` varchar(250) COLLATE utf8_spanish2_ci NOT NULL,
   `prioridad` varchar(10) COLLATE utf8_spanish2_ci NOT NULL,
   `analista` varchar(30) COLLATE utf8_spanish2_ci DEFAULT NULL,
@@ -129,7 +131,7 @@ CREATE TABLE `usuarios` (
   `empresa` varchar(30) COLLATE utf8_spanish2_ci NOT NULL,
   `depto` varchar(30) COLLATE utf8_spanish2_ci NOT NULL,
   `usuario` varchar(30) COLLATE utf8_spanish2_ci NOT NULL,
-  `nivel` varchar(15) COLLATE utf8_spanish2_ci NOT NULL COMMENT 'tecnico, gerente, analista, usuario',
+  `nivel` varchar(15) COLLATE utf8_spanish2_ci NOT NULL COMMENT 'admin, gerente, analista, usuario',
   `clave` varchar(25) COLLATE utf8_spanish2_ci NOT NULL,
   `clave_enc` varchar(100) COLLATE utf8_spanish2_ci NOT NULL,
   `estatus` tinyint(1) NOT NULL,

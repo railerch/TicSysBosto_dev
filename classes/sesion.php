@@ -39,10 +39,10 @@ class Sesion
 
                 // DATOS PARA LA SESIÓN
                 $_SESSION['id_sesion']      = uniqid();
-                $_SESSION['nombre']         = 'Root Admin';
+                $_SESSION['nombre']         = 'SU Root';
                 $_SESSION['usuario']        = 'root';
-                $_SESSION['nivel']          = 'analista';
-                $_SESSION['empresa']       = 'Global';
+                $_SESSION['nivel']          = 'admin';
+                $_SESSION['empresa']        = 'Grupo Bosto';
                 $_SESSION['depto']          = 'Sistemas';
                 $_SESSION['sesion_estatus'] = 1;
 
@@ -50,8 +50,8 @@ class Sesion
                 Log::registrar_log('Sesión iniciada');
 
                 // REDIRECCIONAR AL DASHBOARD
-                $_SESSION['tec_token'] = md5(uniqid());
-                header('Location: dashboardTech.php?token=' . $_SESSION['tec_token']);
+                $_SESSION['adm_token'] = md5(uniqid());
+                header('Location: dashboardTech.php?token=' . $_SESSION['adm_token']);
             } else {
                 $this->exception = 'Datos de inicio de sesión invalidos!';
                 Log::registrar_log('ERROR: Usuario: "root" | Metodo: ' . __FUNCTION__ . ' | Clase: ' . __CLASS__ . ' | ' . $this->exception);
@@ -94,16 +94,13 @@ class Sesion
                     }
 
                     // REDIRECCIONAR AL DASHBOARD CORRESPONDIENTE
-                    if ($datos['nivel'] == 'tecnico') {
-
-                        $_SESSION['tec_token'] = md5(uniqid());
-                        header('Location: dashboardTech.php?token=' . $_SESSION['tec_token']);
+                    if ($datos['nivel'] == 'admin') {
+                        $_SESSION['adm_token'] = md5(uniqid());
+                        header('Location: dashboardTech.php?token=' . $_SESSION['adm_token']);
                     } else if ($datos['nivel'] == 'gerente' || $datos['nivel'] == 'analista') {
-
-                        $_SESSION['grt_token'] = md5(uniqid());
+                        $_SESSION['grt_token'] = $_SESSION['anl_token'] = md5(uniqid());
                         header('Location: dashboardDpto.php?token=' . $_SESSION['grt_token']);
                     } else if ($datos['nivel'] == 'usuario') {
-
                         $_SESSION['usr_token'] = md5(uniqid());
                         header('Location: dashboardUser.php?token=' . $_SESSION['usr_token']);
                     }
@@ -169,7 +166,7 @@ class Sesion
             $_SESSION['depto']          = NULL;
             $_SESSION['sesion_estatus'] = NULL;
             $_SESSION['usr_token']      = NULL;
-            $_SESSION['tec_token']      = NULL;
+            $_SESSION['adm_token']      = NULL;
             $_SESSION['grt_token']      = NULL;
             $_SESSION['temp_token']     = NULL;
             $_SESSION['new_conn']       = NULL;

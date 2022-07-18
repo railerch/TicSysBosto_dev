@@ -4,6 +4,17 @@
 #---------------------------------------------------------
 include('main_functions.php');
 
+#---------------------------------------------------------
+// CONFIGURACIONES GENERALES
+#---------------------------------------------------------
+$config = json_decode(file_get_contents('config/config.json'));
+
+// Niveles de usuario
+$adminLvl      = $config[3]->nivelUsuario[0];
+$gerenteLvl    = $config[3]->nivelUsuario[1];
+$analistaLvl   = $config[3]->nivelUsuario[2];
+$usuarioLvl    = $config[3]->nivelUsuario[3];
+
 //---------------------------------------------------------------------------------------------
 //////////////////////////// CONEXION DB
 //---------------------------------------------------------------------------------------------
@@ -50,7 +61,7 @@ if (@$_GET['logout']) {
         $_SESSION['avisos'] = 'Error al momento de cerrar sesión, intente nuevamente!';
         header('Location: ' . $_SERVER['HTTP_REFERER']);
     } else {
-        $_SESSION['avisos'] = 'Error al momento de cerrar sesión, intente nuevamente!';
+        $_SESSION['avisos'] = 'Error de sistema, intente nuevamente!';
         header('Location: ' . $_SERVER['HTTP_REFERER']);
     }
 
@@ -106,7 +117,7 @@ if (@$_GET['registrarUsuario']) {
         echo $usuario->exception;
         echo '<meta http-equiv="refresh" content="3;url=index.php">';
     }
-    
+
     exit();
 }
 
@@ -201,6 +212,17 @@ if (@$_GET['usuariosActivos']) {
 //////////////////////////// TICKETS
 //---------------------------------------------------------------------------------------------
 
+// CATEGORIAS EN TICKETS SEGUN EL DEPTO
+if (@$_GET['deptoCats']) {
+    $depto  = $_GET['depto'];
+    $stmt   = $conn->query("SELECT * FROM miscelaneos WHERE descripcion LIKE '%$depto%' AND tipo = 'cat'");
+    while ($cat = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $categorias[] = explode("-", $cat['descripcion'])[1];
+    };
+    echo isset($categorias) ? json_encode($categorias) : json_encode([]);
+    exit();
+}
+
 // CREAR TICKET
 if (@$_GET['crearTicket']) {
 
@@ -266,7 +288,7 @@ if (@$_GET['estatusTicket']) {
 if (@$_GET['eliminarTicket']) {
 
     $id = $_GET['id'];
-    
+
     if ($_GET['papelera']) {
         $ticket = new Ticket($_GET);
         $ticket->enviar_ticket_papelera();
@@ -394,7 +416,7 @@ if (@$_GET['recuperarMensajes']) {
 if (@$_GET['actualizarMsjTecnico']) {
     $user  = $_SESSION['nombre'];
     $remit = $_SESSION['usuario'];
-    $col   = "analista";
+    $col   = 'analista';
 
     echo comprobar_no_leidos($col, $user, $remit);
 }
@@ -647,7 +669,7 @@ if (@$_GET['crearEmpresa']) {
         echo 'Empresa creada exitosamente!';
 
         // CREAR LOG
-        Log::registrar_log("Nueva empresa registrada: {$empresa} ");
+        Log::registrar_log("Nueva empresa registrada: {$empresa}");
     } catch (PDOException $e) {
 
         echo 'ERROR: ' . $e;
@@ -673,7 +695,33 @@ if (@$_GET['crearDepto']) {
         echo 'Departamento creado exitosamente!';
 
         // CREAR LOG
-        Log::registrar_log("Nuevo departamento/area registrados: {$desc}/{$desc} ");
+        Log::registrar_log("Nuevo departamento registrado: {$desc}");
+    } catch (PDOException $e) {
+
+        echo 'ERROR: ' . $e;
+    }
+
+    exit();
+}
+
+// CREAR CATEGORIA
+if (@$_GET['crearCat']) {
+
+    try {
+
+        $stmt_dpt = $conn->prepare("INSERT INTO miscelaneos (descripcion, tipo) VALUES (?, ?)");
+
+        $desc = $_SESSION['depto'] . '-' . trim($_POST['categoria']);
+        $tipo = 'cat';
+        $stmt_dpt->bindParam(1, $desc);
+        $stmt_dpt->bindParam(2, $tipo);
+
+        $stmt_dpt->execute();
+
+        echo 'Categoria creada exitosamente!';
+
+        // CREAR LOG
+        Log::registrar_log("Nueva categoria registrada: {$desc}");
     } catch (PDOException $e) {
 
         echo 'ERROR: ' . $e;
@@ -715,7 +763,7 @@ if (@$_GET['verRespaldos']) {
         } else {
             $last = NULL;
         }
-        echo "<li><a href='assets/db/BKP/{$scan[$i]}' download>{$scan[$i]} {$last}</a></li>";
+        echo "<li><a href='database/BKP/{$scan[$i]}' download>{$scan[$i]} {$last}</a></li>";
     };
     echo '</ul>';
 

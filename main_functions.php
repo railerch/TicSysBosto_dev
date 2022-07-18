@@ -74,8 +74,8 @@ function validar_selecciones(string $selector, string $valor)
     ';
 }
 
-function validar_nombre_usuario(){
-
+function validar_nombre_usuario()
+{
 }
 
 // COMPROBAR ESTATUS DE SESION
@@ -90,8 +90,11 @@ function estatus_de_sesion()
         $estatus = $stmt_sesion->fetch(PDO::FETCH_ASSOC);
 
         switch ($estatus['nivel']) {
+            case 'admin':
+                $token = $_SESSION['adm_token'];
+                break;
             case 'analista':
-                $token = $_SESSION['tec_token'];
+                $token = $_SESSION['anl_token'];
                 break;
             case 'gerente':
                 $token = $_SESSION['grt_token'];
@@ -105,8 +108,7 @@ function estatus_de_sesion()
             header('Location: main_controller.php?logout=true');
         }
     } else {
-
-        if ($_SESSION['sesion_estatus'] == 0 || $_GET['token'] == NULL || $_GET['token'] != $_SESSION['tec_token']) {
+        if ($_SESSION['sesion_estatus'] == 0 || $_GET['token'] == NULL) {
             header('Location: main_controller.php?logout=true');
         }
     }
@@ -355,20 +357,27 @@ function consultarMsjs($id_ticket)
 }
 
 // MOSTRAR TICKETS SEGUN EL DEPARTAMENTO
+// Fuera del depto de sistemas los niveles permitidos son:
+//  - GERENTE: el nivel maximo por departamento 
+//  - ANALISTA: los auxiliares de un GERENTE en un depto determinado
+//  - USUARIO: todo aquel que solo haga peticiones
+// Dentro del depto de sistema todos deben ser:
+//  - ADMIN: Ccontrol total en la gestion de tickets
+// de lo contrario se arrojara un error en el dashboard
 function filtrar_depto()
 {
-    if ($_SESSION['nivel'] == 'gerente') {
-        if ($_SESSION['depto'] != 'Sistemas') {
-            return "WHERE area = '{$_SESSION['depto']}'";
+    if ($_SESSION['depto'] != 'Sistemas') {
+        if ($_SESSION['nivel'] == 'gerente' || $_SESSION['nivel'] == 'analista') {
+            return "WHERE area = '{$_SESSION['depto']}' AND empresa = '{$_SESSION['empresa']}'";
         } else {
-            echo '<span style="background-color:red; padding:10px; border-radius:5px;">ERROR: el nivel de usuario GERENTE no corresponde con el departamento asignado.</span>';
+            echo '<span style="background-color:red; padding:10px; border-radius:5px;">ERROR: el nivel de usuario no corresponde con el departamento asignado.</span>';
             exit();
         }
-    } else if ($_SESSION['nivel'] == 'analista') {
-        if ($_SESSION['depto'] == 'Sistemas') {
-            return "WHERE area = '{$_SESSION['depto']}'";
+    } else {
+        if ($_SESSION['nivel'] == 'admin') {
+            return "WHERE area = '{$_SESSION['depto']}' AND empresa = '{$_SESSION['empresa']}'";
         } else {
-            echo '<span style="background-color:red; padding:10px; border-radius:5px;">ERROR: el nivel de usuario TÉCNICO no corresponde con el departamento asignado.</span>';
+            echo '<span style="background-color:red; padding:10px; border-radius:5px;">ERROR: el nivel de usuario no corresponde con el departamento asignado.</span>';
             exit();
         }
     }

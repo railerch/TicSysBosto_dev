@@ -339,7 +339,7 @@
                                     ENVIAR
                                 </button>
                             </div>
-                            
+
                         </div>
                         <!-- ARCHIVO ADJUNTOS -->
                         <div id="seleccionarArchivo" class="input-group" style="margin-top: 10px">
@@ -370,9 +370,10 @@
                             <!-- NIVEL DE USUARIO -->
                             <select class="form-control" name="nivel">
                                 <option style="color:#aaa" value="NULL">Nivel de usuario</option>
-                                <option value="analista">Analista</option>
+                                <option value="admin">Admin</option>
                                 <option value="gerente">Gerente</option>
-                                <option value="usuario">Usuario</option>
+                                <option value="analista">Analista</option>
+                                <option value="usuario">Usuario comun</option>
                             </select>
                             <select class="form-control" name="empresa">
                                 <option style="color:#555" value="NULL">Seleccione nueva ubicación</option>

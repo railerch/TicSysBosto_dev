@@ -46,7 +46,7 @@ $stmt_3->execute();
         </li>
     </ul>
     <div class="tab-content">
-        <!-- PESTAÑA 01 -->
+        <!-- PESTAÑA 01 - USUARIOS -->
         <div class="tab-pane active" role="tabpanel" id="tab-1">
             <div style="background: #505050;padding: 0.5em;border-radius: 0 0 1em 1em;box-shadow: 0px 0px 10px rgb(0,0,0);border-width: 1px;border-style: none;border-top-style: none;border-right-style: none;border-bottom-style: none;color: #d7d7d7;">
                 <i class="fa fa-user-o" style="font-size: 5vw;margin-right: 0.3em;"></i>
@@ -88,8 +88,9 @@ $stmt_3->execute();
                                                 <option style="color:#aaa" value="Nivel de usuario" selected>Nivel de
                                                     usuario</option>
                                                 <option value="admin">Admin</option>
+                                                <option value="gerente">Gerente</option>
                                                 <option value="analista">Analista</option>
-                                                <option value="analista">Analista</option>
+                                                <option value="usuario">Usuario comun</option>
                                             </select>
                                         </td>
                                         <td><input id="clave" class="form-control" type="password" name="clave" placeholder="Clave">
@@ -112,7 +113,7 @@ $stmt_3->execute();
                                 <th>ID</th>
                                 <th>Nombre</th>
                                 <th>Usuario</th>
-                                <th>Ubicación</th>
+                                <th>Empresa</th>
                                 <th>Departamento</th>
                                 <th>Nivel</th>
                                 <th>Acciones</th>
@@ -156,15 +157,15 @@ $stmt_3->execute();
                 </div>
             </div>
         </div>
-        <!-- PESTAÑA 02 -->
+        <!-- PESTAÑA 02 - MISCELANEOS -->
         <div class="tab-pane" role="tabpanel" id="tab-2">
             <div style="background: #505050;padding: 0.5em;border-radius: 0 0 1em 1em;box-shadow: 0px 0px 10px rgb(0,0,0);border-width: 1px;border-style: none;border-top-style: none;border-right-style: none;border-bottom-style: none;color: #d7d7d7;">
                 <i class="fa fa-paperclip" style="font-size: 5vw;margin-right: 0.3em;"></i>
                 <h1 class="d-inline-block">Miscelaneos</h1>
                 <hr style="background: #969696;">
-                <div id="misceForms">
+                <div id="misceForms" class="d-flex flex-wrap">
                     <!-- CREAR EMPRESA -->
-                    <form id="crearEmpresa" class="form-block" style="background: #7c7c7c;border-radius: 10px;padding: 1em; min-width: 30%">
+                    <form id="crearEmpresa" class="form-block mt-2" style="background: #7c7c7c;border-radius: 10px;padding: 1em; min-width: 30%">
                         <h3>Crear empresa</h3>
                         <input id="empresa_2" class="form-control" type="text" name="empresa" data-tabla=miscelaneos data-tipo="empresa" placeholder="Nombre empresa">
                         <span id="aviso" style="color:lightgreen"></span>
@@ -173,7 +174,7 @@ $stmt_3->execute();
                     </form>
 
                     <!-- CREAR DEPARTAMENTO -->
-                    <form id="crearDepto" class="form-block" style="background: #7c7c7c;border-radius: 10px;padding: 1em; min-width: 30%">
+                    <form id="crearDepto" class="form-block mt-2" style="background: #7c7c7c;border-radius: 10px;padding: 1em; min-width: 30%">
                         <h3>Crear departamento</h3>
                         <input id="departamento" class="form-control" type="text" name="departamento" data-tabla=miscelaneos data-tipo="depto" placeholder="Nombre depto">
                         <span id="avisoDpt" style="color:lightgreen"></span>
@@ -181,10 +182,19 @@ $stmt_3->execute();
                         <button class="btn btn-primary btn-inline crearDepto">Confirmar departamento</button>
                     </form>
 
+                    <!-- CREAR CATEGORIA -->
+                    <form id="crearCat" class="form-block mt-2" style="background: #7c7c7c;border-radius: 10px;padding: 1em; min-width: 30%">
+                        <h3>Crear categoría</h3>
+                        <input id="dcategoria" class="form-control" type="text" name="categoria" data-tabla=miscelaneos data-tipo="cat" placeholder="Descripción categoría">
+                        <span id="avisoCat" style="color:lightgreen"></span>
+                        <br>
+                        <button class="btn btn-primary btn-inline crearCat">Confirmar categoría</button>
+                    </form>
+
                     <!-- RESPALDAR BD -->
-                    <form id="respaldarBd" class="form-block d-flex flex-column" style="background: #7c7c7c;border-radius: 10px;padding: 1em; min-width: 30%"">
+                    <form id="respaldarBd" class="form-block d-flex flex-column mt-2" style="background: #7c7c7c;border-radius: 10px;padding: 1em; min-width: 30%"">
                         <h3>Respaldar Base de Datos<br></h3>
-                        <span id=" avisoBD" style="color:lightgreen; height:2vh"></span>
+                        <span id="avisoBD" style="color:lightgreen; height:2vh"></span>
                         <br>
                         <button class="btn btn-primary btn-inline respaldarBD">Respaldar BD</button>
                         <button class="btn btn-primary btn-inline verRespaldos" data-toggle="modal" data-target="#listaRespaldos" style="margin-top: 10px;">Lista de respaldos</button>
@@ -200,7 +210,7 @@ $stmt_3->execute();
                 </div>
             </div>
         </div>
-        <!-- PESTAÑA 03 -->
+        <!-- PESTAÑA 03 - LOGS -->
         <div class="tab-pane" role="tabpanel" id="tab-3">
             <div style="background: #505050;padding: 0.5em;border-radius: 0 0 1em 1em;box-shadow: 0px 0px 10px rgb(0,0,0);border-width: 1px;border-style: none;border-top-style: none;border-right-style: none;border-bottom-style: none;color: #d7d7d7;">
                 <i class="fa fa-edit" style="font-size: 5vw;margin-right: 0.3em;"></i>
@@ -496,6 +506,39 @@ ocultar_aviso();
 
         })
 
+        // CREAR CATEGORIA
+        $(".crearCat").click(function() {
+
+            // VALIDAR SELECCIONES
+            <?php echo validar_selecciones("categoria", "") ?>
+
+            event.preventDefault();
+
+            if (localStorage.getItem("inputOK") == 1) {
+                $.ajax({
+                    type: "POST",
+                    url: "main_controller.php?crearCat=true",
+                    data: $("#crearCat").serialize(),
+                    success: function(data) {
+                        console.log(data);
+
+                        $("#categoria").val("");
+
+                        $("#avisoCat").text(data);
+
+                        $("#crearCat input").css("color", "#333");
+
+                        setTimeout(function() {
+                            $("#avisoCat").text("");
+                        }, 3000)
+
+                        localStorage.clear();
+                    }
+                })
+            }
+
+        })
+
         // CREAR AREA DE REQUERIMIENTO
         $(".crearArea").click(function() {
 
@@ -538,7 +581,7 @@ ocultar_aviso();
                 type: "GET",
                 url: "main_controller.php?respaldarBD=true",
                 success: function(data) {
-                    // console.log(data);
+                    console.log(data);
 
                     $("#avisoBD").text(data);
 
@@ -557,7 +600,6 @@ ocultar_aviso();
                 type: "GET",
                 url: "main_controller.php?verRespaldos=true",
                 success: function(data) {
-                    console.log(data);
                     if (data == "<ul></ul>") {
                         $("#listaRespaldos .modal-body").html("<p>Sin respaldos que mostrar</p>");
                     } else {

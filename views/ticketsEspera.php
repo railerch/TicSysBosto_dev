@@ -5,7 +5,7 @@ include('../main_functions.php');
 $conexion = new Connection('../config/config.json');
 $conn = $conexion->db_conn();
 
-if(!$conn){
+if (!$conn) {
     Log::registrar_log($conexion->error);
 }
 
@@ -28,9 +28,9 @@ $stmt->execute();
                     <th>ID</th>
                     <th>Fecha</th>
                     <th>Empresa</th>
-                    <th>Usuario</th>
+                    <th>Depto</th>
+                    <th>Categoria</th>
                     <th>Prioridad</th>
-                    <th>Analista</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -48,12 +48,13 @@ $stmt->execute();
                     }
 
                 ?>
-                
+
                     <tr id="<?php echo $ticket['id_ticket'] ?>" class="ticketRow" style="<?php echo $pointer ?>background-color:<?php echo $color ?>" title="<?php echo $title ?>">
                         <td><?php echo $ticket['id_ticket'] ?></td>
                         <td><?php echo $ticket['fecha'] ?></td>
                         <td><?php echo $ticket['empresa'] ?></td>
-                        <td><?php echo $ticket['persona'] ?></td>
+                        <td><?php echo $ticket['depto'] ?></td>
+                        <td><?php echo $ticket['categoria'] ?></td>
                         <?php
                         switch ($ticket['prioridad']) {
                             case 'baja':
@@ -72,7 +73,6 @@ $stmt->execute();
 
                         ?>
                         <td <?php echo $style ?>><?php echo $ticket['prioridad'] ?></td>
-                        <td><?php echo $ticket['analista'] ?></td>
                         <td>
                             <div class="btn-toolbar d-flex flex-row justify-content-center">
                                 <div class="btn-group" role="group">
@@ -107,8 +107,8 @@ $stmt->execute();
 
                     <!-- VENTANAS MODAL -->
                     <?php
-                        $pagina = 'ticketsEspera.php';
-                        include('ventanasModal.php');
+                    $pagina = 'ticketsEspera.php';
+                    include('ventanasModal.php');
                     ?>
 
                 <?php } ?>

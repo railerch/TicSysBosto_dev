@@ -5,27 +5,12 @@ include('../main_functions.php');
 $conexion = new Connection('../config/config.json');
 $conn = $conexion->db_conn();
 
-if(!$conn){
+if (!$conn) {
     Log::registrar_log($conexion->error);
 }
 
 // MOSTRAR TICKETS SEGUN EL DEPARTAMENTO
-if ($_SESSION['nivel'] == 'gerente') {
-    if ($_SESSION['depto'] != 'Sistemas') {
-        $area = "WHERE area = '{$_SESSION['depto']}'";
-    } else {
-        echo '<span style="background-color:red; padding:10px; border-radius:5px;">ERROR: el nivel de usuario GERENTE no corresponde con el departamento asignado.</span>';
-        exit();
-    }
-} else if ($_SESSION['nivel'] == 'analista') {
-    if ($_SESSION['depto'] == 'Sistemas') {
-        $area = "WHERE area = '{$_SESSION['depto']}'";
-    } else {
-        echo '<span style="background-color:red; padding:10px; border-radius:5px;">ERROR: el nivel de usuario TÉCNICO no corresponde con el departamento asignado.</span>';
-        exit();
-    }
-}
-
+$area = filtrar_depto();
 $stmt = $conn->prepare("SELECT fecha, estatus FROM tickets $area AND estatus <> 'eliminado'");
 $stmt->setFetchMode(PDO::FETCH_ASSOC);
 $stmt->execute();

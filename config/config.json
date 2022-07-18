@@ -15,14 +15,20 @@
         "logo2": "assets/img/logo02.png",
         "favicon": "assets/img/favicon.png",
         "fondo": "assets/img/background.jpg",
-        "titulo": "Grupo Bosto"
-    },
-    {
+        "titulo": "Grupo Bosto",
         "mainBg": "",
         "sideBarBg": "",
         "topBarBg": "",
         "iconHoverColor": "",
         "linkColor": "",
         "linkHoverColor": ""
+    },
+    {
+        "nivelUsuario": [
+            "admin",
+            "gerente",
+            "analista",
+            "usuario"
+        ]
     }
 ]

@@ -23,10 +23,11 @@ class Ticket
         global $conn;
 
         try {
-            $stmt       = $conn->prepare("INSERT INTO tickets (id_ticket, fecha, empresa, persona, usuario, area, solicitud, descripcion, prioridad, analista, estatus, comentarios) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt       = $conn->prepare("INSERT INTO tickets (id_ticket, fecha, empresa, depto, persona, usuario, area, categoria, asunto, descripcion, prioridad, analista, estatus, comentarios) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             $id_ticket  = NULL;
             $fecha      = date('Y-m-d H:i:s');
-            $empresa   = isset($this->info['empresa']) ? $this->info['empresa'] : $_SESSION['empresa'];
+            $empresa    = isset($this->info['empresa']) ? $this->info['empresa'] : $_SESSION['empresa'];
+            $depto      = isset($this->info['depto']) ? $this->info['depto'] : $_SESSION['depto'];
             $persona    = isset($this->info['persona']) ? $this->info['persona'] : $_SESSION['nombre'];
 
             if (isset($this->info['persona'])) {
@@ -40,7 +41,8 @@ class Ticket
 
             $usuario    = isset($usrTmp) ? $usrTmp : $_SESSION['usuario'];
             $area       = $this->info['area'];
-            $solicitud  = $this->info['solicitud'];
+            $categoria  = $this->categoria;
+            $asunto     = $this->info['asunto'];
 
             if ($this->info['descripcion'] != "") {
                 $descripcion = $this->info['descripcion'];
@@ -48,7 +50,7 @@ class Ticket
                 $descripcion = 'Sin descripción';
             }
 
-            $prioridad = $this->info['prioridad'];
+            $prioridad  = $this->info['prioridad'];
             $analista   = NULL;
 
             $estatus     = 'abierto';
@@ -57,15 +59,17 @@ class Ticket
             $stmt->bindParam(1, $id_ticket);
             $stmt->bindParam(2, $fecha);
             $stmt->bindParam(3, $empresa);
-            $stmt->bindParam(4, $persona);
-            $stmt->bindParam(5, $usuario);
-            $stmt->bindParam(6, $area);
-            $stmt->bindParam(7, $solicitud);
-            $stmt->bindParam(8, $descripcion);
-            $stmt->bindParam(9, $prioridad);
-            $stmt->bindParam(10, $analista);
-            $stmt->bindParam(11, $estatus);
-            $stmt->bindParam(12, $comentarios);
+            $stmt->bindParam(4, $depto);
+            $stmt->bindParam(5, $persona);
+            $stmt->bindParam(6, $usuario);
+            $stmt->bindParam(7, $area);
+            $stmt->bindParam(8, $categoria);
+            $stmt->bindParam(9, $asunto);
+            $stmt->bindParam(10, $descripcion);
+            $stmt->bindParam(11, $prioridad);
+            $stmt->bindParam(12, $analista);
+            $stmt->bindParam(13, $estatus);
+            $stmt->bindParam(14, $comentarios);
 
             $stmt->execute();
 
@@ -105,7 +109,7 @@ class Ticket
             $analista = $stmt->fetch(PDO::FETCH_ASSOC);
 
             $this->estatus = true;
-        return isset($analista['analista']) ? $analista['analista'] : '<span style="color:orange">Aun sin atender!</span>';
+            return isset($analista['analista']) ? $analista['analista'] : '<span style="color:orange">Aun sin atender!</span>';
         } catch (PDOException $e) {
 
             return '<span style="color: red">ERROR, al consultar el analista asignado!</span>';

@@ -52,9 +52,9 @@ $_SESSION['dashboard'] = __FILE__;
                             Tiempo de sesón <br><span id="timer"></span>
                         </div>
 
-                        <i id="userIcon" class="fa fa-user-o" style="margin-right:0.2em;color:gray;cursor:pointer;" data-query="yes"></i>
+                        <i id="userIcon" class="fa fa-user" style="margin-right:0.2em;color:lightgreen;cursor:pointer;" data-query="yes"></i>
 
-                        <span id="nombreUsuario" class="d-inline-block"><?php echo $_SESSION['nombre'] ?></span>
+                        <span id="nombreUsuario" class="d-inline-block"><b><?php echo $_SESSION['nombre'] ?></b> [<small><?php echo $_SESSION['empresa'] . ' - ' . $_SESSION['depto'] ?></small>]</span>
 
                         <!-- *********************************************************************************************** -->
 
@@ -69,15 +69,15 @@ $_SESSION['dashboard'] = __FILE__;
                             </div>
                             <div>
                                 <span>
-                                    <i class="fa fa-user-o" style="margin-right:0.2em;color:#0bf82b"></i>
+                                    <i class="fa fa-user" style="margin-right:0.2em;color:#0bf82b"></i>
                                     <span id="usuariosActivos"></span>
                                 </span>
                                 <span>
-                                    <i class="fa fa-user-o" style="margin-right:0.2em;color:red"></i>
+                                    <i class="fa fa-user" style="margin-right:0.2em;color:red"></i>
                                     <span id="usuariosInactivos"></span>
                                 </span>
                                 <span>
-                                    <i class="fa fa-users" style="margin-right:0.2em;color:gray"></i>
+                                    <i class="fa fa-users" style="margin-right:0.2em;color:blue"></i>
                                     <span id="usuariosTotales"></span>
                                 </span>
                             </div>
@@ -500,7 +500,7 @@ $_SESSION['dashboard'] = __FILE__;
                                 if ("<?php echo $_SESSION['usuario'] ?>" != "root") {
                                     $("#usuariosConectados tbody").append(
                                         `<tr id="rootUser" class="usuario" data-nombre="Administrador" data-emisor="<?php echo $_SESSION['usuario'] ?>" data-receptor="root" data-toggle="modal" data-target="#chatWindow">
-                                        <td style="padding:5px"><i class="fa fa-user-o" style="color:orange;margin-right:5px;"></i></td>
+                                        <td style="padding:5px"><i class="fa fa-user" style="color:orange;margin-right:5px;"></i></td>
                                         <td colspan="2" style="padding-right:15px">Administrador del sistema</td>
                                     </tr>`)
                                 }
@@ -532,12 +532,12 @@ $_SESSION['dashboard'] = __FILE__;
                                         if (usuarios[i]["estatus"] == 1) {
                                             var iconColor = "#0bf82b";
                                         } else {
-                                            var iconColor = "gray";
+                                            var iconColor = "red";
                                         }
 
                                         // Fila con datos de usuario
                                         var usuario = `<tr style="${bg}" class="usuario" data-nombre="${usuarios[i]["nombre"]}" data-emisor="<?php echo $_SESSION['usuario'] ?>" data-receptor="${usuarios[i]["usuario"]}" data-toggle="modal" data-target="#chatWindow">
-                                                    <td><i class="fa fa-user-o" style="color:${iconColor};margin-right:5px;"></i></td>
+                                                    <td><i class="fa fa-user" style="color:${iconColor};margin-right:5px;"></i></td>
                                                     <td style="padding-right:10px">${usuarios[i]["nombre"]}</td>
                                                     <td style="color:lightgray"> | ${usuarios[i]["depto"]}</td>
                                                 </tr>`;
@@ -546,7 +546,7 @@ $_SESSION['dashboard'] = __FILE__;
                                         if (usuarios[i]["nombre"] == "<?php echo $_SESSION['nombre'] ?>") {
                                             $("#usuariosConectados tbody").append(
                                                 `<tr>
-                                                <td style="padding:5px"><i class="fa fa-user-o" style="color:#0bf82b;margin-right:5px;"></i></td>
+                                                <td style="padding:5px"><i class="fa fa-user" style="color:#0bf82b;margin-right:5px;"></i></td>
                                                 <td style="padding-right:15px">${usuarios[i]["nombre"]}</td>
                                                 <td style="color:lightgray;padding:5px"> | ${usuarios[i]["depto"]}</td>
                                             </tr>`

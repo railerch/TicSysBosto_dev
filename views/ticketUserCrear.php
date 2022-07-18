@@ -47,10 +47,10 @@ if (@$_SESSION['avisos'] != "Ticket creado exitosamente!") {
     <h1 class="d-inline-block">Crear Ticket</h1>
     <hr>
     <form id="ticketForm">
-        <div class="form-group">
-            <h4>Departamento al que va dirigido el ticket</h4>
-            <select id="area" class="form-control" name="area" style="min-width:200px;max-width:80%;margin: 0 0.5em 0.5em 0;" <?php echo $deshabilitar ?>>
-                <option style="color:#aaa" selected>Seleccione el departamento</option>
+        <h4>Datos del ticket</h4>
+        <div class="form-group d-inline-flex flex-wrap" style="width:100%">
+            <select id="area" class="form-control" name="area" style="min-width:200px;max-width:30%;margin: 0 0.5em 0.5em 0;" <?php echo $deshabilitar ?>>
+                <option style="color:#aaa" selected>Departamento receptor</option>
                 <?php while ($depto = $stmt_0->fetch()) {
                     if ($depto['descripcion'] != $_SESSION['depto']) {
                 ?>
@@ -59,10 +59,11 @@ if (@$_SESSION['avisos'] != "Ticket creado exitosamente!") {
                 <?php }
                 } ?>
             </select>
-            <h4>Titulo del ticket</h4>
-            <input id="solicitud" class="form-control" type="text" name="solicitud" placeholder="Breve encabezado de su solicitud" maxlength="50" <?php echo $deshabilitar ?>>
-            <br>
-            <!-- PRIORIDAD -->
+
+            <select id="categoria" class="form-control" name="categoria" style="min-width:200px;max-width:30%;margin: 0 0.5em 0.5em 0;" <?php echo $deshabilitar ?>>
+                <option style="color:#aaa" selected>Categoría</option>
+            </select>
+
             <select id="prioridad" class="form-control" name="prioridad" style="min-width:200px;max-width:20%;margin: 0 0.5em 0.5em 0;" <?php echo $deshabilitar ?>>
                 <option selected>Prioridad</option>
                 <option value="baja">Baja</option>
@@ -72,6 +73,9 @@ if (@$_SESSION['avisos'] != "Ticket creado exitosamente!") {
             </select>
         </div>
         <div class="form-group">
+            <h4>Asunto</h4>
+            <input id="asunto" class="form-control mb-2" type="text" name="asunto" placeholder="Breve encabezado de su solicitud" maxlength="50" <?php echo $deshabilitar ?>>
+
             <h4>Descripción</h4>
             <textarea id="descripcion" class="form-control" name="descripcion" style="min-height: 5em; max-height: 5em;" placeholder="Describa su solicitud, de ser necesario habilite ANYDESK y envie los datos de conexión" maxlength="500" required <?php echo @$deshabilitar ?>></textarea>
         </div>
@@ -94,6 +98,30 @@ ocultar_aviso();
         // ESTABLECER LA PAGINA ACTUAL
         sessionStorage.setItem("pagina_actual", "views/ticketUserCrear.php");
 
+        // FILTRAR CATEGORIAS SEGUN EL DEPTO SELECCIONADO
+        $("#area").change(function() {
+            let depto = $(this).val();
+            let categoria = document.getElementById("categoria");
+            fetch(`main_controller.php?deptoCats=true&depto=${depto}`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data != "") {
+                        categoria.innerHTML = "<option style='color:#aaa' selected>Categoría:</option>";
+                        data.forEach(cat => {
+                            let opt = document.createElement("option");
+                            opt.setAttribute("value", cat);
+                            opt.innerText = cat;
+                            $("#categoria").append(opt);
+                        })
+
+                    } else {
+                        categoria.innerHTML = "<option style='color:#aaa' selected>Categoría:</option>";
+                        console.warn("AVISO: El depto seleccionado no posee categorias activas.")
+                    }
+
+                })
+        })
+
         // CREAR TICKET
         $("button[type=submit]").click(function() {
             event.preventDefault();
@@ -101,7 +129,7 @@ ocultar_aviso();
             // VALIDAR CAMPOS Y SELECCIONES
             <?php
             echo validar_selecciones("area", "Seleccione el departamento");
-            echo validar_selecciones("solicitud", "");
+            echo validar_selecciones("asunto", "");
             echo validar_selecciones("prioridad", "Prioridad");
             echo validar_selecciones("descripcion", "");
             ?>

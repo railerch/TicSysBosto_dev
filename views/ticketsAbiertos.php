@@ -28,9 +28,9 @@ $stmt->execute();
                     <th>ID</th>
                     <th>Fecha</th>
                     <th>Empresa</th>
-                    <th>Usuario</th>
+                    <th>Depto</th>
+                    <th>Categoria</th>
                     <th>Prioridad</th>
-                    <th>Analista</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -56,25 +56,26 @@ $stmt->execute();
                         <td><?php echo $ticket['id_ticket'] ?></td>
                         <td><?php echo $ticket['fecha'] ?></td>
                         <td><?php echo $ticket['empresa'] ?></td>
-                        <td><?php echo $ticket['persona'] ?></td>
+                        <td><?php echo $ticket['depto'] ?></td>
+                        <td><?php echo $ticket['categoria'] ?></td>
                         <?php
-                            switch ($ticket['prioridad']) {
-                                case 'baja':
-                                    $style = "style='background-color:lightskyblue;color:white'";
-                                    break;
-                                case 'media':
-                                    $style = "style='background-color:lightsalmon;color:white'";
-                                    break;
-                                case 'alta':
-                                    $style = "style='background-color:orange;color:white'";
-                                    break;
-                                case 'urgente':
-                                    $style = "style='background-color:red;color:white'";
-                                    break;
-                            }
+                        switch ($ticket['prioridad']) {
+                            case 'baja':
+                                $style = "style='background-color:lightskyblue;color:white'";
+                                break;
+                            case 'media':
+                                $style = "style='background-color:lightsalmon;color:white'";
+                                break;
+                            case 'alta':
+                                $style = "style='background-color:orange;color:white'";
+                                break;
+                            case 'urgente':
+                                $style = "style='background-color:red;color:white'";
+                                break;
+                        }
                         ?>
                         <td <?php echo $style ?>><?php echo $ticket['prioridad'] ?></td>
-                        <td><?php echo $ticket['analista'] ?></td>
+
                         <td style="text-align: unset">
                             <div class="btn-toolbar d-flex flex-row justify-content-center">
                                 <div class="btn-group" role="group">
@@ -118,8 +119,8 @@ $stmt->execute();
 
                     <!-- VENTANAS MODAL -->
                     <?php
-                        $pagina = 'ticketsAbiertos.php';
-                        include('ventanasModal.php');
+                    $pagina = 'ticketsAbiertos.php';
+                    include('ventanasModal.php');
                     ?>
 
                 <?php } ?>
