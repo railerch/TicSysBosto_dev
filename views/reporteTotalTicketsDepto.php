@@ -1,11 +1,11 @@
-<?php 
+<?php
 include('../main_functions.php');
 
 // CONEXION DB
 $conexion = new Connection('../config/config.json');
 $conn = $conexion->db_conn();
 
-if(!$conn){
+if (!$conn) {
     Log::registrar_log($conexion->error);
 }
 
@@ -13,8 +13,8 @@ if(!$conn){
 Log::registrar_log("Reporte de tickets de {$_SESSION['depto']} generado");
 
 // PERIODO DE FECHA PARA EL REPORTE
-$fechaInicial = isset($_POST['fechaInicial']) ? $_POST['fechaInicial'].' 00:00:00' : "2020-01-01 00:00:00";
-$fechaFinal   = isset($_POST['fechaFinal']) ? $_POST['fechaFinal'].' 23:59:59' : date("Y-m-d 23:59:59");
+$fechaInicial = isset($_POST['fechaInicial']) ? $_POST['fechaInicial'] . ' 00:00:00' : "2020-01-01 00:00:00";
+$fechaFinal   = isset($_POST['fechaFinal']) ? $_POST['fechaFinal'] . ' 23:59:59' : date("Y-m-d 23:59:59");
 
 // CONSULTAR TICKETS GLOBALES DEL PERIODO
 $depto = $_SESSION['depto'];
@@ -24,13 +24,13 @@ $stmt_st->execute();
 $abiertos = $espera = $preCierre = $cerrados = 0;
 $sinTecnico = NULL;
 
-while($ticket = $stmt_st->fetch(PDO::FETCH_ASSOC)){
+while ($ticket = $stmt_st->fetch(PDO::FETCH_ASSOC)) {
 
-    if($ticket['analista'] == NULL){
+    if ($ticket['analista'] == NULL) {
         $sinTecnico++;
     }
-    
-    switch($ticket['estatus']){
+
+    switch ($ticket['estatus']) {
         case 'abierto':
             $abiertos++;
             break;
@@ -44,7 +44,6 @@ while($ticket = $stmt_st->fetch(PDO::FETCH_ASSOC)){
             $cerrados++;
             break;
     }
-    
 }
 
 // TOTAL TICKETS
@@ -94,7 +93,7 @@ $ticketsTotales = $abiertos + $espera + $preCierre + $cerrados;
             background-color: #fff !important;
         }
 
-        h1 span{
+        h1 span {
             font-size: 1em;
         }
 
@@ -131,19 +130,18 @@ $ticketsTotales = $abiertos + $espera + $preCierre + $cerrados;
     }
 </style>
 
-<div id="docReporte"
-    style="background: #5b5b5b; padding: 0.5em; border-radius: 1em; box-shadow: 0px 0px 10px rgb(0,0,0);border-width: 1px;border-style: none;border-top-style: none;border-right-style: none;border-bottom-style: none;color: #d7d7d7;">
+<div id="docReporte" style="background: #5b5b5b; padding: 0.5em; border-radius: 1em; box-shadow: 0px 0px 10px rgb(0,0,0);border-width: 1px;border-style: none;border-top-style: none;border-right-style: none;border-bottom-style: none;color: #d7d7d7;">
     <div id="locDiv">
         <i class="fa fa-ticket" style="font-size: 5vw;margin-right: 0.3em;"></i>
-        <h1 class="d-inline-block">Reporte: <span style="font-weight:lighter">tickets totales <?php echo strtolower($_SESSION['depto'])?></span></h1>
+        <h1 class="d-inline-block">Reporte: <span style="font-weight:lighter">tickets totales <?php echo strtolower($_SESSION['depto']) ?></span></h1>
     </div>
     <h5 id="fechaReporte">
         <!-- FECHA DEL REPORTE -->
     </h5>
     <hr style="background: #969696; margin-top:1em;">
     <p style="text-align:right">
-        <?php echo '<b>Periodo:</b> '.$_POST['fechaInicial'].' <b>al</b> '.$_POST['fechaFinal'] ?></p>
-    
+        <?php echo '<b>Periodo:</b> ' . $_POST['fechaInicial'] . ' <b>al</b> ' . $_POST['fechaFinal'] ?></p>
+
     <!-- ESTADISTICAS DE TICKETS POR TECNICO -->
     <h3>Historial de tickets por empresaes</h3>
     <hr style="background: #969696; margin-top:1em;">
@@ -151,42 +149,41 @@ $ticketsTotales = $abiertos + $espera + $preCierre + $cerrados;
         <table>
             <tr>
                 <td><b>Abiertos:</b></td>
-                <td><?php echo isset($abiertos) ? $abiertos : 0?>
-                    <?php echo isset($sinTecnico) ? '<sup>(' . $sinTecnico . ' Sin atención )</sup>' : NULL?></td>
+                <td><?php echo isset($abiertos) ? $abiertos : 0 ?>
+                    <?php echo isset($sinTecnico) ? '<sup>(' . $sinTecnico . ' Sin atención )</sup>' : NULL ?></td>
             </tr>
         </table>
         <table>
             <tr>
                 <td><b>En espera:</b></td>
-                <td><?php echo isset($espera) ? $espera : 0?></td>
+                <td><?php echo isset($espera) ? $espera : 0 ?></td>
             </tr>
         </table>
         <table>
             <tr>
                 <td><b>Pre-cierre:</b></td>
-                <td><?php echo isset($preCierre) ? $preCierre : 0?></td>
+                <td><?php echo isset($preCierre) ? $preCierre : 0 ?></td>
             </tr>
         </table>
         <table>
             <tr>
                 <td><b>Cerrados:</b></td>
-                <td><?php echo isset($cerrados) ? $cerrados : 0?></td>
+                <td><?php echo isset($cerrados) ? $cerrados : 0 ?></td>
             </tr>
         </table>
         <table>
             <tr>
                 <td><b>Tickets totales:</b></td>
-                <td><?php echo isset($ticketsTotales) ? $ticketsTotales : 0?></td>
+                <td><?php echo isset($ticketsTotales) ? $ticketsTotales : 0 ?></td>
             </tr>
         </table>
     </div>
     <hr>
     <!-- ESTADITISCAS DE TICKETS POR EMPRESA -->
-    <div id="historial" class="table-striped"
-        style="background: #ffffff;margin-bottom: 1em;width: 100%;margin-top: 1em;padding:0.5em; overflow:scroll">
+    <div id="historial" class="table-striped" style="background: #ffffff;margin-bottom: 1em;width: 100%;margin-top: 1em;padding:0.5em; overflow:scroll">
         <table class="table table-bordered">
             <thead>
-                <tr style="text-align: center;background: lightgray;color: rgb(255,255,255);">
+                <tr style="text-align: center;background: #505050;color: rgb(255,255,255);">
                     <th>ID</th>
                     <th>Empresa</th>
                     <th>T/abiertos</th>
@@ -205,9 +202,9 @@ $ticketsTotales = $abiertos + $espera + $preCierre + $cerrados;
 
                 // ID DE FILA EN TABLA
                 $cont = 1;
-                
-                while($empresa = $stmt_L->fetch(PDO::FETCH_ASSOC)){ 
-                //*******************************************************************************
+
+                while ($empresa = $stmt_L->fetch(PDO::FETCH_ASSOC)) {
+                    //*******************************************************************************
                     // EMPRESA EN CURSO
                     $empresa = $empresa['descripcion'];
 
@@ -218,11 +215,11 @@ $ticketsTotales = $abiertos + $espera + $preCierre + $cerrados;
 
                     $abiertosL = $esperaL = $preCierreL = $cerradosL = 0;
 
-                    while($ticket = $stmtLoc->fetch(PDO::FETCH_ASSOC)){
-                        
+                    while ($ticket = $stmtLoc->fetch(PDO::FETCH_ASSOC)) {
+
                         $estatusL = $ticket['estatus'];
-                        
-                        switch($estatusL){
+
+                        switch ($estatusL) {
                             case 'abierto':
                                 $abiertosL++;
                                 break;
@@ -236,41 +233,41 @@ $ticketsTotales = $abiertos + $espera + $preCierre + $cerrados;
                                 $cerradosL++;
                                 break;
                         }
-                    
                     }
 
                     // PORCENTAJE DE TICKETS TOMADOS
                     $ticketsLoc = $abiertosL + $esperaL + $preCierreL + $cerradosL;
-                    if($ticketsTotales > 0){
+                    if ($ticketsTotales > 0) {
                         $porcentajeLoc = (100 / $ticketsTotales) * $ticketsLoc;
-                    }else{
+                    } else {
                         $porcentajeLoc = 0;
                     }
-                    
-                    if($ticketsLoc != 0){
-                //*******************************************************************************
+
+                    if ($ticketsLoc != 0) {
+                        //*******************************************************************************
                 ?>
 
-                <tr class="ticketRow" style="text-align:center">
-                    <td><?php echo $cont?></td>
-                    <td><?php echo $empresa?></td>
-                    <td><?php echo $abiertosL?></td>
-                    <td><?php echo $esperaL?></td>
-                    <td><?php echo $preCierreL?></td>
-                    <td><?php echo $cerradosL?></td>
-                    <td><?php echo $ticketsLoc?></td>
-                    <td><?php echo number_format($porcentajeLoc, 2)?>%</td>
-                </tr>
+                        <tr class="ticketRow" style="text-align:center">
+                            <td><?php echo $cont ?></td>
+                            <td><?php echo $empresa ?></td>
+                            <td><?php echo $abiertosL ?></td>
+                            <td><?php echo $esperaL ?></td>
+                            <td><?php echo $preCierreL ?></td>
+                            <td><?php echo $cerradosL ?></td>
+                            <td><?php echo $ticketsLoc ?></td>
+                            <td><?php echo number_format($porcentajeLoc, 2) ?>%</td>
+                        </tr>
 
-                <?php $cont++; } }?>
+                <?php $cont++;
+                    }
+                } ?>
             </tbody>
         </table>
     </div>
 
     <!-- BOTONES DEL REPORTE -->
     <div id="botones" style="width:80%; margin: 0 auto;">
-        <button id="volverReportes" class="btn btn-primary" type="button" style="width:45%;"
-            onclick="location.reload()">
+        <button id="volverReportes" class="btn btn-primary" type="button" style="width:45%;" onclick="location.reload()">
             Atras
         </button>
 
@@ -281,16 +278,16 @@ $ticketsTotales = $abiertos + $espera + $preCierre + $cerrados;
 </div>
 
 <script type="text/javascript">
-$(document).ready(function() {
+    $(document).ready(function() {
 
-    // FECHA DEL REPORTE
-    var fecha = new Date();
-    $("#fechaReporte").html(`FECHA DE EMISION DEL REPORTE<br>${fecha}`);
+        // FECHA DEL REPORTE
+        var fecha = new Date();
+        $("#fechaReporte").html(`FECHA DE EMISION DEL REPORTE<br>${fecha}`);
 
-    // IMPRIMIR REPORTE
-    $("#imprimirReporte").click(function() {
-        window.print();
+        // IMPRIMIR REPORTE
+        $("#imprimirReporte").click(function() {
+            window.print();
+        })
+
     })
-
-})
 </script>

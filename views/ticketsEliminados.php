@@ -30,6 +30,7 @@ $stmt->execute();
                     <th>Empresa</th>
                     <th>Depto</th>
                     <th>Categoria</th>
+                    <th>Analista</th>
                     <th>Prioridad</th>
                     <th>Acciones</th>
                 </tr>
@@ -41,8 +42,9 @@ $stmt->execute();
                         <td><?php echo $ticket['id_ticket'] ?></td>
                         <td><?php echo $ticket['fecha'] ?></td>
                         <td><?php echo $ticket['empresa'] ?></td>
-                        <td><?php echo $ticket['persona'] ?></td>
+                        <td><?php echo $ticket['nombre'] ?></td>
                         <td><?php echo $ticket['categoria'] ?>
+                        <td><?php echo $ticket['analista'] ?></td>
                         </td>
                         <?php
                         switch ($ticket['prioridad']) {

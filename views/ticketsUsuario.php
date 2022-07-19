@@ -79,7 +79,7 @@ $stmt->execute();
                 <tr style="background: #505050;color: rgb(255,255,255);">
                     <th>ID</th>
                     <th>Fecha</th>
-                    <th>Solicitud</th>
+                    <th>Asunto</th>
                     <th>Prioridad</th>
                     <th>Analista</th>
                     <th>Estatus</th>
@@ -96,7 +96,7 @@ $stmt->execute();
                     <tr id="<?php echo $ticket['id_ticket'] ?>" style="background-color:<?php echo $color ?>">
                         <td><?php echo $ticket['id_ticket'] ?></td>
                         <td><?php echo $ticket['fecha'] ?></td>
-                        <td><?php echo $ticket['solicitud'] ?></td>
+                        <td><?php echo $ticket['asunto'] ?></td>
                         <?php
                         switch ($ticket['prioridad']) {
                             case 'baja':

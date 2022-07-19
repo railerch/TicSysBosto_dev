@@ -23,16 +23,16 @@ class Ticket
         global $conn;
 
         try {
-            $stmt       = $conn->prepare("INSERT INTO tickets (id_ticket, fecha, empresa, depto, persona, usuario, area, categoria, asunto, descripcion, prioridad, analista, estatus, comentarios) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt       = $conn->prepare("INSERT INTO tickets (id_ticket, fecha, empresa, depto, nombre, usuario, area, categoria, asunto, descripcion, prioridad, analista, estatus, comentarios) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             $id_ticket  = NULL;
             $fecha      = date('Y-m-d H:i:s');
             $empresa    = isset($this->info['empresa']) ? $this->info['empresa'] : $_SESSION['empresa'];
-            $depto      = isset($this->info['depto']) ? $this->info['depto'] : $_SESSION['depto'];
-            $persona    = isset($this->info['persona']) ? $this->info['persona'] : $_SESSION['nombre'];
+            $depto      = isset($this->info['deptoEmisor']) ? $this->info['deptoEmisor'] : $_SESSION['depto'];
+            $nombre    = isset($this->info['nombre']) ? $this->info['nombre'] : $_SESSION['nombre'];
 
-            if (isset($this->info['persona'])) {
-                // BUSCAR USUARIO EN CASO DE QUE EL TICKET LO HAYA CREADO UN TECNICO
-                $nombre    = $this->info['persona'];
+            if (isset($this->info['nombre'])) {
+                // BUSCAR USUARIO EN CASO DE QUE EL TICKET LO HAYA CREADO UN ANALISTA
+                $nombre    = $this->info['nombre'];
                 $stmt_usr  = $conn->prepare("SELECT usuario FROM usuarios WHERE nombre = '$nombre'");
                 $stmt_usr->execute();
                 $usuario   = $stmt_usr->fetch(PDO::FETCH_ASSOC);
@@ -40,8 +40,8 @@ class Ticket
             }
 
             $usuario    = isset($usrTmp) ? $usrTmp : $_SESSION['usuario'];
-            $area       = $this->info['area'];
-            $categoria  = $this->categoria;
+            $area       = isset($this->info['area']) ? $this->info['area'] : $_SESSION['depto'];
+            $categoria  = $this->info['categoria'];
             $asunto     = $this->info['asunto'];
 
             if ($this->info['descripcion'] != "") {
@@ -60,7 +60,7 @@ class Ticket
             $stmt->bindParam(2, $fecha);
             $stmt->bindParam(3, $empresa);
             $stmt->bindParam(4, $depto);
-            $stmt->bindParam(5, $persona);
+            $stmt->bindParam(5, $nombre);
             $stmt->bindParam(6, $usuario);
             $stmt->bindParam(7, $area);
             $stmt->bindParam(8, $categoria);

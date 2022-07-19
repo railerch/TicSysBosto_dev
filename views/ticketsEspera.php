@@ -30,6 +30,7 @@ $stmt->execute();
                     <th>Empresa</th>
                     <th>Depto</th>
                     <th>Categoria</th>
+                    <th>Analista</th>
                     <th>Prioridad</th>
                     <th>Acciones</th>
                 </tr>
@@ -55,6 +56,7 @@ $stmt->execute();
                         <td><?php echo $ticket['empresa'] ?></td>
                         <td><?php echo $ticket['depto'] ?></td>
                         <td><?php echo $ticket['categoria'] ?></td>
+                        <td><?php echo $ticket['analista'] ?></td>
                         <?php
                         switch ($ticket['prioridad']) {
                             case 'baja':

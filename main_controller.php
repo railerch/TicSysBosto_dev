@@ -158,7 +158,7 @@ if (@$_GET['consultarUsuario']) {
     exit();
 }
 
-// ACTUALIZAR DATOS DE USUARIO 
+// ACTUALIZdeptosEmpresaAR DATOS DE USUARIO 
 if (@$_GET['actualizarDatos']) {
     $usuario = new Usuario($_POST);
     $usuario->actualizar_usuario();
@@ -212,10 +212,41 @@ if (@$_GET['usuariosActivos']) {
 //////////////////////////// TICKETS
 //---------------------------------------------------------------------------------------------
 
+// DEPARTAMENTO SEGUN LA EMPRESA SELECCIONADA
+if (@$_GET['deptosEmpresa']) {
+    $empresa = $_GET['empresa'];
+    $stmt = $conn->query("SELECT descripcion FROM miscelaneos WHERE tipo = 'depto' AND descripcion LIKE '$empresa%' ORDER BY descripcion ASC");
+
+    $deptos = [];
+
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $d = explode('-', $row['descripcion']);
+        $deptos[] = $d[1];
+    }
+
+    echo json_encode($deptos);
+
+    exit();
+}
+
+// USUARIOS SEGUN EL DEPTO SELECCIONADO
+if (@$_GET['usuariosEmpresaDepto']) {
+    $empresa = $_GET['empresa'];
+    $depto   = $_GET['depto'];
+    $stmt    = $conn->query("SELECT nombre FROM usuarios WHERE empresa = '$empresa' AND depto = '$depto' ORDER BY nombre");
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $usuarios[] = $row['nombre'];
+    };
+
+    echo isset($usuarios) ? json_encode($usuarios) : json_encode([]);
+
+    exit();
+}
+
 // CATEGORIAS EN TICKETS SEGUN EL DEPTO
 if (@$_GET['deptoCats']) {
     $depto  = $_GET['depto'];
-    $stmt   = $conn->query("SELECT * FROM miscelaneos WHERE descripcion LIKE '%$depto%' AND tipo = 'cat'");
+    $stmt   = $conn->query("SELECT descripcion FROM miscelaneos WHERE descripcion LIKE '%$depto%' AND tipo = 'cat' ORDER BY descripcion ASC");
     while ($cat = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $categorias[] = explode("-", $cat['descripcion'])[1];
     };
@@ -424,7 +455,7 @@ if (@$_GET['actualizarMsjTecnico']) {
 if (@$_GET['actualizarMsjUsuario']) {
     $user   = $_SESSION['nombre'];
     $remit  = $_SESSION['usuario'];
-    $col    = "persona";
+    $col    = "nombre";
 
     echo comprobar_no_leidos($col, $user, $remit);
 }
@@ -682,10 +713,10 @@ if (@$_GET['crearEmpresa']) {
 if (@$_GET['crearDepto']) {
 
     try {
-
+        $empresa = isset($_POST['empresa']) ? $_POST['empresa'] : $_SESSION['empresa'];
         $stmt_dpt = $conn->prepare("INSERT INTO miscelaneos (descripcion, tipo) VALUES (?, ?)");
 
-        $desc = trim($_POST['departamento']);
+        $desc = $empresa . '-' . trim($_POST['departamento']);
         $tipo = 'depto';
         $stmt_dpt->bindParam(1, $desc);
         $stmt_dpt->bindParam(2, $tipo);
@@ -708,10 +739,10 @@ if (@$_GET['crearDepto']) {
 if (@$_GET['crearCat']) {
 
     try {
-
+        $depto = isset($_POST['depto']) ? $_POST['depto'] : $_SESSION['depto'];
         $stmt_dpt = $conn->prepare("INSERT INTO miscelaneos (descripcion, tipo) VALUES (?, ?)");
 
-        $desc = $_SESSION['depto'] . '-' . trim($_POST['categoria']);
+        $desc = $depto . '-' . trim($_POST['categoria']);
         $tipo = 'cat';
         $stmt_dpt->bindParam(1, $desc);
         $stmt_dpt->bindParam(2, $tipo);

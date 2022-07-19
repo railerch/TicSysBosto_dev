@@ -9,8 +9,9 @@ if (!$conn) {
     Log::registrar_log($conexion->error);
 }
 
-// MOSTRAR AREAS E INCIDENCIAS REGULARES
-$stmt_0 = $conn->prepare("SELECT * FROM miscelaneos WHERE tipo = 'depto' ORDER BY descripcion ASC");
+// CARGAR DEPARTAMENTOS
+$empresa = $_SESSION['empresa'];
+$stmt_0 = $conn->prepare("SELECT descripcion FROM miscelaneos WHERE tipo = 'depto' AND descripcion LIKE '$empresa%' ORDER BY descripcion ASC");
 $stmt_0->setFetchMode(PDO::FETCH_ASSOC);
 $stmt_0->execute();
 
@@ -52,12 +53,11 @@ if (@$_SESSION['avisos'] != "Ticket creado exitosamente!") {
             <select id="area" class="form-control" name="area" style="min-width:200px;max-width:30%;margin: 0 0.5em 0.5em 0;" <?php echo $deshabilitar ?>>
                 <option style="color:#aaa" selected>Departamento receptor</option>
                 <?php while ($depto = $stmt_0->fetch()) {
-                    if ($depto['descripcion'] != $_SESSION['depto']) {
+                    $depto = explode("-", $depto['descripcion'])[1];
                 ?>
-                        <option style='color:#555' value="<?php echo $depto['descripcion'] ?>">
-                            <?php echo $depto['descripcion'] ?></option>
-                <?php }
-                } ?>
+                    <option style='color:#555' value="<?php echo $depto ?>">
+                        <?php echo $depto ?></option>
+                <?php } ?>
             </select>
 
             <select id="categoria" class="form-control" name="categoria" style="min-width:200px;max-width:30%;margin: 0 0.5em 0.5em 0;" <?php echo $deshabilitar ?>>
@@ -106,7 +106,7 @@ ocultar_aviso();
                 .then(res => res.json())
                 .then(data => {
                     if (data != "") {
-                        categoria.innerHTML = "<option style='color:#aaa' selected>Categoría:</option>";
+                        categoria.innerHTML = "<option style='color:#aaa' selected>Categoría</option>";
                         data.forEach(cat => {
                             let opt = document.createElement("option");
                             opt.setAttribute("value", cat);
@@ -115,8 +115,8 @@ ocultar_aviso();
                         })
 
                     } else {
-                        categoria.innerHTML = "<option style='color:#aaa' selected>Categoría:</option>";
-                        console.warn("AVISO: El depto seleccionado no posee categorias activas.")
+                        categoria.innerHTML = "<option style='color:#aaa' selected>Categoría</option>";
+                        console.warn("AVISO: Sin registros.")
                     }
 
                 })

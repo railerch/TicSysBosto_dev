@@ -10,19 +10,9 @@ if (!$conn) {
 }
 
 // MOSTRAR DEPARTAMENTOS, EMPRESAS E INCIDENCIAS REGULARES
-$stmt_1 = $conn->prepare("SELECT * FROM miscelaneos WHERE tipo = 'empresa'");
+$stmt_1 = $conn->prepare("SELECT * FROM miscelaneos WHERE tipo = 'empresa' ORDER BY descripcion ASC");
 $stmt_1->setFetchMode(PDO::FETCH_ASSOC);
 $stmt_1->execute();
-
-$stmt_2 = $conn->prepare("SELECT nombre FROM usuarios ORDER BY nombre ASC");
-$stmt_2->setFetchMode(PDO::FETCH_ASSOC);
-$stmt_2->execute();
-
-$stmt_3 = $conn->prepare("SELECT * FROM miscelaneos WHERE tipo = 'depto' ORDER BY descripcion ASC");
-$stmt_3->setFetchMode(PDO::FETCH_ASSOC);
-$stmt_3->execute();
-
-
 ?>
 <style>
     .ocultar {
@@ -45,23 +35,20 @@ $stmt_3->execute();
                         </option>
                     <?php } ?>
                 </select>
-                <select id="persona" class="form-control" name="persona" style="min-width:200px;max-width:20%;margin: 0 0.5em 0.5em 0;">
+                <select id="deptoEmisor" class="form-control" name="deptoEmisor" style="min-width:200px;max-width:20%;margin: 0 0.5em 0.5em 0;">
+                    <option style="color:#aaa" selected>Depto emisor</option>
+                </select>
+                <select id="nombre" class="form-control" name="nombre" style="min-width:200px;max-width:20%;margin: 0 0.5em 0.5em 0;">
                     <option style="color:#aaa" selected>Usuario emisor</option>
-                    <?php while ($usr = $stmt_2->fetch()) { ?>
-                        <option style='color:#555' value="<?php echo $usr['nombre'] ?>"><?php echo $usr['nombre'] ?></option>
-                    <?php } ?>
                 </select>
-                <select id="area" class="form-control" name="area" style="min-width:200px;max-width:20%;margin: 0 0.5em 0.5em 0;">
-                    <option style="color:#aaa" selected>Ticket para</option>
-                    <?php while ($depto = $stmt_3->fetch()) { ?>
-                        <option style='color:#555' value="<?php echo $depto['descripcion'] ?>"><?php echo $depto['descripcion'] ?>
-                        </option>
-                    <?php } ?>
-                </select>
-                <select id="categoria" class="form-control" name="categoria" style="min-width:200px;max-width:20%;margin: 0 0.5em 0.5em 0;" <?php echo $deshabilitar ?>>
+                <?php if ($_SESSION['nivel'] == 'admin') { ?>
+                    <select id="area" class="form-control" name="area" style="min-width:200px;max-width:20%;margin: 0 0.5em 0.5em 0;">
+                        <option style="color:#aaa" selected>Depto receptor</option>
+                    </select>
+                <?php } ?>
+                <select id="categoria" class="form-control" name="categoria" style="min-width:200px;max-width:20%;margin: 0 0.5em 0.5em 0;" <?php echo @$deshabilitar ?>>
                     <option style="color:#aaa" selected>Categoría</option>
                 </select>
-                <!-- PRIORIDAD -->
                 <select id="prioridad" class="form-control" name="prioridad" style="min-width:200px;max-width:15%;margin: 0 0.5em 0.5em 0;">
                     <option selected>Prioridad</option>
                     <option value="baja">Baja</option>
@@ -71,7 +58,7 @@ $stmt_3->execute();
                 </select>
             </div>
             <h4>Asunto</h4>
-            <input id="solicitud" class="form-control mb-2" type="text" name="solicitud" placeholder="Breve encabezado de la solicitud" maxlength="50">
+            <input id="asunto" class="form-control mb-2" type="text" name="asunto" placeholder="Breve encabezado de la solicitud" maxlength="50">
             <h4>Descripción</h4>
             <textarea id="descripcion" class="form-control" name="descripcion" style="min-height: 5em;max-height: 5em;" placeholder="Describa su solicitud, de ser necesario habilite ANYDESK y envie los datos de conexión" maxlength="250" required></textarea>
         </div>
@@ -94,10 +81,112 @@ ocultar_aviso();
         // ESTABLECER LA PAGINA ACTUAL
         sessionStorage.setItem("pagina_actual", "views/ticketTechCrear.php");
 
-        // FILTRAR CATEGORIAS SEGUN EL DEPTO SELECCIONADO
-        $("#area").change(function() {
-            let depto = $(this).val();
+        // FILTRAR DEPTOS SEGUN LA EMPRESA SELECCIONADA
+        $("#empresa").change(function() {
+            let tipoSesion = sessionStorage.getItem("tipoSesion");
+            let empresa = $(this).val();
+            let deptoRt = document.getElementById("deptoEmisor");
+            let deptoRx = null;
+
+            // Permitir cambiar depto receptor si el nivel es admin
+            if (tipoSesion == "admin") {
+                deptoRx = document.getElementById("area");
+            }
+
+            let usuarios = document.getElementById("nombre");
             let categoria = document.getElementById("categoria");
+            fetch(`main_controller.php?deptosEmpresa=true&empresa=${empresa}`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data != "") {
+                        deptoRt.innerHTML = "<option style='color:#aaa' selected>Depto emisor</option>";
+                        usuarios.innerHTML = "<option style='color:#aaa' selected>Usuario emisor</option>";
+                        if (tipoSesion == "admin") {
+                            deptoRx.innerHTML = "<option style='color:#aaa' selected>Depto receptor</option>";
+                            categoria.innerHTML = "<option style='color:#aaa' selected>Categoria</option>";
+                        }
+                        data.forEach(dep => {
+                            let optA = document.createElement("option");
+                            optA.setAttribute("value", dep);
+                            optA.innerText = dep;
+                            deptoRt.append(optA);
+                            // Permitir cambiar depto receptor si el nivel es admin
+                            if (tipoSesion == "admin") {
+                                let optB = document.createElement("option");
+                                optB.setAttribute("value", dep);
+                                optB.innerText = dep;
+                                deptoRx.append(optB);
+                            }
+                        })
+
+                    } else {
+                        deptoRt.innerHTML = "<option style='color:#aaa' selected>Sin registros</option>";
+                        // Permitir cambiar depto receptor si el nivel es admin
+                        if (tipoSesion == "admin") {
+                            deptoRx.innerHTML = "<option style='color:#aaa' selected>Sin registros</option>";
+                            categoria.innerHTML = "<option style='color:#aaa' selected>Sin registros</option>";
+                        }
+                        usuarios.innerHTML = "<option style='color:#aaa' selected>Sin registros</option>";
+                        console.warn("AVISO: sin registros activos.")
+                    }
+
+                })
+        })
+
+        // FILTRAR USUARIOS EMISORES SEGUN EL DEPTO
+        $("#deptoEmisor").change(function() {
+            let depto = $(this).val();
+            let empresa = document.getElementById("empresa").value;
+            let usuarios = document.getElementById("nombre");
+            fetch(`main_controller.php?usuariosEmpresaDepto=true&empresa=${empresa}&depto=${depto}`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data != "") {
+                        usuarios.innerHTML = "<option style='color:#aaa' selected>Usuario emisor</option>";
+                        data.forEach(dep => {
+                            let opt = document.createElement("option");
+                            opt.setAttribute("value", dep);
+                            opt.innerText = dep;
+                            usuarios.append(opt);
+                        })
+
+                    } else {
+                        usuarios.innerHTML = "<option style='color:#aaa' selected>Sin registros</option>";
+                        console.warn("AVISO: sin registros activos.")
+                    }
+
+                })
+        })
+
+        // FILTRAR CATEGORIAS SEGUN EL DEPTO SELECCIONADO
+        let tipoSesion = sessionStorage.getItem("tipoSesion");
+
+        if (tipoSesion == "admin") {
+            $("#area").change(function() {
+                let depto = $(this).val();
+                let categoria = document.getElementById("categoria");
+                fetch(`main_controller.php?deptoCats=true&depto=${depto}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data != "") {
+                            categoria.innerHTML = "<option style='color:#aaa' selected>Categoría</option>";
+                            data.forEach(cat => {
+                                let opt = document.createElement("option");
+                                opt.setAttribute("value", cat);
+                                opt.innerText = cat;
+                                categoria.append(opt);
+                            })
+
+                        } else {
+                            categoria.innerHTML = "<option style='color:#aaa' selected>Sin registros</option>";
+                            console.warn("AVISO: sin registros activos.")
+                        }
+
+                    })
+            })
+        } else {
+            let depto = sessionStorage.getItem("depto");
+
             fetch(`main_controller.php?deptoCats=true&depto=${depto}`)
                 .then(res => res.json())
                 .then(data => {
@@ -107,16 +196,16 @@ ocultar_aviso();
                             let opt = document.createElement("option");
                             opt.setAttribute("value", cat);
                             opt.innerText = cat;
-                            $("#categoria").append(opt);
+                            categoria.append(opt);
                         })
 
                     } else {
-                        categoria.innerHTML = "<option style='color:#aaa' selected>Categoría</option>";
-                        console.warn("AVISO: El depto seleccionado no posee categorias activas.")
+                        categoria.innerHTML = "<option style='color:#aaa' selected>Sin registros</option>";
+                        console.warn("AVISO: sin registros activos.")
                     }
 
                 })
-        })
+        }
 
         // CREAR TICKET
         $("button[type=submit]").click(function() {
@@ -125,9 +214,9 @@ ocultar_aviso();
             // VALIDAR CAMPOS Y SELECCIONES
             <?php
             echo validar_selecciones("empresa", "Empresa");
-            echo validar_selecciones("persona", "Usuario");
+            echo validar_selecciones("nombre", "Usuario");
             echo validar_selecciones("area", "Departamento al que va dirigida la solicitud");
-            echo validar_selecciones("solicitud", "");
+            echo validar_selecciones("asunto", "");
             echo validar_selecciones("prioridad", "Prioridad");
             echo validar_selecciones("descripcion", "");
 

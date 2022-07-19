@@ -7,13 +7,16 @@
                     <h5 class="modal-title" style="color: #333;"><strong>TICKET:
                             #<?php echo $ticket['id_ticket'] ?></strong>
                         <br>
-                        <?php echo $ticket['persona'] ?> (<?php echo $ticket['empresa'] ?>)
+                        <?php echo $ticket['nombre'] ?>
+                        <br>
+                        <?php echo $ticket['empresa'] . ' - ' . $ticket['depto'] ?>
                     </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                 </div>
                 <div class="modal-body" style="color: #333;">
                     <ul class="list-unstyled">
-                        <li><strong>Solicitud: </strong><?php echo $ticket['solicitud'] ?></li>
+                        <li><strong>Categoria: </strong><?php echo $ticket['categoria'] ?></li>
+                        <li><strong>Solicitud: </strong><?php echo $ticket['asunto'] ?></li>
                         <li><strong>Descripción: </strong><?php echo $ticket['descripcion'] ?></li>
                     </ul>
 
@@ -87,7 +90,7 @@
                     <textarea id="bitacora<?php echo $ticket['id_ticket'] ?>" class="form-control" name="bitacora" style="min-width:100%; max-width:100%; min-height:150px; max-height:15px;" placeholder="Indique una breve descripción de la solucion..."></textarea>
                 </div>
                 <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">CANCELAR</button>
-                    <button class="btn btn-danger cerrarConfirmacion" type="button" data-cerrar-id="<?php echo $ticket['id_ticket'] ?>" data-analista="<?php echo $ticket['analista'] ?>" data-nombre-usuario="<?php echo $ticket['persona'] ?>" data-dismiss="modal">CERRAR
+                    <button class="btn btn-danger cerrarConfirmacion" type="button" data-cerrar-id="<?php echo $ticket['id_ticket'] ?>" data-analista="<?php echo $ticket['analista'] ?>" data-nombre-usuario="<?php echo $ticket['nombre'] ?>" data-dismiss="modal">CERRAR
                         TICKET</button>
                 </div>
             </div>
@@ -120,12 +123,13 @@
                     <h5 class="modal-title" style="color: #333;"><strong>TICKET:
                             #<?php echo $ticket['id_ticket'] ?></strong>
                         <br>
-                        <?php echo $ticket['persona'] ?> (<?php echo $ticket['empresa'] ?>)
+                        <?php echo $ticket['nombre'] ?> (<?php echo $ticket['empresa'] ?>)
                     </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                 </div>
                 <div class="modal-body" style="color: #333;">
                     <ul class="list-unstyled">
+                        <li><strong>Categoria: </strong><?php echo $ticket['categoria'] ?></li>
                         <li><strong>Solicitud: </strong><?php echo $ticket['solicitud'] ?></li>
                         <li><strong>Descripción: </strong><?php echo $ticket['descripcion'] ?></li>
                     </ul>
@@ -167,13 +171,16 @@
                     <h5 class="modal-title" style="color: #333;"><strong>TICKET:
                             #<?php echo $ticket['id_ticket'] ?></strong>
                         <br>
-                        <?php echo $ticket['persona'] ?> (<?php echo $ticket['empresa'] ?>)
+                        <?php echo $ticket['nombre'] ?>
+                        <br>
+                        <?php echo $ticket['empresa'] . ' - ' . $ticket['depto'] ?>
                     </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                 </div>
                 <div class="modal-body" style="color: #333;">
                     <ul class="list-unstyled">
-                        <li><strong>Solicitud: </strong><?php echo $ticket['solicitud'] ?></li>
+                        <li><strong>Categoria: </strong><?php echo $ticket['categoria'] ?></li>
+                        <li><strong>Solicitud: </strong><?php echo $ticket['asunto'] ?></li>
                         <li><strong>Descripción: </strong><?php echo $ticket['descripcion'] ?></li>
                     </ul>
                 </div>
@@ -207,13 +214,16 @@
                     <h5 class="modal-title" style="color: #333;"><strong>TICKET:
                             #<?php echo $ticket['id_ticket'] ?></strong>
                         <br>
-                        <?php echo $ticket['persona'] ?> (<?php echo $ticket['empresa'] ?>)
+                        <?php echo $ticket['nombre'] ?>
+                        <br>
+                        <?php echo $ticket['empresa'] . ' - ' . $ticket['depto'] ?>
                     </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                 </div>
                 <div class="modal-body" style="color: #333;">
                     <ul class="list-unstyled">
-                        <li><strong>Solicitud: </strong><?php echo $ticket['solicitud'] ?></li>
+                        <li><strong>Categoria: </strong><?php echo $ticket['categoria'] ?></li>
+                        <li><strong>Solicitud: </strong><?php echo $ticket['asunto'] ?></li>
                         <li><strong>Descripción: </strong><?php echo $ticket['descripcion'] ?></li>
                     </ul>
                     <hr>

@@ -10,83 +10,75 @@ if (!$conn) {
 }
 
 // CREAR LOG
-Log::registrar_log('Reporte de tareas: ' . $_POST['analista']);
+Log::registrar_log('Reporte de tickets por categoria: ' . $_POST['categoria']);
 
 // DATOS PARA EL REPORTE
-$nombre       = isset($_POST['analista']) ? $_POST['analista'] : NULL;
+$categoria    = isset($_POST['categoria']) ? $_POST['categoria'] : NULL;
+$empresa      = $_SESSION['empresa'];
+$depto        = $_SESSION['depto'];
 $fechaInicial = isset($_POST['fechaInicial']) ? $_POST['fechaInicial'] . ' 00:00:00' : "2020-01-01 00:00:00";
 $fechaFinal   = isset($_POST['fechaFinal']) ? $_POST['fechaFinal'] . ' 23:59:59' : date("Y-m-d 23:59:59");
 
-// CONSULTAR POR DATOS DEL USUARIO
-$stmt_0 = $conn->prepare("SELECT nombre FROM usuarios WHERE nombre = '$nombre' ");
-$stmt_0->execute();
-$analista = $stmt_0->fetch(PDO::FETCH_ASSOC);
+// PORCENTAJE DE INCIDENCIAS CON RESPECTO A OTROS DEPTOS
+$stmtTicDepto = $conn->prepare("SELECT depto, estatus FROM tickets WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' AND empresa = '$empresa' AND categoria = '$categoria' AND estatus <> 'eliminado'");
+$stmtTicDepto->execute();
 
-// CONSULTA PARA LA TABLA DE TAREAS ASIGNADAS
-$stmt_tareas = $conn->prepare("SELECT * FROM tareas WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' AND analista = '$nombre'");
-$stmt_tareas->execute();
+$abiertos = $espera = $preCierre = $cerrados = 0;
+$incidenciasDepto = [];
+$ticketsTotales = 0;
+$porcTicket = 0;
 
-// CONSULTA DE TAREAS PARA ENCABEZADO DE ESTADISTICAS
-$stmt_stats = $conn->prepare("SELECT analista, valoracion, estatus FROM tareas WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' AND analista = '$nombre'");
-$stmt_stats->execute();
+while ($incDepto = $stmtTicDepto->fetch(PDO::FETCH_ASSOC)) {
+    // Ticket por depto
+    @$incidenciasDepto[$incDepto['depto']] += 1;
 
-$pendiente = $cola = $procesando = $finalizada = $verificada = $efectividad = $puntaje = 0;
-
-while ($tarea = $stmt_stats->fetch(PDO::FETCH_ASSOC)) {
-
-    $valor    = $tarea['valoracion'];
-
-    switch ($tarea['estatus']) {
-        case 'Pendiente':
-            $pendiente++;
+    // Total por estatus
+    switch ($incDepto['estatus']) {
+        case 'abierto':
+            $abiertos++;
             break;
-        case 'En espera':
-            $cola++;
+        case 'espera':
+            $espera++;
             break;
-        case 'Procesando':
-            $procesando++;
+        case 'precierre':
+            $preCierre++;
             break;
-        case 'Finalizada':
-            $finalizada++;
-            break;
-        case 'Verificada':
-            $verificada++;
-            $puntaje += $valor;
+        case 'cerrado':
+            $cerrados++;
             break;
     }
+
+    // Tickets totales
+    $ticketsTotales++;
 }
 
-// EFECTIVIDAD
-$totalTareas = $pendiente + $cola + $procesando + $finalizada + $verificada;
-
-if ($totalTareas > 0) {
-    $efectividad = (100 / $totalTareas) * $verificada;
-} else {
-    $efectividad = 0;
+// PORCENTAJE POR TICKET
+if ($ticketsTotales > 0) {
+    $porcTicket = 100 / $ticketsTotales;
 }
 
 ?>
 
 <style>
-    #datosTecnico {
+    #ticketsCategoria {
         display: flex;
         justify-content: space-around;
         margin-bottom: 1em;
     }
 
-    #datosTecnico div {
+    #ticketsCategoria div {
         width: 30%;
     }
 
-    #datosTecnico table {
+    #ticketsCategoria table {
         color: #d7d7d7;
     }
 
-    #datosTecnico table tr td:first-child {
+    #ticketsCategoria table tr td:first-child {
         text-align: right;
     }
 
-    #datosTecnico table tr td:last-child {
+    #ticketsCategoria table tr td:last-child {
         padding-left: 1em;
     }
 
@@ -142,13 +134,14 @@ if ($totalTareas > 0) {
             display: block;
             text-align: center !important;
         }
+
     }
 </style>
 
 <div id="docReporte" style="background: #5b5b5b; padding: 0.5em; border-radius: 1em; box-shadow: 0px 0px 10px rgb(0,0,0);border-width: 1px;border-style: none;border-top-style: none;border-right-style: none;border-bottom-style: none;color: #d7d7d7;">
     <div id="locDiv">
         <i class="fa fa-user-circle-o" style="font-size: 5vw;margin-right: 0.3em;"></i>
-        <h1 class="d-inline-block">Reporte: <span style="font-weight:lighter"><?php echo $analista['nombre'] ?></span></h1>
+        <h1 class="d-inline-block">Reporte: <span style="font-weight:lighter"><?php echo $_SESSION['empresa'] . '-' . $_SESSION['depto'] ?></span></h1>
     </div>
     <h5 id="fechaReporte">
         <!-- FECHA DEL REPORTE -->
@@ -157,43 +150,37 @@ if ($totalTareas > 0) {
     <p style="text-align:right">
         <?php echo '<b>Periodo:</b> ' . $_POST['fechaInicial'] . ' <b>al</b> ' . $_POST['fechaFinal'] ?></p>
 
-    <h3>Historial de tareas realizadas</h3>
+    <h3>Nivel de incidencias, categoria: <?php echo $categoria ?></h3>
     <hr style="background: #969696; margin-top:1em;">
-    <div id="datosTecnico">
+    <div id="ticketsCategoria">
         <table>
             <tr>
-                <td><b>Pendientes:</b></td>
-                <td><?php echo isset($pendiente) ? $pendiente : 0 ?></td>
+                <td><b>Abiertos:</b></td>
+                <td><?php echo isset($abiertos) ? $abiertos : 0 ?></td>
             </tr>
         </table>
         <table>
             <tr>
                 <td><b>En espera:</b></td>
-                <td><?php echo isset($cola) ? $cola : 0 ?></td>
+                <td><?php echo isset($espera) ? $espera : 0 ?></td>
             </tr>
         </table>
         <table>
             <tr>
-                <td><b>En proceso:</b></td>
-                <td><?php echo isset($procesando) ? $procesando : 0 ?></td>
+                <td><b>Pre-cierre:</b></td>
+                <td><?php echo isset($preCierre) ? $preCierre : 0 ?></td>
             </tr>
         </table>
         <table>
             <tr>
-                <td><b>Finalizadas:</b></td>
-                <td><?php echo isset($finalizada) ? $finalizada : 0 ?></td>
+                <td><b>Cerrados:</b></td>
+                <td><?php echo isset($cerrados) ? $cerrados : 0 ?></td>
             </tr>
         </table>
         <table>
             <tr>
-                <td><b>Verificadas:</b></td>
-                <td><?php echo isset($verificada) ? $verificada : 0 ?></td>
-            </tr>
-        </table>
-        <table>
-            <tr>
-                <td><b>Tareas totales:</b></td>
-                <td><?php echo isset($totalTareas) ? $totalTareas : 0 ?></td>
+                <td><b>Tickets totales:</b></td>
+                <td><?php echo isset($ticketsTotales) ? $ticketsTotales : 0 ?></td>
             </tr>
         </table>
     </div>
@@ -202,11 +189,10 @@ if ($totalTareas > 0) {
         <table class="table table-bordered">
             <thead>
                 <tr style="text-align: center;background: #505050;color: rgb(255,255,255);">
-                    <th style="width: 5%;">ID</th>
-                    <th style="width: 15%;">Fecha</th>
-                    <th style="width: 25%;">Tarea</th>
-                    <th style="width: 10%;">Valor Pts</th>
-                    <th style="width: 10%;">Estatus</th>
+                    <th>ID</th>
+                    <th>Departamento</th>
+                    <th>Tickets totales</th>
+                    <th>% Incidencia</th>
                 </tr>
             </thead>
             <tbody>
@@ -214,27 +200,23 @@ if ($totalTareas > 0) {
                 // ID DE FILA EN TABLA
                 $cont = 1;
 
-                while ($tarea = $stmt_tareas->fetch(PDO::FETCH_ASSOC)) {
+                foreach ($incidenciasDepto as $key => $val) {
+
                 ?>
 
                     <tr class="ticketRow" style="text-align:center">
                         <td><?php echo $cont ?></td>
-                        <td><?php echo $tarea['fecha'] ?></td>
-                        <td style="text-align:left"><?php echo $tarea['descripcion'] ?></td>
-                        <td><?php echo $tarea['valoracion'] ?></td>
-                        <td><?php echo $tarea['estatus'] ?></td>
+                        <td><?php echo $key ?></td>
+                        <td><?php echo $val ?></td>
+                        <td><?php echo number_format(($val * $porcTicket), 2, '.') ?></td>
                     </tr>
 
                 <?php $cont++;
                 } ?>
             </tbody>
         </table>
-        <span style="display: block; text-align:center; color:#333"><b>EFECTIVIDAD DEL PERIODO:</b>
-            <?php echo number_format($efectividad, 2) ?>%</span>
-        <span style="display: block; text-align:center; color:#333"><b>PUNTAJE TOTAL:</b> <?php echo $puntaje ?>
-            Pts</span>
     </div>
-    <hr>
+
     <div id="botones" style="width:80%; margin: 0 auto;">
         <button id="volverReportes" class="btn btn-primary" type="button" style="width:45%;" onclick="location.reload()">
             Atras

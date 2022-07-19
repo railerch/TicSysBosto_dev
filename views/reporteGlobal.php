@@ -1,11 +1,11 @@
-<?php 
+<?php
 include('../main_functions.php');
 
 // CONEXION DB
 $conexion = new Connection('../config/config.json');
 $conn = $conexion->db_conn();
 
-if(!$conn){
+if (!$conn) {
     Log::registrar_log($conexion->error);
 }
 
@@ -13,8 +13,8 @@ if(!$conn){
 Log::registrar_log('Reporte global generado');
 
 // PERIODO DE FECHA PARA EL REPORTE
-$fechaInicial = isset($_POST['fechaInicial']) ? $_POST['fechaInicial'].' 00:00:00' : '2020-01-01 00:00:00';
-$fechaFinal   = isset($_POST['fechaFinal']) ? $_POST['fechaFinal'].' 23:59:59' : date("Y-m-d 23:59:59");
+$fechaInicial = isset($_POST['fechaInicial']) ? $_POST['fechaInicial'] . ' 00:00:00' : '2020-01-01 00:00:00';
+$fechaFinal   = isset($_POST['fechaFinal']) ? $_POST['fechaFinal'] . ' 23:59:59' : date("Y-m-d 23:59:59");
 
 // CONSULTAR TICKETS GLOBALES DEL PERIODO
 $stmt_st = $conn->prepare("SELECT analista, estatus FROM tickets WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' AND area = 'Sistemas' AND estatus <> 'eliminado'");
@@ -23,16 +23,16 @@ $stmt_st->execute();
 $abiertosG = $esperaG = $preCierreG = $cerradosG = 0;
 $sinTecnico = NULL;
 
-while($ticket = $stmt_st->fetch(PDO::FETCH_ASSOC)){
-    
+while ($ticket = $stmt_st->fetch(PDO::FETCH_ASSOC)) {
+
     // OMITIR LOS TICKETS DEL ROOT
-    if($ticket['analista'] != 'root'){
-        
-        if($ticket['analista'] == NULL){
+    if ($ticket['analista'] != 'root') {
+
+        if ($ticket['analista'] == NULL) {
             $sinTecnico++;
         }
-        
-        switch($ticket['estatus']){
+
+        switch ($ticket['estatus']) {
             case 'abierto':
                 $abiertosG++;
                 break;
@@ -47,7 +47,6 @@ while($ticket = $stmt_st->fetch(PDO::FETCH_ASSOC)){
                 break;
         }
     }
-    
 }
 
 // TOTAL TICKETS
@@ -60,15 +59,15 @@ $stmt_stats->execute();
 $pendienteG = $colaG = $procesandoG = $finalizadaG = $verificadaG = 0;
 $sinAsignar = NULL;
 
-while($tarea = $stmt_stats->fetch(PDO::FETCH_ASSOC)){
+while ($tarea = $stmt_stats->fetch(PDO::FETCH_ASSOC)) {
 
-    if($tarea['analista'] == 'Sin asignar'){
+    if ($tarea['analista'] == 'Sin asignar') {
         $sinAsignar++;
     }
 
     $estatus  = $tarea['estatus'];
 
-    switch($estatus){
+    switch ($estatus) {
         case 'Pendiente':
             $pendienteG++;
             break;
@@ -85,7 +84,6 @@ while($tarea = $stmt_stats->fetch(PDO::FETCH_ASSOC)){
             $verificadaG++;
             break;
     }
-
 }
 
 // TOTAL TAREAS GLOBALES
@@ -135,7 +133,7 @@ $totaltareas = $pendienteG + $colaG + $procesandoG + $finalizadaG + $verificadaG
             background-color: #fff !important;
         }
 
-        h1 span{
+        h1 span {
             font-size: 1em;
         }
 
@@ -172,18 +170,17 @@ $totaltareas = $pendienteG + $colaG + $procesandoG + $finalizadaG + $verificadaG
     }
 </style>
 
-<div id="docReporte"
-    style="background: #5b5b5b; padding: 0.5em; border-radius: 1em; box-shadow: 0px 0px 10px rgb(0,0,0);border-width: 1px;border-style: none;border-top-style: none;border-right-style: none;border-bottom-style: none;color: #d7d7d7;">
+<div id="docReporte" style="background: #5b5b5b; padding: 0.5em; border-radius: 1em; box-shadow: 0px 0px 10px rgb(0,0,0);border-width: 1px;border-style: none;border-top-style: none;border-right-style: none;border-bottom-style: none;color: #d7d7d7;">
     <div id="locDiv">
         <i class="fa fa-globe" style="font-size: 5vw;margin-right: 0.3em;"></i>
-        <h1 class="d-inline-block">Reporte: <span style="font-weight:lighter">global <?php echo strtolower($_SESSION['depto'])?></span></h1>
+        <h1 class="d-inline-block">Reporte: <span style="font-weight:lighter">global <?php echo strtolower($_SESSION['depto']) ?></span></h1>
     </div>
     <h5 id="fechaReporte">
         <!-- FECHA DEL REPORTE -->
     </h5>
     <hr style="background: #969696; margin-top:1em;">
     <p style="text-align:right">
-        <?php echo '<b>Periodo:</b> '.$_POST['fechaInicial'].' <b>al</b> '.$_POST['fechaFinal'] ?></p>
+        <?php echo '<b>Periodo:</b> ' . $_POST['fechaInicial'] . ' <b>al</b> ' . $_POST['fechaFinal'] ?></p>
 
     <!-- ESTADISTICAS DE TICKETS POR TECNICO -->
     <h3>Estadistica de tickets por analista</h3>
@@ -192,41 +189,40 @@ $totaltareas = $pendienteG + $colaG + $procesandoG + $finalizadaG + $verificadaG
         <table>
             <tr>
                 <td><b>Abiertos:</b></td>
-                <td><?php echo isset($abiertosG) ? $abiertosG : 0?>
-                    <?php echo isset($sinTecnico) ? '<sup>(' . $sinTecnico . ' Sin atención )</sup>' : NULL?></td>
+                <td><?php echo isset($abiertosG) ? $abiertosG : 0 ?>
+                    <?php echo isset($sinTecnico) ? '<sup>(' . $sinTecnico . ' Sin atención )</sup>' : NULL ?></td>
             </tr>
         </table>
         <table>
             <tr>
                 <td><b>En espera:</b></td>
-                <td><?php echo isset($esperaG) ? $esperaG : 0?></td>
+                <td><?php echo isset($esperaG) ? $esperaG : 0 ?></td>
             </tr>
         </table>
         <table>
             <tr>
                 <td><b>Pre-cierre:</b></td>
-                <td><?php echo isset($preCierreG) ? $preCierreG : 0?></td>
+                <td><?php echo isset($preCierreG) ? $preCierreG : 0 ?></td>
             </tr>
         </table>
         <table>
             <tr>
                 <td><b>Cerrados:</b></td>
-                <td><?php echo isset($cerradosG) ? $cerradosG : 0?></td>
+                <td><?php echo isset($cerradosG) ? $cerradosG : 0 ?></td>
             </tr>
         </table>
         <table>
             <tr>
                 <td><b>Tickets totales:</b></td>
-                <td><?php echo isset($ticketsGlobales) ? $ticketsGlobales : 0?></td>
+                <td><?php echo isset($ticketsGlobales) ? $ticketsGlobales : 0 ?></td>
             </tr>
         </table>
     </div>
     <hr>
-    <div id="historial" class="table-striped"
-        style="background: #ffffff;margin-bottom: 1em;width: 100%;margin-top: 1em;padding:0.5em; overflow:scroll">
+    <div id="historial" class="table-striped" style="background: #ffffff;margin-bottom: 1em;width: 100%;margin-top: 1em;padding:0.5em; overflow:scroll">
         <table class="table table-bordered">
             <thead>
-                <tr style="text-align: center;background: lightgray;color: rgb(255,255,255);">
+                <tr style="text-align: center;background: #505050;color: rgb(255,255,255);">
                     <th>ID</th>
                     <th>Analista</th>
                     <th>T/abiertos</th>
@@ -245,9 +241,9 @@ $totaltareas = $pendienteG + $colaG + $procesandoG + $finalizadaG + $verificadaG
 
                 // ID DE FILA EN TABLA
                 $cont = 1;
-                
-                while($analista = $stmt_tck->fetch(PDO::FETCH_ASSOC)){ 
-                //*******************************************************************************
+
+                while ($analista = $stmt_tck->fetch(PDO::FETCH_ASSOC)) {
+                    //*******************************************************************************
                     // TECNICO EN CURSO
                     $nombre = $analista['nombre'];
 
@@ -257,11 +253,11 @@ $totaltareas = $pendienteG + $colaG + $procesandoG + $finalizadaG + $verificadaG
 
                     $abiertosT = $esperaT = $preCierreT = $cerradosT = 0;
 
-                    while($ticket = $stmt_st->fetch(PDO::FETCH_ASSOC)){
+                    while ($ticket = $stmt_st->fetch(PDO::FETCH_ASSOC)) {
 
                         $estatusT  = $ticket['estatus'];
-                        
-                        switch($estatusT){
+
+                        switch ($estatusT) {
                             case 'abierto':
                                 $abiertosT++;
                                 break;
@@ -279,27 +275,28 @@ $totaltareas = $pendienteG + $colaG + $procesandoG + $finalizadaG + $verificadaG
 
                     // TICKETS TOTALES Y PORCENTAJE DE INCIDENCIA
                     $ticketsTec = $abiertosT + $esperaT + $preCierreT + $cerradosT;
-                    if($ticketsGlobales > 0){
+                    if ($ticketsGlobales > 0) {
                         $porcentajeT = (100 / $ticketsGlobales) * $ticketsTec;
-                    }else{
+                    } else {
                         $porcentajeT = 0;
                     }
-                    
-                //*******************************************************************************
+
+                    //*******************************************************************************
                 ?>
 
-                <tr class="ticketRow" style="text-align:center">
-                    <td><?php echo $cont?></td>
-                    <td><?php echo $nombre?></td>
-                    <td><?php echo $abiertosT?></td>
-                    <td><?php echo $esperaT?></td>
-                    <td><?php echo $preCierreT?></td>
-                    <td><?php echo $cerradosT?></td>
-                    <td><?php echo $ticketsTec?></td>
-                    <td><?php echo isset($porcentajeT) ? number_format($porcentajeT, 2) : 0?>%</td>
-                </tr>
+                    <tr class="ticketRow" style="text-align:center">
+                        <td><?php echo $cont ?></td>
+                        <td><?php echo $nombre ?></td>
+                        <td><?php echo $abiertosT ?></td>
+                        <td><?php echo $esperaT ?></td>
+                        <td><?php echo $preCierreT ?></td>
+                        <td><?php echo $cerradosT ?></td>
+                        <td><?php echo $ticketsTec ?></td>
+                        <td><?php echo isset($porcentajeT) ? number_format($porcentajeT, 2) : 0 ?>%</td>
+                    </tr>
 
-                <?php $cont++; }?>
+                <?php $cont++;
+                } ?>
             </tbody>
         </table>
     </div>
@@ -311,44 +308,43 @@ $totaltareas = $pendienteG + $colaG + $procesandoG + $finalizadaG + $verificadaG
         <table>
             <tr>
                 <td><b>Pendientes:</b></td>
-                <td><?php echo isset($pendienteG) ? $pendienteG : 0?>
-                    <?php echo isset($sinAsignar) ? '<sup>(' . $sinAsignar . ' Sin atención )</sup>' : NULL?></td>
+                <td><?php echo isset($pendienteG) ? $pendienteG : 0 ?>
+                    <?php echo isset($sinAsignar) ? '<sup>(' . $sinAsignar . ' Sin atención )</sup>' : NULL ?></td>
             </tr>
         </table>
         <table>
             <tr>
                 <td><b>En espera:</b></td>
-                <td><?php echo isset($colaG) ? $colaG : 0?></td>
+                <td><?php echo isset($colaG) ? $colaG : 0 ?></td>
             </tr>
         </table>
         <table>
             <tr>
                 <td><b>En proceso:</b></td>
-                <td><?php echo isset($procesandoG) ? $procesandoG : 0?></td>
+                <td><?php echo isset($procesandoG) ? $procesandoG : 0 ?></td>
             </tr>
         </table>
         <table>
             <tr>
                 <td><b>Finalizadas:</b></td>
-                <td><?php echo isset($finalizadaG) ? $finalizadaG : 0?></td>
+                <td><?php echo isset($finalizadaG) ? $finalizadaG : 0 ?></td>
             </tr>
         </table>
         <table>
             <tr>
                 <td><b>Verificadas:</b></td>
-                <td><?php echo isset($verificadaG) ? $verificadaG : 0?></td>
+                <td><?php echo isset($verificadaG) ? $verificadaG : 0 ?></td>
             </tr>
         </table>
         <table>
             <tr>
                 <td><b>Tareas totales:</b></td>
-                <td><?php echo isset($totaltareas) ? $totaltareas : 0?></td>
+                <td><?php echo isset($totaltareas) ? $totaltareas : 0 ?></td>
             </tr>
         </table>
     </div>
     <hr>
-    <div id="historial" class="table-striped"
-        style="background: #ffffff;margin-bottom: 1em;width: 100%;margin-top: 1em;padding:0.5em; overflow:scroll">
+    <div id="historial" class="table-striped" style="background: #ffffff;margin-bottom: 1em;width: 100%;margin-top: 1em;padding:0.5em; overflow:scroll">
         <table class="table table-bordered">
             <thead>
                 <tr style="text-align: center;background: lightgray;color: rgb(255,255,255);">
@@ -371,9 +367,9 @@ $totaltareas = $pendienteG + $colaG + $procesandoG + $finalizadaG + $verificadaG
 
                 // ID DE FILA EN TABLA
                 $cont = 1;
-                
-                while($analista = $stmt_tsk->fetch(PDO::FETCH_ASSOC)){ 
-                //*******************************************************************************
+
+                while ($analista = $stmt_tsk->fetch(PDO::FETCH_ASSOC)) {
+                    //*******************************************************************************
                     // TECNICO EN CURSO
                     $nombre = $analista['nombre'];
 
@@ -383,12 +379,12 @@ $totaltareas = $pendienteG + $colaG + $procesandoG + $finalizadaG + $verificadaG
 
                     $pendiente = $cola = $procesando = $finalizada = $verificada = $efectividad = $puntaje = 0;
 
-                    while($tarea = $stmt_stats->fetch(PDO::FETCH_ASSOC)){
-                        
+                    while ($tarea = $stmt_stats->fetch(PDO::FETCH_ASSOC)) {
+
                         $valor    = $tarea['valoracion'];
                         $estatus  = $tarea['estatus'];
-                        
-                        switch($estatus){
+
+                        switch ($estatus) {
                             case 'Pendiente':
                                 $pendiente++;
                                 break;
@@ -410,38 +406,38 @@ $totaltareas = $pendienteG + $colaG + $procesandoG + $finalizadaG + $verificadaG
 
                     // EFECTIVIDAD
                     $totalTareas = $pendiente + $cola + $procesando + $finalizada + $verificada;
-                    if($totalTareas > 0){
+                    if ($totalTareas > 0) {
                         $efectividad = (100 / $totalTareas) * $verificada;
-                    }else{
+                    } else {
                         $efectividad = 0;
                     }
-                    
-                    
-                    
-                //*******************************************************************************
+
+
+
+                    //*******************************************************************************
                 ?>
 
-                <tr class="ticketRow" style="text-align:center">
-                    <td><?php echo $cont?></td>
-                    <td><?php echo $nombre?></td>
-                    <td><?php echo $pendiente?></td>
-                    <td><?php echo $cola?></td>
-                    <td><?php echo $procesando?></td>
-                    <td><?php echo $finalizada?></td>
-                    <td><?php echo $verificada?></td>
-                    <td><?php echo $puntaje?></td>
-                    <td><?php echo number_format($efectividad, 2)?>%</td>
-                </tr>
+                    <tr class="ticketRow" style="text-align:center">
+                        <td><?php echo $cont ?></td>
+                        <td><?php echo $nombre ?></td>
+                        <td><?php echo $pendiente ?></td>
+                        <td><?php echo $cola ?></td>
+                        <td><?php echo $procesando ?></td>
+                        <td><?php echo $finalizada ?></td>
+                        <td><?php echo $verificada ?></td>
+                        <td><?php echo $puntaje ?></td>
+                        <td><?php echo number_format($efectividad, 2) ?>%</td>
+                    </tr>
 
-                <?php $cont++; }?>
+                <?php $cont++;
+                } ?>
             </tbody>
         </table>
     </div>
 
     <!-- ESTADITISCAS DE TICKETS POR EMPRESA -->
     <h3>Estadistica de tickets por empresaes</h3>
-    <div id="historial" class="table-striped"
-        style="background: #ffffff;margin-bottom: 1em;width: 100%;margin-top: 1em;padding:0.5em; overflow:scroll">
+    <div id="historial" class="table-striped" style="background: #ffffff;margin-bottom: 1em;width: 100%;margin-top: 1em;padding:0.5em; overflow:scroll">
         <table class="table table-bordered">
             <thead>
                 <tr style="text-align: center;background: lightgray;color: rgb(255,255,255);">
@@ -463,9 +459,9 @@ $totaltareas = $pendienteG + $colaG + $procesandoG + $finalizadaG + $verificadaG
 
                 // ID DE FILA EN TABLA
                 $cont = 1;
-                
-                while($empresa = $stmt_L->fetch(PDO::FETCH_ASSOC)){ 
-                //*******************************************************************************
+
+                while ($empresa = $stmt_L->fetch(PDO::FETCH_ASSOC)) {
+                    //*******************************************************************************
                     // EMPRESA EN CURSO
                     $empresa = $empresa['descripcion'];
 
@@ -475,13 +471,13 @@ $totaltareas = $pendienteG + $colaG + $procesandoG + $finalizadaG + $verificadaG
 
                     $abiertosL = $esperaL = $preCierreL = $cerradosL = 0;
 
-                    while($ticket = $stmtLoc->fetch(PDO::FETCH_ASSOC)){
+                    while ($ticket = $stmtLoc->fetch(PDO::FETCH_ASSOC)) {
 
                         // OMITIR LOS TICKETS DEL ROOT
-                        if($ticket['analista'] != 'root'){
+                        if ($ticket['analista'] != 'root') {
                             $estatusL = $ticket['estatus'];
-                            
-                            switch($estatusL){
+
+                            switch ($estatusL) {
                                 case 'abierto':
                                     $abiertosL++;
                                     break;
@@ -495,32 +491,33 @@ $totaltareas = $pendienteG + $colaG + $procesandoG + $finalizadaG + $verificadaG
                                     $cerradosL++;
                                     break;
                             }
-                            
                         }
                     }
 
                     // TICKETS TOTALES Y PORCENTAJE DE INCIDENCIA
                     $ticketsLoc = $abiertosL + $esperaL + $preCierreL + $cerradosL;
-                    if($ticketsGlobales > 0){
+                    if ($ticketsGlobales > 0) {
                         $porcentajeLoc = (100 / $ticketsGlobales) * $ticketsLoc;
                     }
-                    
-                    if($ticketsLoc != 0){
-                //*******************************************************************************
+
+                    if ($ticketsLoc != 0) {
+                        //*******************************************************************************
                 ?>
 
-                <tr class="ticketRow" style="text-align:center">
-                    <td><?php echo $cont?></td>
-                    <td><?php echo $empresa?></td>
-                    <td><?php echo $abiertosL?></td>
-                    <td><?php echo $esperaL?></td>
-                    <td><?php echo $preCierreL?></td>
-                    <td><?php echo $cerradosL?></td>
-                    <td><?php echo $ticketsLoc?></td>
-                    <td><?php echo number_format($porcentajeLoc, 2)?>%</td>
-                </tr>
+                        <tr class="ticketRow" style="text-align:center">
+                            <td><?php echo $cont ?></td>
+                            <td><?php echo $empresa ?></td>
+                            <td><?php echo $abiertosL ?></td>
+                            <td><?php echo $esperaL ?></td>
+                            <td><?php echo $preCierreL ?></td>
+                            <td><?php echo $cerradosL ?></td>
+                            <td><?php echo $ticketsLoc ?></td>
+                            <td><?php echo number_format($porcentajeLoc, 2) ?>%</td>
+                        </tr>
 
-                <?php } $cont++; }?>
+                <?php }
+                    $cont++;
+                } ?>
             </tbody>
         </table>
     </div>
@@ -537,16 +534,16 @@ $totaltareas = $pendienteG + $colaG + $procesandoG + $finalizadaG + $verificadaG
     </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function() {
+    $(document).ready(function() {
 
-    // FECHA DEL REPORTE
-    var fecha = new Date();
-    $("#fechaReporte").html(`FECHA DE EMISION DEL REPORTE<br>${fecha}`);
+        // FECHA DEL REPORTE
+        var fecha = new Date();
+        $("#fechaReporte").html(`FECHA DE EMISION DEL REPORTE<br>${fecha}`);
 
-    // IMPRIMIR REPORTE
-    $("#imprimirReporte").click(function() {
-        window.print();
+        // IMPRIMIR REPORTE
+        $("#imprimirReporte").click(function() {
+            window.print();
+        })
+
     })
-
-})
 </script>

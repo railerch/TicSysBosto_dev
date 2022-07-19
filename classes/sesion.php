@@ -74,7 +74,7 @@ class Sesion
                     $_SESSION['nombre']         = $datos['nombre'];
                     $_SESSION['usuario']        = $datos['usuario'];
                     $_SESSION['nivel']          = $datos['nivel'];
-                    $_SESSION['empresa']       = $datos['empresa'];
+                    $_SESSION['empresa']        = $datos['empresa'];
                     $_SESSION['depto']          = $datos['depto'];
                     $_SESSION['sesion_estatus'] = 1;
 

@@ -35,7 +35,7 @@ $stmt_tsk->execute();
     <div class="text-light table-striped" style="background: #ffffff;margin-bottom: 1em;width: 100%;margin-top: 1em;padding:0.5em">
         <table id="tasksList" class="table">
             <thead>
-                <tr style="text-align: center;background: lightgray;color: rgb(255,255,255);">
+                <tr style="text-align: center;background: #505050;color: rgb(255,255,255);">
                     <th style="width: 5%;">ID</th>
                     <th style="width: 15%;">Fecha</th>
                     <th style="width: 25%;">Tarea</th>

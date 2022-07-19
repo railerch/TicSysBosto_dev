@@ -30,13 +30,13 @@ $stmt->execute();
                     <th>Empresa</th>
                     <th>Depto</th>
                     <th>Categoria</th>
+                    <th>Analista</th>
                     <th>Prioridad</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 <?php while ($ticket = $stmt->fetch()) {
-
                     // PONER EN VERDE SI EL TICKET NO TIENEN UN TECNICO ASIGNADO
                     $color = 'transparent';
                     if (!$ticket['analista']) {
@@ -58,6 +58,7 @@ $stmt->execute();
                         <td><?php echo $ticket['empresa'] ?></td>
                         <td><?php echo $ticket['depto'] ?></td>
                         <td><?php echo $ticket['categoria'] ?></td>
+                        <td><?php echo $ticket['analista'] ?></td>
                         <?php
                         switch ($ticket['prioridad']) {
                             case 'baja':

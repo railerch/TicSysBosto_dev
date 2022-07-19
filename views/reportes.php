@@ -17,6 +17,11 @@ $stmt_admin->execute();
 $stmt_loc = $conn->prepare("SELECT descripcion FROM miscelaneos WHERE tipo = 'empresa'");
 $stmt_loc->execute();
 
+// CONSULTAR CATEGORIAS
+$depto = $_SESSION['depto'];
+$stmt_cat = $conn->prepare("SELECT descripcion FROM miscelaneos WHERE descripcion LIKE '$depto%' AND tipo = 'cat'");
+$stmt_cat->execute();
+
 ?>
 <div style="background: #5b5b5b;padding: 1em;border-radius: 1em;box-shadow: 0px 0px 10px rgb(0,0,0);border-width: 1px;border-style: none;border-top-style: none;border-right-style: none;border-bottom-style: none;color: #d7d7d7;">
     <i class="fa fa-line-chart" style="font-size: 5vw;margin-right: 0.3em;"></i>
@@ -29,19 +34,22 @@ $stmt_loc->execute();
             <fieldset>
                 <legend>Tipo de reporte</legend>
                 <?php if ($_SESSION['nivel'] == 'admin') { ?>
-                    <div class="form-check"><input class="form-check-input reporte" type="radio" name="reporte" value="analista"><label class="form-check-label" for="formCheck-1">Tickets por analista</label>
+                    <div class="form-check"><input class="form-check-input reporte" type="radio" name="reporte" value="analista"><label class="form-check-label">Tickets por analista</label>
                     </div>
-                    <div class="form-check"><input class="form-check-input reporte" type="radio" name="reporte" value="tareas"><label class="form-check-label" for="formCheck-1">Tareas por analista</label>
+                    <div class="form-check"><input class="form-check-input reporte" type="radio" name="reporte" value="categoria"><label class="form-check-label">Tickets por categoria</label>
                     </div>
-                    <div class="form-check"><input class="form-check-input reporte" type="radio" name="reporte" value="empresa"><label class="form-check-label" for="formCheck-2">Tickets por empresa</label>
+                    <div class="form-check"><input class="form-check-input reporte" type="radio" name="reporte" value="tareas"><label class="form-check-label">Tareas por analista</label>
                     </div>
-                    <div class="form-check"><input class="form-check-input reporte" type="radio" name="reporte" value="global"><label class="form-check-label" for="formCheck-2">Reporte general</label>
+                    <div class="form-check"><input class="form-check-input reporte" type="radio" name="reporte" value="empresa"><label class="form-check-label">Tickets por empresa</label>
+                    </div>
+                    <div class="form-check"><input class="form-check-input reporte" type="radio" name="reporte" value="global"><label class="form-check-label">Reporte general</label>
                     </div>
                 <?php } else if ($_SESSION['nivel'] == 'gerente' || $_SESSION['nivel'] == 'analista') { ?>
-                    <div class="form-check"><input class="form-check-input reporte" type="radio" name="reporte" value="TotalTicketsDepto"><label class="form-check-label" for="formCheck-1">Tickets
-                            totales</label>
+                    <div class="form-check"><input class="form-check-input reporte" type="radio" name="reporte" value="TotalTicketsDepto"><label class="form-check-label">Tickets totales</label>
                     </div>
-                    <div class="form-check"><input class="form-check-input reporte" type="radio" name="reporte" value="empresa"><label class="form-check-label" for="formCheck-1">Tickets por empresa</label>
+                    <div class="form-check"><input class="form-check-input reporte" type="radio" name="reporte" value="categoria"><label class="form-check-label">Tickets por categoria</label>
+                    </div>
+                    <div class="form-check"><input class="form-check-input reporte" type="radio" name="reporte" value="empresa"><label class="form-check-label">Tickets por empresa</label>
                     </div>
                 <?php } ?>
             </fieldset>
@@ -52,6 +60,18 @@ $stmt_loc->execute();
                     <option style="color:#aaa" value="">Seleccione el analista</option>
                     <?php while ($analista = $stmt_admin->fetch(PDO::FETCH_ASSOC)) { ?>
                         <option value="<?php echo $analista['nombre'] ?>"><?php echo $analista['nombre'] ?></option>
+                    <?php } ?>
+                </select>
+            </div>
+
+            <div id="categoria-div">
+                <select id="categoria" class="form-control" name="categoria">
+                    <option style="color:#aaa" value="">Seleccione la categoria</option>
+                    <?php while ($categoria = $stmt_cat->fetch(PDO::FETCH_ASSOC)) {
+                        $cat = explode("-", $categoria['descripcion'])[1];
+                    ?>
+                        <option value="<?php echo $cat ?>"><?php echo $cat ?>
+                        </option>
                     <?php } ?>
                 </select>
             </div>
@@ -93,11 +113,13 @@ $stmt_loc->execute();
         $("#data").hide();
         $("#tech").hide();
         $("#empresa-div").hide();
+        $("#categoria-div").hide();
 
         $("input[value=analista]").focus(function() {
             $("#data").show();
             $("#tech").show();
             $("#empresa-div").hide();
+            $("#categoria-div").hide();
             $("#generarReporte").attr("data-tipo", "analista");
             localStorage.setItem("inputOK", 0)
         })
@@ -106,7 +128,17 @@ $stmt_loc->execute();
             $("#data").show();
             $("#tech").show();
             $("#empresa-div").hide();
+            $("#categoria-div").hide();
             $("#generarReporte").attr("data-tipo", "tareas");
+            localStorage.setItem("inputOK", 0)
+        })
+
+        $("input[value=categoria]").focus(function() {
+            $("#data").show();
+            $("#tech").hide();
+            $("#empresa-div").hide();
+            $("#categoria-div").show();
+            $("#generarReporte").attr("data-tipo", "categoria");
             localStorage.setItem("inputOK", 0)
         })
 
@@ -114,6 +146,7 @@ $stmt_loc->execute();
             $("#data").show();
             $("#tech").hide();
             $("#empresa-div").show();
+            $("#categoria-div").hide();
             $("#generarReporte").attr("data-tipo", "empresa");
             localStorage.setItem("inputOK", 0)
         })
@@ -122,6 +155,7 @@ $stmt_loc->execute();
             $("#data").show();
             $("#tech").hide();
             $("#empresa-div").hide();
+            $("#categoria-div").hide();
             $("#generarReporte").attr("data-tipo", "TotalTicketsDepto");
             localStorage.setItem("inputOK", 1)
         })
@@ -130,6 +164,7 @@ $stmt_loc->execute();
             $("#data").show();
             $("#tech").hide();
             $("#empresa-div").hide();
+            $("#categoria-div").hide();
             $("#generarReporte").attr("data-tipo", "global");
             localStorage.setItem("inputOK", 1)
         })
@@ -146,6 +181,8 @@ $stmt_loc->execute();
                 <?php echo validar_selecciones("analista", "") ?>
             } else if (tipo == "empresa") {
                 <?php echo validar_selecciones("empresa", "") ?>
+            } else if (tipo == "categoria") {
+                <?php echo validar_selecciones("categoria", "") ?>
             }
 
             <?php echo validar_selecciones("fechaInicial", "") ?>

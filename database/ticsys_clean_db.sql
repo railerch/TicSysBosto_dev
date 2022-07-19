@@ -107,7 +107,7 @@ CREATE TABLE `tickets` (
   `fecha` datetime NOT NULL,
   `empresa` varchar(30) COLLATE utf8_spanish2_ci NOT NULL,
   `depto` varchar(50) COLLATE utf8_spanish2_ci NOT NULL,
-  `persona` varchar(30) COLLATE utf8_spanish2_ci NOT NULL,
+  `nombre` varchar(30) COLLATE utf8_spanish2_ci NOT NULL,
   `usuario` varchar(15) COLLATE utf8_spanish2_ci NOT NULL,
   `area` varchar(50) COLLATE utf8_spanish2_ci NOT NULL,
   `categoria` varchar(50) COLLATE utf8_spanish2_ci NOT NULL,
