@@ -1,4 +1,3 @@
-
 2022-07-18 04:12:06 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión iniciada
 2022-07-18 04:12:06 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Tiempo de sesión actualizado
 2022-07-18 04:12:48 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Reporte de empresa generado
@@ -260,3 +259,277 @@
 2022-07-19 04:16:08 | ::1 | Railer Chalbaud (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ticket #3 movido a la bandeja de entrada
 2022-07-19 04:16:08 | ::1 | Railer Chalbaud (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ticket #9 movido a la bandeja de entrada
 2022-07-19 04:16:09 | ::1 | Railer Chalbaud (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ticket #7 movido a la bandeja de entrada
+2022-07-20 08:47:50 | ::1 |  () | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión finalizada
+2022-07-20 08:53:31 | ::1 | Pedro Perez (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión iniciada
+2022-07-20 08:53:31 | ::1 | Pedro Perez (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Tiempo de sesión actualizado
+2022-07-20 08:54:49 | ::1 | Pedro Perez (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Datos del usuario #4 actualizados
+2022-07-20 09:01:21 | ::1 | Pedro Perez (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ver usuarios activos
+2022-07-20 09:01:35 | ::1 | Pedro Perez (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ver usuarios activos
+2022-07-20 09:02:38 | ::1 | Pedro Perez (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ver usuarios activos
+2022-07-20 09:03:19 | ::1 | Pedro Perez (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ver usuarios activos
+2022-07-20 09:03:30 | ::1 | Pedro Perez (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ver usuarios activos
+2022-07-20 09:03:47 | ::1 | Pedro Perez (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ver usuarios activos
+2022-07-20 09:04:11 | ::1 | Pedro Perez (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ver usuarios activos
+2022-07-20 09:04:16 | ::1 | Pedro Perez (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ver usuarios activos
+2022-07-20 09:04:21 | ::1 | Pedro Perez (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ver usuarios activos
+2022-07-20 09:05:02 | ::1 | Pedro Perez (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ver usuarios activos
+2022-07-20 09:07:17 | ::1 | Pedro Perez (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Nuevo ticket registrado
+2022-07-20 09:08:04 | ::1 | Pedro Perez (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ticket #14 enviado a la papelera
+2022-07-20 09:08:06 | ::1 | Pedro Perez (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ticket #1 enviado a la papelera
+2022-07-20 09:08:57 | ::1 | Pedro Perez (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Nuevo ticket registrado
+2022-07-20 09:10:59 | ::1 | Pedro Perez (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión finalizada
+2022-07-20 09:12:46 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión iniciada
+2022-07-20 09:12:46 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Tiempo de sesión actualizado
+2022-07-20 09:13:02 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ticket #8 enviado a la papelera
+2022-07-20 09:13:08 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ticket #12 eliminado
+2022-07-20 09:13:11 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ticket #8 eliminado
+2022-07-20 09:14:12 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Nuevo ticket registrado
+2022-07-20 09:14:37 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión finalizada
+2022-07-20 09:14:56 | ::1 | Adrian Hernandez (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión iniciada
+2022-07-20 09:14:56 | ::1 | Adrian Hernandez (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Tiempo de sesión actualizado
+2022-07-20 09:15:42 | ::1 | Adrian Hernandez (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Datos del usuario #3 actualizados
+2022-07-20 09:25:45 | ::1 | Adrian Hernandez (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ticket #17 atendido
+2022-07-20 09:27:02 | ::1 | Adrian Hernandez (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ticket #17 puesto en espera
+2022-07-20 09:27:13 | ::1 | Adrian Hernandez (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión finalizada
+2022-07-20 09:27:29 | ::1 | Railer Chalbaud (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión iniciada
+2022-07-20 09:27:29 | ::1 | Railer Chalbaud (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Tiempo de sesión actualizado
+2022-07-20 09:27:43 | ::1 | Railer Chalbaud (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ticket #15 atendido
+2022-07-20 09:59:03 | ::1 | Railer Chalbaud (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ticket #1 eliminado
+2022-07-20 09:59:05 | ::1 | Railer Chalbaud (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ticket #11 eliminado
+2022-07-20 09:59:07 | ::1 | Railer Chalbaud (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ticket #10 eliminado
+2022-07-20 09:59:17 | ::1 | Railer Chalbaud (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ticket #14 eliminado
+2022-07-20 10:17:32 | ::1 | Railer Chalbaud (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ticket #2 enviado a la papelera
+2022-07-20 10:17:37 | ::1 | Railer Chalbaud (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ticket #3 enviado a la papelera
+2022-07-20 10:17:40 | ::1 | Railer Chalbaud (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ticket #5 enviado a la papelera
+2022-07-20 10:17:42 | ::1 | Railer Chalbaud (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ticket #9 enviado a la papelera
+2022-07-20 10:17:45 | ::1 | Railer Chalbaud (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ticket #4 enviado a la papelera
+2022-07-20 10:17:47 | ::1 | Railer Chalbaud (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ticket #7 enviado a la papelera
+2022-07-20 10:36:04 | ::1 | Railer Chalbaud (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ticket #15 enviado a la papelera
+2022-07-20 10:41:34 | ::1 | Railer Chalbaud (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión finalizada
+2022-07-20 10:41:41 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión iniciada
+2022-07-20 10:41:41 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Tiempo de sesión actualizado
+2022-07-20 10:41:50 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ticket #16 atendido
+2022-07-20 10:42:04 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ticket #13 atendido
+2022-07-20 10:43:09 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión finalizada
+2022-07-20 10:43:15 | ::1 | Pedro Perez (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión iniciada
+2022-07-20 10:43:15 | ::1 | Pedro Perez (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Tiempo de sesión actualizado
+2022-07-20 10:44:17 | ::1 | Pedro Perez (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión finalizada
+2022-07-20 10:44:24 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión iniciada
+2022-07-20 10:44:24 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Tiempo de sesión actualizado
+2022-07-20 10:44:47 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ticket #16 puesto en espera
+2022-07-20 10:45:21 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión finalizada
+2022-07-20 10:45:25 | ::1 | Pedro Perez (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión iniciada
+2022-07-20 10:45:25 | ::1 | Pedro Perez (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Tiempo de sesión actualizado
+2022-07-20 10:45:37 | ::1 | Pedro Perez (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ticket #16 preCerrado
+2022-07-20 10:45:37 | ::1 | Pedro Perez (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Bitacora de ticket #16 registrada
+2022-07-20 10:45:44 | ::1 | Pedro Perez (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión finalizada
+2022-07-20 10:45:50 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión iniciada
+2022-07-20 10:45:50 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Tiempo de sesión actualizado
+2022-07-20 10:46:16 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Bitacora de ticket #16 registrada
+2022-07-20 10:46:16 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ticket #16 cerrado
+2022-07-20 10:47:24 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ver usuarios activos
+2022-07-20 10:47:32 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ver usuarios activos
+2022-07-20 10:47:51 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión finalizada
+2022-07-20 10:47:56 | ::1 | Pedro Perez (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión iniciada
+2022-07-20 10:47:56 | ::1 | Pedro Perez (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Tiempo de sesión actualizado
+2022-07-20 10:48:00 | ::1 | Pedro Perez (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ver usuarios activos
+2022-07-20 10:48:17 | ::1 | Pedro Perez (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ver usuarios activos
+2022-07-20 10:48:23 | ::1 | Pedro Perez (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión finalizada
+2022-07-20 10:48:29 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión iniciada
+2022-07-20 10:48:29 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Tiempo de sesión actualizado
+2022-07-20 10:48:31 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ver usuarios activos
+2022-07-20 10:49:12 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ver usuarios activos
+2022-07-20 10:49:18 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ver usuarios activos
+2022-07-20 10:49:23 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ver usuarios activos
+2022-07-20 10:49:30 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ver usuarios activos
+2022-07-20 10:49:40 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ver usuarios activos
+2022-07-20 10:49:53 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ver usuarios activos
+2022-07-20 10:49:55 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ver usuarios activos
+2022-07-20 10:49:57 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ver usuarios activos
+2022-07-20 10:50:05 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ver usuarios activos
+2022-07-20 10:50:09 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ver usuarios activos
+2022-07-20 10:50:10 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ver usuarios activos
+2022-07-20 10:50:12 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ver usuarios activos
+2022-07-20 10:50:13 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ver usuarios activos
+2022-07-20 10:50:15 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ver usuarios activos
+2022-07-20 10:50:19 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ver usuarios activos
+2022-07-20 10:50:24 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ver usuarios activos
+2022-07-20 10:56:07 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Reporte de tickets de Talento Humano generado
+2022-07-20 10:56:07 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Reporte de tickets de Talento Humano generado
+2022-07-20 10:56:31 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Reporte de tickets por categoria: Nomina
+2022-07-20 10:56:31 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Reporte de tickets por categoria: Nomina
+2022-07-20 10:57:05 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Reporte de tickets de Talento Humano generado
+2022-07-20 10:57:05 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Reporte de tickets de Talento Humano generado
+2022-07-20 10:58:17 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Reporte de tickets de Talento Humano generado
+2022-07-20 10:58:17 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Reporte de tickets de Talento Humano generado
+2022-07-20 10:59:06 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Reporte de tickets de Talento Humano generado
+2022-07-20 10:59:06 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Reporte de tickets de Talento Humano generado
+2022-07-20 10:59:58 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Reporte de tickets de Talento Humano generado
+2022-07-20 10:59:58 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Reporte de tickets de Talento Humano generado
+2022-07-20 11:00:46 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Reporte de tickets de Talento Humano generado
+2022-07-20 11:00:46 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Reporte de tickets de Talento Humano generado
+2022-07-20 11:05:29 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ticket #13 enviado a la papelera
+2022-07-20 11:06:05 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Nuevo ticket registrado
+2022-07-20 11:06:16 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ticket #18 atendido
+2022-07-20 11:06:41 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ticket #18 atendido
+2022-07-20 11:07:51 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión finalizada
+2022-07-20 11:07:57 | ::1 | Pedro Perez (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión iniciada
+2022-07-20 11:07:57 | ::1 | Pedro Perez (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Tiempo de sesión actualizado
+2022-07-20 11:08:09 | ::1 | Pedro Perez (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión finalizada
+2022-07-20 11:08:14 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión iniciada
+2022-07-20 11:08:14 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Tiempo de sesión actualizado
+2022-07-20 11:08:25 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión finalizada
+2022-07-20 11:08:30 | ::1 | Pedro Perez (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión iniciada
+2022-07-20 11:08:30 | ::1 | Pedro Perez (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Tiempo de sesión actualizado
+2022-07-20 11:09:27 | ::1 | Pedro Perez (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ticket #18 preCerrado
+2022-07-20 11:09:27 | ::1 | Pedro Perez (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Bitacora de ticket #18 registrada
+2022-07-20 11:09:41 | ::1 | Pedro Perez (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión finalizada
+2022-07-20 11:09:47 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión iniciada
+2022-07-20 11:09:47 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Tiempo de sesión actualizado
+2022-07-20 11:10:00 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ticket #18 cerrado
+2022-07-20 11:10:00 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Bitacora de ticket #18 registrada
+2022-07-20 11:10:24 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ticket #17 movido a la bandeja de entrada
+2022-07-20 11:10:41 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ticket #17 atendido
+2022-07-20 11:11:08 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión finalizada
+2022-07-20 11:11:16 | ::1 | Railer Chalbaud (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión iniciada
+2022-07-20 11:11:16 | ::1 | Railer Chalbaud (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Tiempo de sesión actualizado
+2022-07-20 11:11:25 | ::1 | Railer Chalbaud (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión finalizada
+2022-07-20 11:11:33 | ::1 | SU Root (Grupo Bosto) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión iniciada
+2022-07-20 11:24:35 | ::1 | SU Root (Grupo Bosto) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Nuevo departamento registrado: Grupo Bosto-Talento Humano
+2022-07-20 12:46:10 | ::1 | SU Root (Grupo Bosto) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Nueva categoria registrada: Sistemas-Desarrollo Web
+2022-07-20 12:58:07 | ::1 | SU Root (Grupo Bosto) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Nuevo departamento registrado: Lior Cosmetics-Test
+2022-07-20 01:00:28 | ::1 | SU Root (Grupo Bosto) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Nuevo departamento registrado: Lior Cosmetics-Test
+2022-07-20 01:01:35 | ::1 | SU Root (Grupo Bosto) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Nuevo departamento registrado: Lior Cosmetics-Test
+2022-07-20 01:04:07 | ::1 | SU Root (Grupo Bosto) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Nueva categoria registrada: Sistemas-desarrollo web
+2022-07-20 01:07:34 | ::1 | SU Root (Grupo Bosto) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Nueva categoria registrada: Lior Cosmetics-Sistemas-Soporte Tecnico
+2022-07-20 01:23:48 | ::1 | SU Root (Grupo Bosto) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión finalizada
+2022-07-20 01:23:56 | ::1 | Pedro Perez (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión iniciada
+2022-07-20 01:23:56 | ::1 | Pedro Perez (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Tiempo de sesión actualizado
+2022-07-20 01:24:09 | ::1 | Pedro Perez (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión finalizada
+2022-07-20 01:24:28 | ::1 | SU Root (Grupo Bosto) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión iniciada
+2022-07-20 02:03:04 | ::1 | SU Root (Grupo Bosto) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión finalizada
+2022-07-20 02:03:32 | ::1 | SU Root (Grupo Bosto) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión iniciada
+2022-07-20 02:04:23 | ::1 | SU Root (Grupo Bosto) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión finalizada
+2022-07-20 02:04:25 | ::1 |  () | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión finalizada
+2022-07-20 02:05:01 | ::1 | SU Root (Grupo Bosto) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión iniciada
+2022-07-20 02:44:06 | ::1 | SU Root (Grupo Bosto) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Datos del usuario #4 actualizados
+2022-07-20 03:11:12 | ::1 | SU Root (Grupo Bosto) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión finalizada
+2022-07-20 03:11:19 | ::1 | Pedro Perez (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión iniciada
+2022-07-20 03:11:20 | ::1 | Pedro Perez (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Tiempo de sesión actualizado
+2022-07-20 03:20:36 | ::1 | Pedro Perez (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Nuevo ticket registrado
+2022-07-20 03:21:48 | ::1 | Pedro Perez (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión finalizada
+2022-07-20 03:22:01 | ::1 | SU Root (Grupo Bosto) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión iniciada
+2022-07-20 03:23:27 | ::1 | SU Root (Grupo Bosto) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ticket #19 atendido
+2022-07-20 04:03:57 | ::1 | SU Root (Grupo Bosto) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión finalizada
+2022-07-20 04:04:03 | ::1 | Pedro Perez (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión iniciada
+2022-07-20 04:04:03 | ::1 | Pedro Perez (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Tiempo de sesión actualizado
+2022-07-20 04:05:00 | ::1 | Pedro Perez (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión finalizada
+2022-07-20 04:05:09 | ::1 | SU Root (Grupo Bosto) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión iniciada
+2022-07-20 04:18:54 | ::1 | SU Root (Grupo Bosto) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Nuevo departamento registrado: Bopa Industrial-RRHH
+2022-07-20 04:19:18 | ::1 | SU Root (Grupo Bosto) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Nueva categoria registrada: Bopa Industrial-RRHH-Nomina
+2022-07-20 04:20:46 | ::1 | SU Root (Grupo Bosto) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Nueva categoria registrada: Bopa Industrial-RRHH-Reclutamiento
+2022-07-20 04:22:19 | ::1 | SU Root (Grupo Bosto) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Nueva categoria registrada: Bopa Industrial-RRHH-Logistica
+2022-07-20 04:23:28 | ::1 | SU Root (Grupo Bosto) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Nueva categoria registrada: Bopa Industrial-RRHH-Test
+2022-07-20 04:24:13 | ::1 | SU Root (Grupo Bosto) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Nueva categoria registrada: Bopa Industrial-RRHH-Test 2
+2022-07-20 04:25:51 | ::1 | SU Root (Grupo Bosto) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Nueva categoria registrada: Bopa Industrial-RRHH-UI
+2022-07-20 04:27:12 | ::1 | SU Root (Grupo Bosto) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Nueva categoria registrada: Bopa Industrial-RRHH-DF
+2022-07-20 04:29:24 | ::1 | SU Root (Grupo Bosto) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Nueva empresa registrada: Test empresa
+2022-07-20 04:29:39 | ::1 | SU Root (Grupo Bosto) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Nuevo departamento registrado: Lior Cosmetics-Test depto
+2022-07-20 04:30:11 | ::1 | SU Root (Grupo Bosto) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Nueva categoria registrada: Bopa Industrial-RRHH-Logistica
+2022-07-20 04:31:46 | ::1 | SU Root (Grupo Bosto) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ticket #19 atendido
+2022-07-20 04:34:11 | ::1 | SU Root (Grupo Bosto) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Nueva tarea registrada
+2022-07-20 04:35:03 | ::1 | SU Root (Grupo Bosto) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Tarea #1 actualizada
+2022-07-20 04:35:03 | ::1 | SU Root (Grupo Bosto) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Tarea #1 actualizada
+2022-07-20 04:35:28 | ::1 | SU Root (Grupo Bosto) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Tarea #1 eliminada
+2022-07-20 04:36:50 | ::1 | SU Root (Grupo Bosto) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Nueva tarea registrada
+2022-07-20 04:37:00 | ::1 | SU Root (Grupo Bosto) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión finalizada
+2022-07-20 04:37:09 | ::1 | Railer Chalbaud (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión iniciada
+2022-07-20 04:37:09 | ::1 | Railer Chalbaud (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Tiempo de sesión actualizado
+2022-07-20 04:37:23 | ::1 | Railer Chalbaud (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Tarea #2 atendida
+2022-07-20 04:37:54 | ::1 | Railer Chalbaud (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión finalizada
+2022-07-20 04:37:59 | ::1 | SU Root (Grupo Bosto) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión iniciada
+2022-07-20 04:39:29 | ::1 | SU Root (Grupo Bosto) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión finalizada
+2022-07-20 04:39:35 | ::1 | Railer Chalbaud (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión iniciada
+2022-07-20 04:39:35 | ::1 | Railer Chalbaud (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Tiempo de sesión actualizado
+2022-07-20 04:39:38 | ::1 | Railer Chalbaud (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Tarea #2 liberada
+2022-07-20 04:41:36 | ::1 | Railer Chalbaud (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión finalizada
+2022-07-20 04:41:42 | ::1 | SU Root (Grupo Bosto) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión iniciada
+2022-07-20 04:45:50 | ::1 | SU Root (Grupo Bosto) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Nueva tarea registrada
+2022-07-20 04:46:13 | ::1 | SU Root (Grupo Bosto) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión finalizada
+2022-07-20 04:46:19 | ::1 | Railer Chalbaud (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión iniciada
+2022-07-20 04:46:19 | ::1 | Railer Chalbaud (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Tiempo de sesión actualizado
+2022-07-20 04:46:28 | ::1 | Railer Chalbaud (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Tarea #2 atendida
+2022-07-20 04:46:36 | ::1 | Railer Chalbaud (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Tarea #2 liberada
+2022-07-20 04:53:15 | ::1 | Railer Chalbaud (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Nuevo registro: John Does
+2022-07-20 04:53:30 | ::1 | Railer Chalbaud (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión finalizada
+2022-07-20 04:53:41 | ::1 | John Does (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión iniciada
+2022-07-20 04:53:41 | ::1 | John Does (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Tiempo de sesión actualizado
+2022-07-20 04:53:50 | ::1 | John Does (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ticket #19 atendido
+2022-07-20 04:53:59 | ::1 | John Does (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Tarea #2 atendida
+2022-07-20 04:54:08 | ::1 | John Does (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Tarea #2 estatus_act: En espera
+2022-07-20 04:54:34 | ::1 | John Does (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Tarea #2 estatus_act: Procesando
+2022-07-20 04:54:40 | ::1 | John Does (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión finalizada
+2022-07-20 04:54:47 | ::1 | SU Root (Grupo Bosto) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión iniciada
+2022-07-20 04:54:57 | ::1 | SU Root (Grupo Bosto) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión finalizada
+2022-07-20 04:55:03 | ::1 | John Does (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión iniciada
+2022-07-20 04:55:03 | ::1 | John Does (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Tiempo de sesión actualizado
+2022-07-20 04:55:10 | ::1 | John Does (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Tarea #2 estatus_act: Procesando
+2022-07-20 04:55:12 | ::1 | John Does (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Tarea #2 estatus_act: Finalizada
+2022-07-20 04:55:18 | ::1 | John Does (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión finalizada
+2022-07-20 04:55:23 | ::1 | SU Root (Grupo Bosto) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión iniciada
+2022-07-20 04:55:32 | ::1 | SU Root (Grupo Bosto) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Tarea #2 estatus_act: Verificada
+2022-07-20 04:55:52 | ::1 | SU Root (Grupo Bosto) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Reporte de tareas: John Does
+2022-07-20 04:55:52 | ::1 | SU Root (Grupo Bosto) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Reporte de tareas: John Does
+2022-07-21 10:07:41 | ::1 | SU Root (Grupo Bosto) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ticket #19 atendido
+2022-07-21 10:10:53 | ::1 | SU Root (Grupo Bosto) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión finalizada
+2022-07-21 10:11:00 | ::1 | Railer Chalbaud (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión iniciada
+2022-07-21 10:11:00 | ::1 | Railer Chalbaud (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Tiempo de sesión actualizado
+2022-07-21 10:11:07 | ::1 | Railer Chalbaud (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión finalizada
+2022-07-21 10:11:13 | ::1 | SU Root (Grupo Bosto) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión iniciada
+2022-07-21 11:17:22 | ::1 | SU Root (Grupo Bosto) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Reporte de tickets: John Does
+2022-07-21 11:17:22 | ::1 | SU Root (Grupo Bosto) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Reporte de tickets: John Does
+2022-07-21 11:17:35 | ::1 | SU Root (Grupo Bosto) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Reporte de tickets: Railer Chalbaud
+2022-07-21 11:17:35 | ::1 | SU Root (Grupo Bosto) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Reporte de tickets: Railer Chalbaud
+2022-07-21 01:59:10 | ::1 | SU Root (Grupo Bosto) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión finalizada
+2022-07-21 01:59:17 | ::1 | Railer Chalbaud (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión iniciada
+2022-07-21 01:59:17 | ::1 | Railer Chalbaud (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Tiempo de sesión actualizado
+2022-07-21 02:02:46 | ::1 | Railer Chalbaud (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión finalizada
+2022-07-21 02:02:53 | ::1 | SU Root (Grupo Bosto) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión iniciada
+2022-07-21 02:03:53 | ::1 | SU Root (Grupo Bosto) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión finalizada
+2022-07-21 02:04:01 | ::1 | Railer Chalbaud (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión iniciada
+2022-07-21 02:04:01 | ::1 | Railer Chalbaud (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Tiempo de sesión actualizado
+2022-07-21 02:42:36 | ::1 | Railer Chalbaud (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión finalizada
+2022-07-21 02:42:42 | ::1 | SU Root (Grupo Bosto) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión iniciada
+2022-07-21 03:59:16 | ::1 | SU Root (Grupo Bosto) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión finalizada
+2022-07-21 03:59:55 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión iniciada
+2022-07-21 03:59:55 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Tiempo de sesión actualizado
+2022-07-21 04:23:25 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión finalizada
+2022-07-21 04:23:41 | ::1 | SU Root (Grupo Bosto) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión iniciada
+2022-07-21 04:32:04 | ::1 | SU Root (Grupo Bosto) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión finalizada
+2022-07-21 04:32:13 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión iniciada
+2022-07-21 04:32:13 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Tiempo de sesión actualizado
+2022-07-21 04:36:39 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión finalizada
+2022-07-21 04:36:51 | ::1 | John Does (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión iniciada
+2022-07-21 04:36:51 | ::1 | John Does (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Tiempo de sesión actualizado
+2022-07-21 04:47:00 | ::1 | John Does (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión finalizada
+2022-07-21 04:47:08 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión iniciada
+2022-07-21 04:47:08 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Tiempo de sesión actualizado
+2022-07-21 04:48:01 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ver usuarios activos
+2022-07-21 04:48:20 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Reporte de tickets: John Does
+2022-07-21 04:48:20 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Reporte de tickets: John Does
+2022-07-21 04:48:37 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión finalizada
+2022-07-21 04:48:42 | ::1 | John Does (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión iniciada
+2022-07-21 04:48:42 | ::1 | John Does (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Tiempo de sesión actualizado
+2022-07-21 04:48:44 | ::1 | John Does (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ver usuarios activos
+2022-07-21 04:49:10 | ::1 | John Does (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión finalizada
+2022-07-21 04:49:17 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión iniciada
+2022-07-21 04:49:17 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Tiempo de sesión actualizado
+2022-07-21 04:49:20 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Ver usuarios activos
+2022-07-21 04:49:23 | ::1 | Yeidimar Ynfante (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión finalizada
+2022-07-21 04:49:31 | ::1 | Railer Chalbaud (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión iniciada
+2022-07-21 04:49:31 | ::1 | Railer Chalbaud (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Tiempo de sesión actualizado
+2022-07-21 04:49:57 | ::1 | Railer Chalbaud (Lior Cosmetics) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión finalizada
+2022-07-21 04:50:03 | ::1 |  () | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | ERROR: Usuario: "root" | Metodo: iniciar_sesion | Clase: Sesion | Datos de inicio de sesión invalidos!
+2022-07-21 04:50:10 | ::1 |  () | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | ERROR: Usuario: "root" | Metodo: iniciar_sesion | Clase: Sesion | Datos de inicio de sesión invalidos!
+2022-07-21 04:50:22 | ::1 | SU Root (Grupo Bosto) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión iniciada
+2022-07-21 04:50:40 | ::1 | SU Root (Grupo Bosto) | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36 | Sesión finalizada

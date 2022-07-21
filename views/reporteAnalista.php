@@ -248,6 +248,9 @@ $stmtTic->execute();
     </div>
 </div>
 
+<!-- FUNCIONES JS -->
+<script src="assets/js/main_fn.js"></script>
+
 <script type="text/javascript">
     $(document).ready(function() {
 

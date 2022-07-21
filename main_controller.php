@@ -82,6 +82,96 @@ if (@$_GET['ultSesion'] && $_SESSION['usuario'] != 'root') {
 }
 
 //---------------------------------------------------------------------------------------------
+//////////////////////////// EMPRESA
+//---------------------------------------------------------------------------------------------
+
+// EMPRESAS REGISTRADAS
+if (@$_GET['empresasRegistradas']) {
+    $stmt = $conn->query("SELECT descripcion FROM miscelaneos WHERE tipo = 'empresa'");
+
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $empresas[] = $row['descripcion'];
+    }
+
+    echo isset($empresas) ? json_encode($empresas) : json_encode([]);
+
+    exit();
+}
+
+// DEPARTAMENTO SEGUN LA EMPRESA
+if (@$_GET['empresaDeptos']) {
+    $empresa = isset($_GET['empresa']) ? $_GET['empresa'] : $_SESSION['empresa'];
+    $stmt = $conn->query("SELECT descripcion FROM miscelaneos WHERE descripcion LIKE '$empresa%' AND tipo = 'depto' ORDER BY descripcion ASC");
+
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $deptos[] = explode('-', $row['descripcion'])[1];
+    }
+
+    echo isset($deptos) ? json_encode($deptos) : json_encode([]);
+
+    exit();
+}
+
+// USUARIOS SEGUN EL DEPTO 
+if (@$_GET['deptoUsuarios']) {
+    $empresa = $_GET['empresa'];
+    $depto   = $_GET['depto'];
+    $stmt    = $conn->query("SELECT nombre FROM usuarios WHERE empresa = '$empresa' AND depto = '$depto' ORDER BY nombre");
+
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $usuarios[] = $row['nombre'];
+    };
+
+    echo isset($usuarios) ? json_encode($usuarios) : json_encode([]);
+
+    exit();
+}
+
+// CATEGORIAS SEGUN EL DEPTO
+if (@$_GET['deptoCats']) {
+    $empresaTmp = isset($_GET['empresa']) ? $_GET['empresa'] : $_SESSION['empresa'];
+    $empresa    = $_SESSION['usuario'] == 'root' ? 'Lior Cosmetics' : $empresaTmp;
+    $depto      = isset($_GET['depto']) ? $_GET['depto'] : $_SESSION['depto'];
+    $desc       =  $empresa . '-' . $depto;
+    $stmt       = $conn->query("SELECT descripcion FROM miscelaneos WHERE descripcion LIKE '$desc%' AND tipo = 'cat' ORDER BY descripcion ASC");
+
+    while ($cat = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $categorias[] = explode("-", $cat['descripcion'])[2];
+    };
+
+    echo isset($categorias) ? json_encode($categorias) : json_encode([]);
+
+    exit();
+}
+
+// ANALISTAS DEL DEPTO
+if (@$_GET['analistasDepto']) {
+    $empresa = $_SESSION['usuario'] == 'root' ? 'empresa' : '\'' . $_SESSION['empresa'] . '\'';
+    $depto   = isset($_GET['depto']) ? $_GET['depto'] : $_SESSION['depto'];
+
+    switch ($_SESSION['nivel']) {
+        case 'gerente':
+            $nivel = 'analista';
+            break;
+        case 'analista':
+            $nivel = 'analista';
+            break;
+        case 'admin':
+            $nivel = 'admin';
+            break;
+    }
+
+    $stmt    = $conn->query("SELECT nombre FROM usuarios WHERE empresa = $empresa AND depto = '$depto' AND nivel = '$nivel' ORDER BY nombre DESC");
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $analistas[] = $row['nombre'];
+    };
+
+    echo isset($analistas) ? json_encode($analistas) : json_encode([]);
+
+    exit();
+}
+
+//---------------------------------------------------------------------------------------------
 //////////////////////////// USUARIOS
 //---------------------------------------------------------------------------------------------
 
@@ -212,48 +302,6 @@ if (@$_GET['usuariosActivos']) {
 //////////////////////////// TICKETS
 //---------------------------------------------------------------------------------------------
 
-// DEPARTAMENTO SEGUN LA EMPRESA SELECCIONADA
-if (@$_GET['deptosEmpresa']) {
-    $empresa = $_GET['empresa'];
-    $stmt = $conn->query("SELECT descripcion FROM miscelaneos WHERE tipo = 'depto' AND descripcion LIKE '$empresa%' ORDER BY descripcion ASC");
-
-    $deptos = [];
-
-    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        $d = explode('-', $row['descripcion']);
-        $deptos[] = $d[1];
-    }
-
-    echo json_encode($deptos);
-
-    exit();
-}
-
-// USUARIOS SEGUN EL DEPTO SELECCIONADO
-if (@$_GET['usuariosEmpresaDepto']) {
-    $empresa = $_GET['empresa'];
-    $depto   = $_GET['depto'];
-    $stmt    = $conn->query("SELECT nombre FROM usuarios WHERE empresa = '$empresa' AND depto = '$depto' ORDER BY nombre");
-    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        $usuarios[] = $row['nombre'];
-    };
-
-    echo isset($usuarios) ? json_encode($usuarios) : json_encode([]);
-
-    exit();
-}
-
-// CATEGORIAS EN TICKETS SEGUN EL DEPTO
-if (@$_GET['deptoCats']) {
-    $depto  = $_GET['depto'];
-    $stmt   = $conn->query("SELECT descripcion FROM miscelaneos WHERE descripcion LIKE '%$depto%' AND tipo = 'cat' ORDER BY descripcion ASC");
-    while ($cat = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        $categorias[] = explode("-", $cat['descripcion'])[1];
-    };
-    echo isset($categorias) ? json_encode($categorias) : json_encode([]);
-    exit();
-}
-
 // CREAR TICKET
 if (@$_GET['crearTicket']) {
 
@@ -344,6 +392,18 @@ if (@$_GET['eliminarTicket']) {
         }
     }
 
+    exit();
+}
+
+// VACIAR PAPELERA
+if (@$_GET['vaciarPapelera']) {
+    try {
+        $conn->query("DELETE FROM tickets WHERE estatus = 'eliminado'");
+        $_SESSION['avisos'] = "Se ha vaciado la papelera";
+        echo true;
+    } catch (PDOException $e) {
+        echo "ERROR: " . $e->getMessage();
+    }
     exit();
 }
 
@@ -669,10 +729,9 @@ if (@$_GET['revisarTareas']) {
 if (@$_GET['comprobarMiscelaneo']) {
 
     try {
-
         $tipo = $_GET['tipo'];
         $val  = strtolower(trim(strval($_GET['val'])));
-        $stmt = $conn->prepare("SELECT * FROM miscelaneos WHERE descripcion = '$val' AND tipo = '$tipo'");
+        $stmt = $conn->prepare("SELECT * FROM miscelaneos WHERE descripcion LIKE '$val' AND tipo = '$tipo'");
         $stmt->setFetchMode(PDO::FETCH_ASSOC);
         $stmt->execute();
         $miscelaneo = $stmt->fetch();
@@ -739,10 +798,11 @@ if (@$_GET['crearDepto']) {
 if (@$_GET['crearCat']) {
 
     try {
+        $empresa = isset($_POST['empresa']) ? $_POST['empresa'] : $_SESSION['empresa'];
         $depto = isset($_POST['depto']) ? $_POST['depto'] : $_SESSION['depto'];
         $stmt_dpt = $conn->prepare("INSERT INTO miscelaneos (descripcion, tipo) VALUES (?, ?)");
 
-        $desc = $depto . '-' . trim($_POST['categoria']);
+        $desc = $empresa . '-' . $depto . '-' . trim($_POST['categoria']);
         $tipo = 'cat';
         $stmt_dpt->bindParam(1, $desc);
         $stmt_dpt->bindParam(2, $tipo);

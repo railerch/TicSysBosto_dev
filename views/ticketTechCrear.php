@@ -73,6 +73,9 @@ avisos(@$_SESSION['avisos']);
 ocultar_aviso();
 ?>
 
+<!-- FUNCIONES JS -->
+<script src="assets/js/main_fn.js"></script>
+
 <script type="text/javascript">
     $(document).ready(function() {
         // LIMPIAR LOCALSTORAGE PARA EVITAR ERRORES AL VALIDAR SELECCIONES
@@ -95,7 +98,7 @@ ocultar_aviso();
 
             let usuarios = document.getElementById("nombre");
             let categoria = document.getElementById("categoria");
-            fetch(`main_controller.php?deptosEmpresa=true&empresa=${empresa}`)
+            fetch(`main_controller.php?empresaDeptos=true&empresa=${empresa}`)
                 .then(res => res.json())
                 .then(data => {
                     if (data != "") {
@@ -138,7 +141,7 @@ ocultar_aviso();
             let depto = $(this).val();
             let empresa = document.getElementById("empresa").value;
             let usuarios = document.getElementById("nombre");
-            fetch(`main_controller.php?usuariosEmpresaDepto=true&empresa=${empresa}&depto=${depto}`)
+            fetch(`main_controller.php?deptoUsuarios=true&empresa=${empresa}&depto=${depto}`)
                 .then(res => res.json())
                 .then(data => {
                     if (data != "") {
@@ -163,9 +166,10 @@ ocultar_aviso();
 
         if (tipoSesion == "admin") {
             $("#area").change(function() {
+                let empresa = $("#empresa").val();
                 let depto = $(this).val();
                 let categoria = document.getElementById("categoria");
-                fetch(`main_controller.php?deptoCats=true&depto=${depto}`)
+                fetch(`main_controller.php?deptoCats=true&depto=${depto}&empresa=${empresa}`)
                     .then(res => res.json())
                     .then(data => {
                         if (data != "") {
@@ -181,7 +185,6 @@ ocultar_aviso();
                             categoria.innerHTML = "<option style='color:#aaa' selected>Sin registros</option>";
                             console.warn("AVISO: sin registros activos.")
                         }
-
                     })
             })
         } else {

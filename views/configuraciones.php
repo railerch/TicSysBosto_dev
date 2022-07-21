@@ -14,23 +14,10 @@ $stmt = $conn->prepare("SELECT * FROM miscelaneos WHERE tipo = 'empresa'");
 $stmt->setFetchMode(PDO::FETCH_ASSOC);
 $stmt->execute();
 
-$stmt_2 = $conn->prepare("SELECT * FROM miscelaneos WHERE tipo = 'depto' ORDER BY descripcion ASC");
-$stmt_2->setFetchMode(PDO::FETCH_ASSOC);
-$stmt_2->execute();
-
-// VOLVER A SOLICITAR DEPARTAMENTOS Y EMPRESAS PARA LA VENTANA MODAL
-$stmt_4 = $conn->prepare("SELECT * FROM miscelaneos WHERE tipo = 'empresa'");
-$stmt_4->setFetchMode(PDO::FETCH_ASSOC);
-$stmt_4->execute();
-
-$stmt_5 = $conn->prepare("SELECT * FROM miscelaneos WHERE tipo = 'depto' ORDER BY descripcion ASC");
-$stmt_5->setFetchMode(PDO::FETCH_ASSOC);
-$stmt_5->execute();
-
 // CONSULTAR USUARIOS REGISTRADOS
-$stmt_3 = $conn->prepare("SELECT * FROM usuarios ORDER BY nombre ASC");
-$stmt_3->setFetchMode(PDO::FETCH_ASSOC);
-$stmt_3->execute();
+$stmt_1 = $conn->prepare("SELECT * FROM usuarios ORDER BY nombre ASC");
+$stmt_1->setFetchMode(PDO::FETCH_ASSOC);
+$stmt_1->execute();
 
 ?>
 <style>
@@ -74,11 +61,8 @@ $stmt_3->execute();
                                         </td>
                                         <td>
                                             <select class="form-control" name="depto" id="depto">
-                                                <option style="color:#aaa">Seleccione el departamento</option>
+                                                <option style="color:#aaa">Departamento</option>
                                                 <!-- DEPARTAMENTOS -->
-                                                <?php while ($depto = $stmt_2->fetch()) {
-                                                    echo "<option value='{$depto["descripcion"]}' style='color:#555'>{$depto['descripcion']}</option>";
-                                                } ?>
                                             </select>
                                         </td>
                                     </tr>
@@ -120,7 +104,7 @@ $stmt_3->execute();
                             </tr>
                         </thead>
                         <tbody>
-                            <?php while ($usuario = $stmt_3->fetch()) {
+                            <?php while ($usuario = $stmt_1->fetch()) {
                                 if ($usuario['usuario'] != "root") {
                             ?>
                                     <tr style="text-align: center;">
@@ -167,34 +151,58 @@ $stmt_3->execute();
                     <!-- CREAR EMPRESA -->
                     <form id="crearEmpresa" class="form-block mt-2" style="background: #7c7c7c;border-radius: 10px;padding: 1em; min-width: 30%">
                         <h3>Crear empresa</h3>
-                        <input id="empresa_2" class="form-control" type="text" name="empresa" data-tabla=miscelaneos data-tipo="empresa" placeholder="Nombre empresa">
+                        <input id="empresa_2" class="form-control" type="text" name="empresa" data-tabla="miscelaneos" data-tipo="empresa" placeholder="Nombre empresa">
                         <span id="aviso" style="color:lightgreen"></span>
                         <br>
-                        <button class="btn btn-primary btn-inline crearEmpresa">Confirmar empresa</button>
+                        <button class="btn btn-primary btn-inline crearEmpresa" data-frm="crearEmpresa">Confirmar empresa</button>
                     </form>
 
                     <!-- CREAR DEPARTAMENTO -->
                     <form id="crearDepto" class="form-block mt-2" style="background: #7c7c7c;border-radius: 10px;padding: 1em; min-width: 30%">
                         <h3>Crear departamento</h3>
-                        <input id="departamento" class="form-control" type="text" name="departamento" data-tabla=miscelaneos data-tipo="depto" placeholder="Nombre depto">
+                        <select class="form-control" name="empresa" id="empresaDepto" data-frm="crearDepto" data-next="departamento">
+                            <option style="color:#aaa" value="">Empresa</option>
+                            <!-- EMPRESA -->
+                            <?php
+                            $stmt = $conn->query("SELECT descripcion FROM miscelaneos WHERE tipo = 'empresa'");
+                            while ($empresa = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                echo "<option value='{$empresa["descripcion"]}' style='color:#555'>{$empresa['descripcion']}</option>";
+                            } ?>
+                        </select>
+                        <!-- DEPTO -->
+                        <input id="departamento" class="form-control mt-2" type="text" name="departamento" data-frm="crearDepto" data-tabla="miscelaneos" data-tipo="depto" placeholder="Nombre depto" disabled>
                         <span id="avisoDpt" style="color:lightgreen"></span>
                         <br>
-                        <button class="btn btn-primary btn-inline crearDepto">Confirmar departamento</button>
+                        <button class="btn btn-primary btn-inline crearDepto" data-frm="crearDepto">Confirmar departamento</button>
                     </form>
 
                     <!-- CREAR CATEGORIA -->
-                    <form id="crearCat" class="form-block mt-2" style="background: #7c7c7c;border-radius: 10px;padding: 1em; min-width: 30%">
+                    <form id="crearCat" class="form-block mt-2" style="background: #7c7c7c;border-radius: 10px;padding: 1em; min-width: 30%;">
                         <h3>Crear categoría</h3>
-                        <input id="dcategoria" class="form-control" type="text" name="categoria" data-tabla=miscelaneos data-tipo="cat" placeholder="Descripción categoría">
+                        <select class="form-control" name="empresa" id="empresaCat" data-frm="crearCat" data-next="deptoCat">
+                            <option style="color:#aaa" value="">Empresa</option>
+                            <!-- EMPRESA -->
+                            <?php
+                            $stmt_e = $conn->query("SELECT descripcion FROM miscelaneos WHERE tipo = 'empresa'");
+                            while ($empresa = $stmt_e->fetch(PDO::FETCH_ASSOC)) {
+                                echo "<option value='{$empresa["descripcion"]}' style='color:#555'>{$empresa['descripcion']}</option>";
+                            } ?>
+                        </select>
+                        <select class="form-control mt-2" name="depto" id="deptoCat" data-frm="crearCat" data-next="categoria" disabled>
+                            <option style="color:#aaa" value="">Departamento</option>
+                            <!-- DEPTO -->
+                        </select>
+                        <!-- CAT -->
+                        <input id="categoria" class="form-control mt-2" type="text" name="categoria" data-frm="crearCat" data-tabla="miscelaneos" data-tipo="cat" placeholder="Descripción categoría" disabled>
                         <span id="avisoCat" style="color:lightgreen"></span>
                         <br>
-                        <button class="btn btn-primary btn-inline crearCat">Confirmar categoría</button>
+                        <button class="btn btn-primary btn-inline crearCat" data-frm="crearCat">Confirmar categoría</button>
                     </form>
 
                     <!-- RESPALDAR BD -->
-                    <form id="respaldarBd" class="form-block d-flex flex-column mt-2" style="background: #7c7c7c;border-radius: 10px;padding: 1em; min-width: 30%"">
+                    <form id="respaldarBd" class="form-block d-flex flex-column mt-2" style="background: #7c7c7c;border-radius: 10px;padding: 1em; min-width: 30%;">
                         <h3>Respaldar Base de Datos<br></h3>
-                        <span id="avisoBD" style="color:lightgreen; height:2vh"></span>
+                        <span id=" avisoBD" style="color:lightgreen; height:2vh"></span>
                         <br>
                         <button class="btn btn-primary btn-inline respaldarBD">Respaldar BD</button>
                         <button class="btn btn-primary btn-inline verRespaldos" data-toggle="modal" data-target="#listaRespaldos" style="margin-top: 10px;">Lista de respaldos</button>
@@ -234,6 +242,9 @@ avisos(@$_SESSION['avisos']);
 ocultar_aviso();
 ?>
 
+<!-- FUNCIONES JS -->
+<script src="assets/js/main_fn.js"></script>
+
 <script type="text/javascript">
     $(document).ready(function() {
 
@@ -241,7 +252,10 @@ ocultar_aviso();
         $("#usReg, #sysLogs").DataTable({
             "language": {
                 "url": "config/dataTableSpanish.json"
-            }
+            },
+            "order": [
+                [1, "desc"]
+            ]
         });
 
         // ESTABLECER LA PAGINA ACTUAL
@@ -298,23 +312,89 @@ ocultar_aviso();
             }
         })
 
+        // HABILITAR CAMPOS EN MISCELANEOS LUEGO DE HACER LAS SELECCIONES OBLIGATORIAS
+        $("select").change(function() {
+            let empresa = $(this).val();
+            let frm = $(this).attr("data-frm");
+            let el = $(this).attr("data-next");
+            let depto = document.getElementById(el);
+            if (empresa) {
+                $(`#${frm} #${el}`).attr("disabled", false);
+
+                // cargar deptos en caso de estar creando una categoria
+                if (frm == "crearCat") {
+                    fetch(`main_controller.php?empresaDeptos=true&empresa=${empresa}`)
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.length > 0) {
+                                depto.innerHTML = "<option style='color:#aaa' selected>Departamento</option>";
+                                data.forEach(dep => {
+                                    let opt = document.createElement("option");
+                                    opt.setAttribute("value", dep);
+                                    opt.innerText = dep;
+                                    depto.append(opt);
+                                })
+                            } else {
+                                depto.innerHTML = "<option style='color:#aaa' selected>Sin registros</option>";
+                                console.warn("AVISO: sin registros activos.")
+                            }
+                        })
+                }
+            } else {
+                $(`#${frm} #${el}`).val("");
+                $(`#${frm} #${el}`).attr("disabled", true);
+                if (frm == "crearCat") {
+                    depto.innerHTML = "<option style='color:#aaa' selected>Departamento</option>";
+                    $(`#${frm} #categoria`).attr("disabled", true);
+                }
+            }
+        })
+
         // COMPROBAR DISPONIBILIDAD DE MISCELANEOS
-        $("input[data-tabla=miscelaneos]").blur(function() {
+        $("input[data-tabla=miscelaneos]").keyup(function() {
+            let placeholder = $(this).attr("placeholder");
+            let tipo = $(this).attr("data-tipo");
+            let frm = $(this).attr("data-frm");
+            let val = "";
 
-            var tipo = $(this).attr("data-tipo");
-            var val = $(this).val();
+            switch (tipo) {
+                case "empresa":
+                    val = $(this).val();
+                    break;
+                case "depto":
+                    let empresaD = $(`#${frm} #empresaDepto`).val();
+                    let depto = $(this).val();
+                    val = `${empresaD}-${depto}`;
+                    break;
+                case "cat":
+                    let empresaC = $(`#${frm} #empresaCat`).val();
+                    let deptoC = $(`#${frm} #deptoCat`).val();
+                    let cat = $(this).val();
+                    val = `${empresaC}-${deptoC}-${cat}`;
+                    break;
+            }
 
+            // Restablecer campo
+            function restablecer_campo() {
+                $(`input[data-tipo=${tipo}]`).attr("placeholder", `${placeholder}`);
+                $(`input[data-tipo=${tipo}]`).css("color", "#333");
+                $(`input[data-tipo=${tipo}]`).css("background", "#fff");
+            }
+
+            // Consultar
             if (val) {
                 $.ajax({
                     url: `main_controller.php?comprobarMiscelaneo=true&tipo=${tipo}&val=${val}`,
                     success: function(data) {
                         if (data) {
-                            console.log(data);
                             $(`input[data-tipo=${tipo}]`).val(null);
                             $(`input[data-tipo=${tipo}]`).css("background", "#720000");
                             $(`input[data-tipo=${tipo}]`).css("color", "#fff");
                             $(`input[data-tipo=${tipo}]`).attr("placeholder", `${val} ya esta creado!`);
                             $(`input[data-tipo=${tipo}]`).focus();
+                            setTimeout(function() {
+                                restablecer_campo();
+                            }, 3000)
                         } else {
                             $(`input[data-tipo=${tipo}]`).css("color", "#333");
                             $(`input[data-tipo=${tipo}]`).css("background", "#fff");
@@ -322,15 +402,35 @@ ocultar_aviso();
                     }
                 })
             } else if (val == "") {
-                $(this).attr("placeholder", `Nombre ${tipo.toLowerCase()}`);
-                $(this).css("color", "#333");
-                $(`input[data-tipo=${tipo}]`).css("background", "#fff");
+                restablecer_campo();
             }
 
             $(this).css("color", "#333");
             $(`input[data-tipo=${tipo}]`).css("background", "#fff");
 
         })
+
+        // REGISTRO DE USUARIO: CONSULTAR DEPTOS SEGUN LA EMPRESA SELECCIONADA
+        $("#empresa").change(function() {
+            let empresa = $(this).val();
+            let depto = document.getElementById("depto");
+            fetch(`main_controller.php?empresaDeptos=true&empresa=${empresa}`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.length) {
+                        depto.innerHTML = "<option style='color:#aaa' selected>Departamento</option>";
+                        data.forEach(dep => {
+                            let opt = document.createElement("option");
+                            opt.setAttribute("value", dep);
+                            opt.innerText = dep;
+                            depto.append(opt);
+                        })
+                    } else {
+                        depto.innerHTML = "<option style='color:#aaa' selected>Sin registros</option>";
+                        console.warn("AVISO: sin registros activos.")
+                    }
+                })
+        });
 
         // REGISTRAR USUARIO
         $("#registrarBtn").click(function(event) {
@@ -385,6 +485,15 @@ ocultar_aviso();
                 }
             })
 
+            // CARGAR DEPTOS AL CAMBIAR LA EMPRESA
+            $("#editUsrEmpresa").change(function() {
+                let empresa = $(this).val();
+                fetch(`main_controller.php?empresaDeptos=true&empresa=${empresa}`)
+                    .then(res => res.json())
+                    .then(res => {
+                        console.log(res);
+                    });
+            });
             // ACTUALIZAR DATOS DE USUARIO
             $(".actualizarBtn").click(function() {
                 $.ajax({
@@ -489,7 +598,9 @@ ocultar_aviso();
                     success: function(data) {
                         console.log(data);
 
+                        $("#empresaDepto").val("");
                         $("#departamento").val("");
+                        $("#departamento").attr("disabled", true);
 
                         $("#avisoDpt").text(data);
 
@@ -522,7 +633,8 @@ ocultar_aviso();
                     success: function(data) {
                         console.log(data);
 
-                        $("#categoria").val("");
+                        $("#empresaCat").val("");
+                        $("#deptoCat, #categoria").val("").attr("disabled", true);
 
                         $("#avisoCat").text(data);
 

@@ -143,7 +143,11 @@ class Ticket
         global $conn;
         try {
 
-            $depto = "AND area = '$departamento'";
+            if ($_SESSION['usuario'] == 'root') {
+                $depto = "AND area = area";
+            } else {
+                $depto = "AND area = '$departamento'";
+            }
 
             $stmt = $conn->prepare("SELECT count(id_ticket) AS total FROM tickets WHERE estatus = 'abierto' $depto");
             $stmt->execute();

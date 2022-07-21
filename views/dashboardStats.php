@@ -162,6 +162,8 @@ if (isset($error)) {
     </div>
 </div>
 
+<!-- FUNCIONES JS -->
+<script src="assets/js/main_fn.js"></script>
 
 <script src="assets/js/chart.min.js"></script>
 <script src="assets/js/bs-init.js"></script>

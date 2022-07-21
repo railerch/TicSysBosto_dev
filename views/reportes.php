@@ -9,19 +9,6 @@ if (!$conn) {
     Log::registrar_log($conexion->error);
 }
 
-// CONSULTAR NOMBRES DE ADMINISTRADORES
-$stmt_admin = $conn->prepare("SELECT nombre FROM usuarios WHERE nivel = 'admin'");
-$stmt_admin->execute();
-
-// CONSULTAR EMPRESAS
-$stmt_loc = $conn->prepare("SELECT descripcion FROM miscelaneos WHERE tipo = 'empresa'");
-$stmt_loc->execute();
-
-// CONSULTAR CATEGORIAS
-$depto = $_SESSION['depto'];
-$stmt_cat = $conn->prepare("SELECT descripcion FROM miscelaneos WHERE descripcion LIKE '$depto%' AND tipo = 'cat'");
-$stmt_cat->execute();
-
 ?>
 <div style="background: #5b5b5b;padding: 1em;border-radius: 1em;box-shadow: 0px 0px 10px rgb(0,0,0);border-width: 1px;border-style: none;border-top-style: none;border-right-style: none;border-bottom-style: none;color: #d7d7d7;">
     <i class="fa fa-line-chart" style="font-size: 5vw;margin-right: 0.3em;"></i>
@@ -36,18 +23,22 @@ $stmt_cat->execute();
                 <?php if ($_SESSION['nivel'] == 'admin') { ?>
                     <div class="form-check"><input class="form-check-input reporte" type="radio" name="reporte" value="analista"><label class="form-check-label">Tickets por analista</label>
                     </div>
+                    <div class="form-check"><input class="form-check-input reporte" type="radio" name="reporte" value="tareas"><label class="form-check-label">Tareas por analista</label>
+                    </div>
                     <div class="form-check"><input class="form-check-input reporte" type="radio" name="reporte" value="categoria"><label class="form-check-label">Tickets por categoria</label>
                     </div>
-                    <div class="form-check"><input class="form-check-input reporte" type="radio" name="reporte" value="tareas"><label class="form-check-label">Tareas por analista</label>
+                    <div class="form-check"><input class="form-check-input reporte" type="radio" name="reporte" value="depto"><label class="form-check-label">Tickets por departamento</label>
                     </div>
                     <div class="form-check"><input class="form-check-input reporte" type="radio" name="reporte" value="empresa"><label class="form-check-label">Tickets por empresa</label>
                     </div>
                     <div class="form-check"><input class="form-check-input reporte" type="radio" name="reporte" value="global"><label class="form-check-label">Reporte general</label>
                     </div>
                 <?php } else if ($_SESSION['nivel'] == 'gerente' || $_SESSION['nivel'] == 'analista') { ?>
-                    <div class="form-check"><input class="form-check-input reporte" type="radio" name="reporte" value="TotalTicketsDepto"><label class="form-check-label">Tickets totales</label>
+                    <div class="form-check"><input class="form-check-input reporte" type="radio" name="reporte" value="analista"><label class="form-check-label">Tickets por analista</label>
                     </div>
                     <div class="form-check"><input class="form-check-input reporte" type="radio" name="reporte" value="categoria"><label class="form-check-label">Tickets por categoria</label>
+                    </div>
+                    <div class="form-check"><input class="form-check-input reporte" type="radio" name="reporte" value="depto"><label class="form-check-label">Tickets por departamento</label>
                     </div>
                     <div class="form-check"><input class="form-check-input reporte" type="radio" name="reporte" value="empresa"><label class="form-check-label">Tickets por empresa</label>
                     </div>
@@ -56,33 +47,34 @@ $stmt_cat->execute();
         </div>
         <div id="data">
             <div id="tech">
-                <select id="analista" class="form-control" name="analista">
+                <select id="analista" class="form-control" name="analista" style="width:50%">
                     <option style="color:#aaa" value="">Seleccione el analista</option>
-                    <?php while ($analista = $stmt_admin->fetch(PDO::FETCH_ASSOC)) { ?>
-                        <option value="<?php echo $analista['nombre'] ?>"><?php echo $analista['nombre'] ?></option>
-                    <?php } ?>
+                    <!-- ANALISTAS DEL DEPTO -->
                 </select>
             </div>
 
             <div id="categoria-div">
-                <select id="categoria" class="form-control" name="categoria">
-                    <option style="color:#aaa" value="">Seleccione la categoria</option>
-                    <?php while ($categoria = $stmt_cat->fetch(PDO::FETCH_ASSOC)) {
-                        $cat = explode("-", $categoria['descripcion'])[1];
-                    ?>
-                        <option value="<?php echo $cat ?>"><?php echo $cat ?>
-                        </option>
-                    <?php } ?>
+                <select id="categoria" class="form-control" name="categoria" style="width:50%">
+                    <option style="color:#aaa" value="">Seleccione la categoría</option>
+                    <!-- CATEGORIAS DEL DEPTO -->
+                </select>
+            </div>
+
+            <div id="depto-div">
+                <select id="empresaDepto" class="form-control d-inline-block mr-lg-2" name="empresaDepto" style="width:30%">
+                    <option style="color:#aaa" value="">Seleccione la empresa</option>
+                    <!-- EMPRESAS REGISTRADAS -->
+                </select>
+                <select id="depto" class="form-control d-inline-block" name="depto" style="width:30%">
+                    <option style="color:#aaa" value="">Seleccione el departamento</option>
+                    <!-- DEPTO EMISOR SEGUN EMPRESA -->
                 </select>
             </div>
 
             <div id="empresa-div">
-                <select id="empresa" class="form-control" name="empresa">
+                <select id="empresa" class="form-control" name="empresa" style="width:50%">
                     <option style="color:#aaa" value="">Seleccione la empresa</option>
-                    <?php while ($empresa = $stmt_loc->fetch(PDO::FETCH_ASSOC)) { ?>
-                        <option value="<?php echo $empresa['descripcion'] ?>"><?php echo $empresa['descripcion'] ?>
-                        </option>
-                    <?php } ?>
+                    <!-- EMPRESAS REGISTRADAS -->
                 </select>
             </div>
 
@@ -99,6 +91,8 @@ $stmt_cat->execute();
     </form>
 </div>
 
+<!-- FUNCIONES JS -->
+<script src="assets/js/main_fn.js"></script>
 
 <script>
     $(document).ready(() => {
@@ -112,59 +106,110 @@ $stmt_cat->execute();
         // OCULTAR INPUT TECNICO/EMPRESA
         $("#data").hide();
         $("#tech").hide();
+        $("#depto-div").hide();
         $("#empresa-div").hide();
         $("#categoria-div").hide();
 
         $("input[value=analista]").focus(function() {
             $("#data").show();
             $("#tech").show();
-            $("#empresa-div").hide();
             $("#categoria-div").hide();
+            $("#depto-div").hide();
+            $("#empresa-div").hide();
             $("#generarReporte").attr("data-tipo", "analista");
-            localStorage.setItem("inputOK", 0)
+
+            // Consultar analistas del departamento
+            let datosPhp = ["analista", "Seleccione el analista", "analistasDepto"]
+            opciones_select(...datosPhp)
+
+            localStorage.setItem("inputOK", 0);
         })
 
         $("input[value=tareas]").focus(function() {
             $("#data").show();
             $("#tech").show();
-            $("#empresa-div").hide();
             $("#categoria-div").hide();
+            $("#depto-div").hide();
+            $("#empresa-div").hide();
             $("#generarReporte").attr("data-tipo", "tareas");
-            localStorage.setItem("inputOK", 0)
+
+            // Consultar analistas del departamento
+            let datosPhp = ["analista", "Seleccione el analista", "analistasDepto"]
+            opciones_select(...datosPhp)
+
+            localStorage.setItem("inputOK", 0);
         })
 
         $("input[value=categoria]").focus(function() {
             $("#data").show();
             $("#tech").hide();
-            $("#empresa-div").hide();
             $("#categoria-div").show();
+            $("#depto-div").hide();
+            $("#empresa-div").hide();
             $("#generarReporte").attr("data-tipo", "categoria");
-            localStorage.setItem("inputOK", 0)
+
+            // Consultar categorias del departamento
+            let datosPhp = ["categoria", "Seleccione la categoría", "deptoCats"]
+            opciones_select(...datosPhp)
+
+            localStorage.setItem("inputOK", 0);
+        })
+
+        $("input[value=depto]").focus(function() {
+            $("#data").show();
+            $("#tech").hide();
+            $("#categoria-div").hide();
+            $("#depto-div").show();
+            $("#empresa-div").hide();
+            $("#generarReporte").attr("data-tipo", "depto");
+
+            // Consultar empresas
+            let datosPhp = ["empresaDepto", "Seleccione la empresa", "empresasRegistradas"];
+            opciones_select(...datosPhp);
+
+            // Consultar departamentos
+            let empresa = document.getElementById("empresaDepto");
+            empresa.addEventListener("change", function() {
+                let datosPhp = ["depto", "Seleccione el depto", "empresaDeptos", `${this.value}`];
+                opciones_select(...datosPhp);
+            })
+
+            localStorage.setItem("inputOK", 0);
         })
 
         $("input[value=empresa]").focus(function() {
             $("#data").show();
             $("#tech").hide();
-            $("#empresa-div").show();
             $("#categoria-div").hide();
+            $("#depto-div").hide();
+            $("#empresa-div").show();
             $("#generarReporte").attr("data-tipo", "empresa");
-            localStorage.setItem("inputOK", 0)
+
+            // Consultar categorias del departamento
+            let datosPhp = ["empresa", "Seleccione la empresa", "empresasRegistradas"]
+            opciones_select(...datosPhp)
+
+            localStorage.setItem("inputOK", 0);
         })
 
-        $("input[value=TotalTicketsDepto]").focus(function() {
+        $("input[value=TicketsDepto]").focus(function() {
             $("#data").show();
             $("#tech").hide();
-            $("#empresa-div").hide();
             $("#categoria-div").hide();
-            $("#generarReporte").attr("data-tipo", "TotalTicketsDepto");
-            localStorage.setItem("inputOK", 1)
+            $("#depto-div").show();
+            $("#empresa-div").hide();
+            $("#generarReporte").attr("data-tipo", "ticketsDepto");
+
+
+            localStorage.setItem("inputOK", 1);
         })
 
         $("input[value=global]").focus(function() {
             $("#data").show();
             $("#tech").hide();
-            $("#empresa-div").hide();
             $("#categoria-div").hide();
+            $("#depto-div").hide();
+            $("#empresa-div").hide();
             $("#generarReporte").attr("data-tipo", "global");
             localStorage.setItem("inputOK", 1)
         })

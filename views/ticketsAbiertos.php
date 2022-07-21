@@ -136,8 +136,12 @@ avisos(@$_SESSION['avisos']);
 ocultar_aviso();
 ?>
 
+<!-- FUNCIONES JS -->
+<script src="assets/js/main_fn.js"></script>
+
 <script type="text/javascript">
     $(document).ready(function() {
+
         // IDIOMA ESPAÑOL PARA EL DATATABLE
         $(".table").DataTable({
             "language": {

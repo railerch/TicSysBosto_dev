@@ -25,6 +25,9 @@ $config = cargar_config(true);
     </form>
 </div>
 
+<!-- FUNCIONES JS -->
+<script src="assets/js/main_fn.js"></script>
+
 <script type="text/javascript">
     $(document).ready(function() {
         // VERIFICAR QUE EL USUARIO ESTE REGISTRADO

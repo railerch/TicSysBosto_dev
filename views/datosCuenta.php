@@ -29,7 +29,7 @@ $stmt_loc->execute();
     <div class="table-striped" style="background: #ffffff;margin-bottom: 1em;width: 100%;margin-top: 1em;padding:0.5em; overflow:scroll">
         <table class="table">
             <thead>
-                <tr style="text-align: center;background: lightgray;color: rgb(255,255,255);">
+                <tr style="text-align: center;background: #505050;color: rgb(255,255,255);">
                     <th>ID</th>
                     <th>Nombre</th>
                     <th>Usuario</th>
@@ -106,6 +106,9 @@ $stmt_loc->execute();
     avisos(@$_SESSION['avisos']);
     ocultar_aviso();
     ?>
+
+    <!-- FUNCIONES JS -->
+    <script src="assets/js/main_fn.js"></script>
 
     <script type="text/javascript">
         $(document).ready(function() {

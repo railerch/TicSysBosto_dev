@@ -16,15 +16,15 @@
                 <div class="modal-body" style="color: #333;">
                     <ul class="list-unstyled">
                         <li><strong>Categoria: </strong><?php echo $ticket['categoria'] ?></li>
-                        <li><strong>Solicitud: </strong><?php echo $ticket['asunto'] ?></li>
+                        <li><strong>Asunto: </strong><?php echo $ticket['asunto'] ?></li>
                         <li><strong>Descripción: </strong><?php echo $ticket['descripcion'] ?></li>
                     </ul>
 
                     <hr>
 
-                    <p style="margin: 0;color: #fff;background: lightgray;padding: 2px;padding-left: 0.5em;padding-right: 0.5em;padding-top: 0.2em;padding-bottom: 0.2em;">
+                    <p style="margin: 0;color: #fff;background: #505050;padding: 2px;padding-left: 0.5em;padding-right: 0.5em;padding-top: 0.2em;padding-bottom: 0.2em;">
                         <i class="fa fa-wechat"></i>&nbsp;
-                        <strong style='color:gray'>Chat directo</strong> - Analista asignado: <span id="analista<?php echo $ticket['id_ticket'] ?>"></span>
+                        <strong>Chat directo</strong> [ Analista: <span id="analista<?php echo $ticket['id_ticket'] ?>"></span> ]
                         <br>
                         <!-- ALERTA DE USUARIO PARA QUE CIERRE EL TICKET -->
                         <?php
@@ -130,13 +130,13 @@
                 <div class="modal-body" style="color: #333;">
                     <ul class="list-unstyled">
                         <li><strong>Categoria: </strong><?php echo $ticket['categoria'] ?></li>
-                        <li><strong>Solicitud: </strong><?php echo $ticket['solicitud'] ?></li>
+                        <li><strong>Asunto: </strong><?php echo $ticket['asunto'] ?></li>
                         <li><strong>Descripción: </strong><?php echo $ticket['descripcion'] ?></li>
                     </ul>
                     <hr>
-                    <p style="margin: 0;color: #fff;background: lightgray;padding: 2px;padding-left: 0.5em;padding-right: 0.5em;padding-top: 0.2em;padding-bottom: 0.2em;">
+                    <p style="margin: 0;color: #fff;background: #505050;padding: 2px;padding-left: 0.5em;padding-right: 0.5em;padding-top: 0.2em;padding-bottom: 0.2em;">
                         <i class="fa fa-wechat"></i>&nbsp;
-                        <strong style='color:gray'>Chat directo</strong> - Analista asignado: <span id="analista<?php echo $ticket['id_ticket'] ?>"></span>
+                        <strong>Chat directo</strong> [ Analista: <span id="analista<?php echo $ticket['id_ticket'] ?>"></span> ]
 
                     </p>
 
@@ -180,7 +180,7 @@
                 <div class="modal-body" style="color: #333;">
                     <ul class="list-unstyled">
                         <li><strong>Categoria: </strong><?php echo $ticket['categoria'] ?></li>
-                        <li><strong>Solicitud: </strong><?php echo $ticket['asunto'] ?></li>
+                        <li><strong>Asunto: </strong><?php echo $ticket['asunto'] ?></li>
                         <li><strong>Descripción: </strong><?php echo $ticket['descripcion'] ?></li>
                     </ul>
                 </div>
@@ -223,17 +223,17 @@
                 <div class="modal-body" style="color: #333;">
                     <ul class="list-unstyled">
                         <li><strong>Categoria: </strong><?php echo $ticket['categoria'] ?></li>
-                        <li><strong>Solicitud: </strong><?php echo $ticket['asunto'] ?></li>
+                        <li><strong>Asunto: </strong><?php echo $ticket['asunto'] ?></li>
                         <li><strong>Descripción: </strong><?php echo $ticket['descripcion'] ?></li>
                     </ul>
                     <hr>
-                    <p style="margin: 0;color: #fff;background: lightgray;padding: 2px;padding-left: 0.5em;padding-right: 0.5em;padding-top: 0.2em;padding-bottom: 0.2em;">
+                    <p style="margin: 0;color: #fff;background: #505050;padding: 2px;padding-left: 0.5em;padding-right: 0.5em;padding-top: 0.2em;padding-bottom: 0.2em;">
                         <i class="fa fa-wechat"></i>&nbsp;
                         <?php
                         if ($ticket['estatus'] == "cerrado") {
-                            echo "<strong style='color:gray'>Historial de chat</strong> - Analista asignado: <span id='analista{$ticket['id_ticket']}'></span>";
+                            echo "<strong style='color:orange'>Historial de chat</strong> [ Analista: <span id='analista{$ticket['id_ticket']}'></span> ]";
                         } else {
-                            echo "<strong style='color:gray'>Chat directo</strong> - Analista asignado: <span id='analista{$ticket['id_ticket']}'></span>";
+                            echo "<strong>Chat directo</strong> [ Analista: <span id='analista{$ticket['id_ticket']}'></span> ]";
                         }
                         ?><br>
                     </p>
@@ -320,9 +320,9 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                 </div>
                 <div class="modal-body" style="color: #333;">
-                    <p style="margin: 0;color: #fff;background: lightgray;padding: 2px;padding-left: 0.5em;padding-right: 0.5em;padding-top: 0.2em;padding-bottom: 0.2em;text-align:left">
+                    <p style="margin: 0;color: #fff;background: #505050;padding: 2px;padding-left: 0.5em;padding-right: 0.5em;padding-top: 0.2em;padding-bottom: 0.2em;text-align:left">
                         <i class="fa fa-wechat"></i>&nbsp;
-                        <span id="chatUser" style='color:gray'>
+                        <span id="chatUser" style='color:#fff'>
                             <!-- USUARIO -->
                         </span>
                     </p>
@@ -385,19 +385,18 @@
                                 <option value="analista">Analista</option>
                                 <option value="usuario">Usuario comun</option>
                             </select>
-                            <select class="form-control" name="empresa">
-                                <option style="color:#555" value="NULL">Seleccione nueva ubicación</option>
+                            <select class="form-control" name="empresa" id="editUsrEmpresa">
+                                <option style="color:#555" value="NULL">Seleccione nueva empresa</option>
                                 <!-- UBICACIONES -->
-                                <?php while ($empresa = $stmt_4->fetch()) {
+                                <?php
+                                $stmt_65 = $conn->query("SELECT descripcion FROM miscelaneos WHERE tipo = 'empresa' ORDER BY descripcion ASC");
+                                while ($empresa = $stmt_65->fetch()) {
                                     echo "<option value='{$empresa["descripcion"]}' style='color:#555'>{$empresa['descripcion']}</option>";
                                 } ?>
                             </select>
-                            <select class="form-control" name="depto">
+                            <select class="form-control" name="depto" id="editUsrDepto">
                                 <option style="color:#555" value="NULL">Seleccione nuevo departamento</option>
                                 <!-- DEPARTAMENTOS -->
-                                <?php while ($depto = $stmt_5->fetch()) {
-                                    echo "<option value='{$depto["descripcion"]}' style='color:#555'>{$depto['descripcion']}</option>";
-                                } ?>
                             </select>
                             <input class="form-control" type="password" name="clave" placeholder="Clave">
                             <button class="btn btn-primary float-right actualizarBtn" data-user-id="" type="submit" data-dismiss="modal">ACTUALIZAR</button>

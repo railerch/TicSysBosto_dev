@@ -30,3 +30,6 @@
         </a>
     </div>
 </div>
+
+<!-- FUNCIONES JS -->
+<script src="assets/js/main_fn.js"></script>

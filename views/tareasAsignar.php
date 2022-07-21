@@ -10,9 +10,9 @@ if (!$conn) {
 }
 
 // CONSULTAR TÉCNICOS REGISTRADOS
-$stmt_tec = $conn->prepare("SELECT * FROM usuarios WHERE nivel = 'analista' ORDER BY nombre ASC");
-$stmt_tec->setFetchMode(PDO::FETCH_ASSOC);
-$stmt_tec->execute();
+$stmt_anl = $conn->prepare("SELECT * FROM usuarios WHERE nivel = 'admin' ORDER BY nombre ASC");
+$stmt_anl->setFetchMode(PDO::FETCH_ASSOC);
+$stmt_anl->execute();
 
 // CONSULTAR TAREAS REGISTRADAS
 $_SESSION['ultimaTarea'] = NULL;
@@ -44,7 +44,7 @@ $stmt_tsk->execute();
                         <option style="color:#aaa" value="">Seleccione el analista</option>
                         <option value="Sin asignar">Tarea libre</option>
                         <!-- SELECCION DE TÉCNICO -->
-                        <?php while ($analista = $stmt_tec->fetch()) {
+                        <?php while ($analista = $stmt_anl->fetch()) {
                             echo "<option value='{$analista["nombre"]}' style='color:#555'>{$analista['nombre']}</option>";
                         } ?>
                     </select>
@@ -225,6 +225,9 @@ $stmt_tsk->execute();
 avisos(@$_SESSION['avisos']);
 ocultar_aviso();
 ?>
+
+<!-- FUNCIONES JS -->
+<script src="assets/js/main_fn.js"></script>
 
 <script type="text/javascript">
     // IDIOMA ESPAÑOL PARA DATATABLES

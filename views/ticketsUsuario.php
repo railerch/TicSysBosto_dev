@@ -80,6 +80,7 @@ $stmt->execute();
                     <th>ID</th>
                     <th>Fecha</th>
                     <th>Asunto</th>
+                    <th>Receptor</th>
                     <th>Prioridad</th>
                     <th>Analista</th>
                     <th>Estatus</th>
@@ -97,6 +98,7 @@ $stmt->execute();
                         <td><?php echo $ticket['id_ticket'] ?></td>
                         <td><?php echo $ticket['fecha'] ?></td>
                         <td><?php echo $ticket['asunto'] ?></td>
+                        <td><?php echo $ticket['area'] ?></td>
                         <?php
                         switch ($ticket['prioridad']) {
                             case 'baja':
@@ -202,6 +204,9 @@ avisos(@$_SESSION['avisos']);
 ocultar_aviso();
 
 ?>
+
+<!-- FUNCIONES JS -->
+<script src="assets/js/main_fn.js"></script>
 
 <script type="text/javascript">
     $(document).ready(function() {

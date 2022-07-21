@@ -90,6 +90,9 @@ avisos(@$_SESSION['avisos']);
 ocultar_aviso();
 ?>
 
+<!-- FUNCIONES JS -->
+<script src="assets/js/main_fn.js"></script>
+
 <script type="text/javascript">
     $(document).ready(function() {
         // LIMPIAR LOCALSTORAGE PARA EVITAR ERRORES AL VALIDAR SELECCIONES
@@ -115,10 +118,9 @@ ocultar_aviso();
                         })
 
                     } else {
-                        categoria.innerHTML = "<option style='color:#aaa' selected>Categoría</option>";
+                        categoria.innerHTML = "<option style='color:#aaa' selected>Sin registros</option>";
                         console.warn("AVISO: Sin registros.")
                     }
-
                 })
         })
 

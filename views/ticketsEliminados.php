@@ -11,14 +11,12 @@ if (!$conn) {
 
 // MOSTRAR TICKETS SEGUN EL DEPARTAMENTO
 $area = filtrar_depto();
-$stmt = $conn->prepare("SELECT * FROM tickets $area AND estatus = 'eliminado'");
-$stmt->setFetchMode(PDO::FETCH_ASSOC);
-$stmt->execute();
+$stmt = $conn->query("SELECT * FROM tickets $area AND estatus = 'eliminado'");
 
 ?>
 
 <div style="background: #505050;padding: 0.5em;border-radius: 1em;box-shadow: 0px 0px 10px rgb(0,0,0);border-width: 1px;border-style: none;border-top-style: none;border-right-style: none;border-bottom-style: none;color: #d7d7d7;">
-    <i class="fa fa-trash-o" style="font-size: 5vw;margin-right: 0.3em;"></i>
+    <i id="vaciar-papelera" class="fa fa-trash-o" style="font-size: 5vw;margin-right: 0.3em;cursor:pointer" title="Clic para vaciar la papelera"></i>
     <h1 class="d-inline-block">Tickets eliminados</h1>
     <hr style="background: #969696;">
     <div class="table-striped" style="background: #ffffff;margin-bottom: 1em;width: 100%;margin-top: 1em;padding:0.5em; overflow:scroll">
@@ -36,7 +34,7 @@ $stmt->execute();
                 </tr>
             </thead>
             <tbody>
-                <?php while ($ticket = $stmt->fetch()) { ?>
+                <?php while ($ticket = $stmt->fetch(PDO::FETCH_ASSOC)) { ?>
 
                     <tr id="<?php echo $ticket['id_ticket'] ?>">
                         <td><?php echo $ticket['id_ticket'] ?></td>
@@ -110,10 +108,20 @@ ocultar_aviso();
     })
 </script>
 
+<!-- FUNCIONES JS -->
+<script src="assets/js/main_fn.js"></script>
+
 <script type="text/javascript">
     $(document).ready(function() {
         // ESTABLECER LA PAGINA ACTUAL
         sessionStorage.setItem("pagina_actual", "views/ticketsEliminados.php");
+
+        // CAMBIAR ICONO DE PAPELERA SI HAY MENSAJES ELIMINADOS
+        let filas = $("table tbody tr").length;
+        if (filas > 0) {
+            $("#vaciar-papelera").removeClass("fa-trash-o");
+            $("#vaciar-papelera").addClass("fa-trash");
+        }
 
         // ELIMINAR TICKET
         $(".eliminarConfirmacion").click(function() {
@@ -140,6 +148,22 @@ ocultar_aviso();
 
             })
 
+        })
+
+        // VACIAR PAPELERA
+        $("#vaciar-papelera").click(function() {
+            // PREOLOADER
+            $("#contenido").html(
+                "<figure style='display:block;width:100%;position:absolute;top:45%;text-align:center;'><img src='assets/img/preloader.gif'></figure>"
+            );
+
+            fetch("main_controller.php?vaciarPapelera=true")
+                .then(res => res.text())
+                .then(res => {
+                    if (res == 1) {
+                        $("#contenido").load("views/ticketsEliminados.php");
+                    }
+                })
         })
 
     })
