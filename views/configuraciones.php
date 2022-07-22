@@ -9,11 +9,6 @@ if (!$conn) {
     Log::registrar_log($conexion->error);
 }
 
-// MOSTRAR DEPARTAMENTOS Y EMPRESAS PARA EL FORMULARIO DE REGISTRO
-$stmt = $conn->prepare("SELECT * FROM miscelaneos WHERE tipo = 'empresa'");
-$stmt->setFetchMode(PDO::FETCH_ASSOC);
-$stmt->execute();
-
 // CONSULTAR USUARIOS REGISTRADOS
 $stmt_1 = $conn->prepare("SELECT * FROM usuarios ORDER BY nombre ASC");
 $stmt_1->setFetchMode(PDO::FETCH_ASSOC);
@@ -51,16 +46,12 @@ $stmt_1->execute();
                                     </tr>
                                     <tr>
                                         <td>
-                                            <select class="form-control" name="empresa" id="empresa">
+                                            <select class="form-control" name="empresa" id="regUsrEmpresa">
                                                 <option style="color:#aaa">Seleccione la empresa</option>
-                                                <!-- EMPRESA -->
-                                                <?php while ($empresa = $stmt->fetch()) {
-                                                    echo "<option value='{$empresa["descripcion"]}' style='color:#555'>{$empresa['descripcion']}</option>";
-                                                } ?>
                                             </select>
                                         </td>
                                         <td>
-                                            <select class="form-control" name="depto" id="depto">
+                                            <select class="form-control" name="depto" id="regUsrDepto">
                                                 <option style="color:#aaa">Departamento</option>
                                                 <!-- DEPARTAMENTOS -->
                                             </select>
@@ -264,8 +255,9 @@ ocultar_aviso();
         // LIMPIAR LOCALSTORAGE PARA EVITAR ERRORES AL VALIDAR SELECCIONES
         localStorage.clear();
 
-        // VALIDAR EL NOMBRE DE USUARIO 
-        $("input[name='usuario']").blur(function() {
+        // ======================================================================== REGISTRO USUARIO
+        // VALIDAR EL NOMBRE DE USUARIO
+        $("input[name='usuario']").keyup(function() {
 
             // QUE SEA SOLO LETRAS Aa-Zz
             var usuario = $("input[name='usuario']").val()
@@ -298,6 +290,11 @@ ocultar_aviso();
                                 $("input[name=usuario]").css("background", "#720000");
                                 $("input[name=usuario]").attr("placeholder", "Usuario no disponible");
                                 $("input[name=usuario]").focus();
+                                $("input[name=usuario]").blur(function() {
+                                    $("input[name='usuario']").css("background", "");
+                                    $("input[name='usuario']").css("color", "unset");
+                                    $("input[name='usuario']").attr("placeholder", "Nombre de usuario")
+                                })
                             } else {
                                 $("input[name='usuario']").css("background", "");
                                 $("input[name='usuario']").css("color", "unset");
@@ -312,125 +309,16 @@ ocultar_aviso();
             }
         })
 
-        // HABILITAR CAMPOS EN MISCELANEOS LUEGO DE HACER LAS SELECCIONES OBLIGATORIAS
-        $("select").change(function() {
-            let empresa = $(this).val();
-            let frm = $(this).attr("data-frm");
-            let el = $(this).attr("data-next");
-            let depto = document.getElementById(el);
-            if (empresa) {
-                $(`#${frm} #${el}`).attr("disabled", false);
+        // CARGAR EMPRESAS EN REGISTRO DE USUARIO
+        let datosPhp = ["regUsrEmpresa", "Seleccione la empresa", "empresasRegistradas"]
+        opciones_select(...datosPhp)
 
-                // cargar deptos en caso de estar creando una categoria
-                if (frm == "crearCat") {
-                    fetch(`main_controller.php?empresaDeptos=true&empresa=${empresa}`)
-                        .then(res => res.json())
-                        .then(data => {
-                            if (data.length > 0) {
-                                depto.innerHTML = "<option style='color:#aaa' selected>Departamento</option>";
-                                data.forEach(dep => {
-                                    let opt = document.createElement("option");
-                                    opt.setAttribute("value", dep);
-                                    opt.innerText = dep;
-                                    depto.append(opt);
-                                })
-                            } else {
-                                depto.innerHTML = "<option style='color:#aaa' selected>Sin registros</option>";
-                                console.warn("AVISO: sin registros activos.")
-                            }
-                        })
-                }
-            } else {
-                $(`#${frm} #${el}`).val("");
-                $(`#${frm} #${el}`).attr("disabled", true);
-                if (frm == "crearCat") {
-                    depto.innerHTML = "<option style='color:#aaa' selected>Departamento</option>";
-                    $(`#${frm} #categoria`).attr("disabled", true);
-                }
-            }
+        // CARGAR DEPTOS EN REGISTRO DE USUARIO SEGUN LA EMPRESA
+        $("#regUsrEmpresa").change(function() {
+            let empresa = $("#regUsrEmpresa").val();
+            let datosPhp = ["regUsrDepto", "Seleccione el depto", "empresaDeptos", empresa]
+            opciones_select(...datosPhp)
         })
-
-        // COMPROBAR DISPONIBILIDAD DE MISCELANEOS
-        $("input[data-tabla=miscelaneos]").keyup(function() {
-            let placeholder = $(this).attr("placeholder");
-            let tipo = $(this).attr("data-tipo");
-            let frm = $(this).attr("data-frm");
-            let val = "";
-
-            switch (tipo) {
-                case "empresa":
-                    val = $(this).val();
-                    break;
-                case "depto":
-                    let empresaD = $(`#${frm} #empresaDepto`).val();
-                    let depto = $(this).val();
-                    val = `${empresaD}-${depto}`;
-                    break;
-                case "cat":
-                    let empresaC = $(`#${frm} #empresaCat`).val();
-                    let deptoC = $(`#${frm} #deptoCat`).val();
-                    let cat = $(this).val();
-                    val = `${empresaC}-${deptoC}-${cat}`;
-                    break;
-            }
-
-            // Restablecer campo
-            function restablecer_campo() {
-                $(`input[data-tipo=${tipo}]`).attr("placeholder", `${placeholder}`);
-                $(`input[data-tipo=${tipo}]`).css("color", "#333");
-                $(`input[data-tipo=${tipo}]`).css("background", "#fff");
-            }
-
-            // Consultar
-            if (val) {
-                $.ajax({
-                    url: `main_controller.php?comprobarMiscelaneo=true&tipo=${tipo}&val=${val}`,
-                    success: function(data) {
-                        if (data) {
-                            $(`input[data-tipo=${tipo}]`).val(null);
-                            $(`input[data-tipo=${tipo}]`).css("background", "#720000");
-                            $(`input[data-tipo=${tipo}]`).css("color", "#fff");
-                            $(`input[data-tipo=${tipo}]`).attr("placeholder", `${val} ya esta creado!`);
-                            $(`input[data-tipo=${tipo}]`).focus();
-                            setTimeout(function() {
-                                restablecer_campo();
-                            }, 3000)
-                        } else {
-                            $(`input[data-tipo=${tipo}]`).css("color", "#333");
-                            $(`input[data-tipo=${tipo}]`).css("background", "#fff");
-                        }
-                    }
-                })
-            } else if (val == "") {
-                restablecer_campo();
-            }
-
-            $(this).css("color", "#333");
-            $(`input[data-tipo=${tipo}]`).css("background", "#fff");
-
-        })
-
-        // REGISTRO DE USUARIO: CONSULTAR DEPTOS SEGUN LA EMPRESA SELECCIONADA
-        $("#empresa").change(function() {
-            let empresa = $(this).val();
-            let depto = document.getElementById("depto");
-            fetch(`main_controller.php?empresaDeptos=true&empresa=${empresa}`)
-                .then(res => res.json())
-                .then(data => {
-                    if (data.length) {
-                        depto.innerHTML = "<option style='color:#aaa' selected>Departamento</option>";
-                        data.forEach(dep => {
-                            let opt = document.createElement("option");
-                            opt.setAttribute("value", dep);
-                            opt.innerText = dep;
-                            depto.append(opt);
-                        })
-                    } else {
-                        depto.innerHTML = "<option style='color:#aaa' selected>Sin registros</option>";
-                        console.warn("AVISO: sin registros activos.")
-                    }
-                })
-        });
 
         // REGISTRAR USUARIO
         $("#registrarBtn").click(function(event) {
@@ -472,28 +360,29 @@ ocultar_aviso();
                 type: "GET",
                 url: "main_controller.php?consultarUsuario=true&id_usuario=" + id,
                 success: function(data) {
+
                     var datos = JSON.parse(data);
-                    var nombre = datos["nombre"];
-                    var usuario = datos["usuario"];
-                    var clave = datos["clave"];
+
+                    // CARGAR EMPRESAS EN EDICION DE USUARIO
+                    let datosPhp = ["editUsrEmpresa", "Seleccione la empresa", "empresasRegistradas"]
+                    opciones_select(...datosPhp)
+
+                    // CARGAR DEPTOS EN EDICION DE USUARIO SEGUN LA EMPRESA
+                    $("#editUsrEmpresa").change(function() {
+                        let empresa = $("#editUsrEmpresa").val();
+                        let datosPhp = ["editUsrDepto", "Seleccione el depto", "empresaDeptos", empresa];
+                        opciones_select(...datosPhp);
+                    })
 
                     // VALORES POR DEFECTO EN VENTANA MODAL PARA EDITAR DATOS DE USUARIO
-                    $("#datosUsuario input[name=nombre]").val(nombre);
-                    $("#datosUsuario input[name=usuario]").val(usuario);
-                    $("#datosUsuario input[name=clave]").val(clave);
+                    $("#editUsrNombre").val(datos["nombre"]);
+                    $("#editUsrUsuario").val(datos["usuario"]);
+                    $("#editUsrNivel").val(datos["nivel"]);
+                    $("#editUsrClave").val(datos["clave"]);
 
                 }
             })
 
-            // CARGAR DEPTOS AL CAMBIAR LA EMPRESA
-            $("#editUsrEmpresa").change(function() {
-                let empresa = $(this).val();
-                fetch(`main_controller.php?empresaDeptos=true&empresa=${empresa}`)
-                    .then(res => res.json())
-                    .then(res => {
-                        console.log(res);
-                    });
-            });
             // ACTUALIZAR DATOS DE USUARIO
             $(".actualizarBtn").click(function() {
                 $.ajax({
@@ -507,24 +396,6 @@ ocultar_aviso();
                         }, 300)
                     }
                 })
-            })
-        })
-
-        // DESCONECTAR A TODOS LOS USUARIOS
-        $("#desconectarUsuarios").click(function() {
-            $.ajax({
-                type: "GET",
-                url: "main_controller.php?desconectarUsuarios=true",
-                success: function(data) {
-                    console.log(data);
-                    $("#avisoDelUsr").text(data);
-                    setTimeout(function() {
-                        $("#avisoDelUsr").text("");
-                    }, 3000)
-                },
-                error: function(e) {
-                    console.log("ERROR: \n", e)
-                }
             })
         })
 
@@ -547,6 +418,105 @@ ocultar_aviso();
                 })
             })
 
+        })
+
+        // ======================================================================== MISCELANEOS
+        // COMPROBAR DISPONIBILIDAD DE MISCELANEOS
+        $("input[data-tabla=miscelaneos]").keyup(function() {
+            let placeholder = $(this).attr("placeholder");
+            let tipo = $(this).attr("data-tipo");
+            let frm = $(this).attr("data-frm");
+            let val = "";
+
+            switch (tipo) {
+                case "empresa":
+                    val = $(this).val();
+                    break;
+                case "depto":
+                    let empresaD = $(`#${frm} #empresaDepto`).val();
+                    let depto = $(this).val();
+                    val = `${empresaD}-${depto}`;
+                    break;
+                case "cat":
+                    let empresaC = $(`#${frm} #empresaCat`).val();
+                    let deptoC = $(`#${frm} #deptoCat`).val();
+                    let cat = $(this).val();
+                    val = `${empresaC}-${deptoC}-${cat}`;
+                    break;
+            }
+
+            // Restablecer campo
+            function restablecer_campo() {
+                $(`input[data-tipo=${tipo}]`).attr("placeholder", `${placeholder}`);
+                $(`input[data-tipo=${tipo}]`).css("color", "#333");
+                $(`input[data-tipo=${tipo}]`).css("background", "#fff");
+            }
+
+            // Consultar
+            if (val) {
+                $.ajax({
+                    url: `main_controller.php?comprobarMiscelaneo=true&tipo=${tipo}&val=${val}`,
+                    success: function(data) {
+                        if (data) {
+                            $(`input[data-tipo=${tipo}]`).val(null);
+                            $(`input[data-tipo=${tipo}]`).css("background", "#720000");
+                            $(`input[data-tipo=${tipo}]`).css("color", "#fff");
+                            $(`input[data-tipo=${tipo}]`).attr("placeholder", "Definición no disponible!");
+                            $(`input[data-tipo=${tipo}]`).focus();
+                            setTimeout(function() {
+                                restablecer_campo();
+                            }, 3000)
+                        } else {
+                            $(`input[data-tipo=${tipo}]`).css("color", "#333");
+                            $(`input[data-tipo=${tipo}]`).css("background", "#fff");
+                        }
+                    }
+                })
+            } else if (val == "") {
+                restablecer_campo();
+            }
+
+            $(this).css("color", "#333");
+            $(`input[data-tipo=${tipo}]`).css("background", "#fff");
+
+        })
+
+        // HABILITAR CAMPOS EN MISCELANEOS LUEGO DE HACER LAS SELECCIONES OBLIGATORIAS
+        $("select").change(function() {
+            let empresa = $(this).val();
+            let frm = $(this).attr("data-frm");
+            let el = $(this).attr("data-next");
+            let depto = document.getElementById(el);
+            if (empresa) {
+                $(`#${frm} #${el}`).attr("disabled", false);
+
+                // cargar deptos en caso de estar creando una categoria
+                if (frm == "crearCat") {
+                    fetch(`main_controller.php?empresaDeptos=true&empresa=${empresa}`)
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.length > 0) {
+                                depto.innerHTML = "<option style='color:#aaa' selected>Departamento</option>";
+                                data.forEach(dep => {
+                                    let opt = document.createElement("option");
+                                    opt.setAttribute("value", dep);
+                                    opt.innerText = dep;
+                                    depto.append(opt);
+                                })
+                            } else {
+                                depto.innerHTML = "<option style='color:#aaa' selected>Sin registros</option>";
+                                console.warn("AVISO: sin registros activos.")
+                            }
+                        })
+                }
+            } else {
+                $(`#${frm} #${el}`).val("");
+                $(`#${frm} #${el}`).attr("disabled", true);
+                if (frm == "crearCat") {
+                    depto.innerHTML = "<option style='color:#aaa' selected>Departamento</option>";
+                    $(`#${frm} #categoria`).attr("disabled", true);
+                }
+            }
         })
 
         // CREAR EMPRESA
@@ -651,39 +621,6 @@ ocultar_aviso();
 
         })
 
-        // CREAR AREA DE REQUERIMIENTO
-        $(".crearArea").click(function() {
-
-            // VALIDAR SELECCIONES
-            <?php echo validar_selecciones("area", "") ?>
-
-            event.preventDefault();
-
-            if (localStorage.getItem("inputOK") == 1) {
-                $.ajax({
-                    type: "POST",
-                    url: "main_controller.php?crearArea=true",
-                    data: $("#crearArea").serialize(),
-                    success: function(data) {
-                        console.log(data);
-
-                        $("#area").val("");
-
-                        $("#avisoArea").text(data);
-
-                        $("#crearArea input").css("color", "#333");
-
-                        setTimeout(function() {
-                            $("#avisoArea").text("");
-                        }, 3000)
-
-                        localStorage.clear();
-                    }
-                })
-            }
-
-        })
-
         // RESPALDAR BD
         $(".respaldarBD").click(function() {
 
@@ -721,6 +658,25 @@ ocultar_aviso();
             })
         })
 
+        // DESCONECTAR A TODOS LOS USUARIOS
+        $("#desconectarUsuarios").click(function() {
+            $.ajax({
+                type: "GET",
+                url: "main_controller.php?desconectarUsuarios=true",
+                success: function(data) {
+                    console.log(data);
+                    $("#avisoDelUsr").text(data);
+                    setTimeout(function() {
+                        $("#avisoDelUsr").text("");
+                    }, 3000)
+                },
+                error: function(e) {
+                    console.log("ERROR: \n", e)
+                }
+            })
+        })
+
+        // ======================================================================== LOGS
         // VER LOGS DEL SISTEMA
         $("li a[data-name=logs]").click(function() {
             $("#logs").load("views/log.php");

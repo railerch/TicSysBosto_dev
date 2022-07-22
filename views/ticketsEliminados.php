@@ -26,7 +26,10 @@ $stmt = $conn->query("SELECT * FROM tickets $area AND estatus = 'eliminado'");
                     <th>ID</th>
                     <th>Fecha</th>
                     <th>Empresa</th>
-                    <th>Depto</th>
+                    <th>Emisor</th>
+                    <?php if ($_SESSION['usuario'] == 'root') { ?>
+                        <th>Receptor</th>
+                    <?php } ?>
                     <th>Categoria</th>
                     <th>Analista</th>
                     <th>Prioridad</th>
@@ -40,7 +43,10 @@ $stmt = $conn->query("SELECT * FROM tickets $area AND estatus = 'eliminado'");
                         <td><?php echo $ticket['id_ticket'] ?></td>
                         <td><?php echo $ticket['fecha'] ?></td>
                         <td><?php echo $ticket['empresa'] ?></td>
-                        <td><?php echo $ticket['nombre'] ?></td>
+                        <td><?php echo $ticket['depto'] ?></td>
+                        <?php if ($_SESSION['usuario'] == 'root') { ?>
+                            <td><?php echo $ticket['area'] ?></td>
+                        <?php } ?>
                         <td><?php echo $ticket['categoria'] ?>
                         <td><?php echo $ticket['analista'] ?></td>
                         </td>

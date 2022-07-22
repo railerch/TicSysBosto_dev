@@ -71,7 +71,7 @@ $stmt->execute();
 
 <div style="background: #505050;padding: 0.5em;border-radius: 1em;box-shadow: 0px 0px 10px rgb(0,0,0);border-width: 1px;border-style: none;border-top-style: none;border-right-style: none;border-bottom-style: none;color: #d7d7d7;">
     <i class="fa fa-ticket" style="font-size: 5vw;margin-right: 0.3em;"></i>
-    <h1 class="d-inline-block">Tickets abiertos</h1>
+    <h1 class="d-inline-block">Mis tickets</h1>
     <hr style="background: #969696;">
     <div class="table-striped" style="background: #ffffff;margin-bottom: 1em;width: 100%;margin-top: 1em;padding:0.5em; overflow:scroll">
         <table class="table table-bordered" style="text-align:center">

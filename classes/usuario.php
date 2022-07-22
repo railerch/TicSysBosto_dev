@@ -65,8 +65,10 @@ class Usuario
         $id = $this->info['id'];
 
         if (isset($this->info['empresa']) and $this->info['empresa'] != 'NULL') {
+
             $empresa = "empresa = '{$this->info['empresa']}',";
-            if ($_SESSION['nivel'] != 'analista') {
+
+            if ($_SESSION['nivel'] != 'admin') {
                 $_SESSION['empresa'] = $this->info['empresa'];
             }
         } else {
@@ -75,6 +77,10 @@ class Usuario
 
         if (isset($this->info['depto']) and $this->info['depto'] != 'NULL') {
             $depto = "depto = '{$this->info['depto']}',";
+
+            if ($_SESSION['nivel'] != 'admin') {
+                $_SESSION['depto'] = $this->info['depto'];
+            }
         } else {
             $depto = NULL;
         }
@@ -92,6 +98,7 @@ class Usuario
             $clave = NULL;
         }
 
+        //if (!$this->exception) {
         try {
             $stmt = $conn->prepare("UPDATE usuarios SET $empresa $depto $nivel $clave WHERE id_usuario = '$id'");
             $stmt->execute();
@@ -103,6 +110,7 @@ class Usuario
             $this->exception = $e->getMessage();
             Log::registrar_log('ERROR: Metodo: ' . __FUNCTION__ . ' | Clase: ' . __CLASS__ . ' | ' . $this->exception);
         }
+        // }
     }
 
     public function usuarios_activos(): string
@@ -167,10 +175,9 @@ class Usuario
 
                 $stmt_nl = $conn->prepare("SELECT id_chat FROM interchat WHERE emisor = '{$user['usuario']}' AND receptor = '{$_SESSION['usuario']}' AND leido = 0");
                 $stmt_nl->execute();
-                
+
                 $stmt_rt = $conn->prepare("SELECT id_chat FROM interchat WHERE emisor = 'root' AND receptor = '{$_SESSION['usuario']}' AND leido = 0");
                 $stmt_rt->execute();
-                
             } catch (PDOException $e) {
 
                 $this->exception = $e->getMessage();

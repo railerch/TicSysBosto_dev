@@ -378,7 +378,7 @@ function filtrar_depto()
             if ($_SESSION['usuario'] == 'root') {
                 return "WHERE area = area AND empresa = empresa";
             } else {
-                return "WHERE area = '{$_SESSION['depto']}' AND empresa = '{$_SESSION['empresa']}'";
+                return "WHERE area = '{$_SESSION['depto']}' AND empresa = empresa";
             }
         } else {
             echo '<span style="background-color:red; padding:10px; border-radius:5px;">ERROR: el nivel de usuario no corresponde con el departamento asignado.</span>';

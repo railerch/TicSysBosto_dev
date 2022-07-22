@@ -28,7 +28,10 @@ $stmt->execute();
                     <th>ID</th>
                     <th>Fecha</th>
                     <th>Empresa</th>
-                    <th>Depto</th>
+                    <th>Emisor</th>
+                    <?php if ($_SESSION['usuario'] == 'root') { ?>
+                        <th>Receptor</th>
+                    <?php } ?>
                     <th>Categoria</th>
                     <th>Analista</th>
                     <th>Prioridad</th>
@@ -55,6 +58,9 @@ $stmt->execute();
                         <td><?php echo $ticket['fecha'] ?></td>
                         <td><?php echo $ticket['empresa'] ?></td>
                         <td><?php echo $ticket['depto'] ?></td>
+                        <?php if ($_SESSION['usuario'] == 'root') { ?>
+                            <td><?php echo $ticket['area'] ?></td>
+                        <?php } ?>
                         <td><?php echo $ticket['categoria'] ?></td>
                         <td><?php echo $ticket['analista'] ?></td>
                         <?php

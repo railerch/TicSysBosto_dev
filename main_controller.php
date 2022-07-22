@@ -38,10 +38,10 @@ if (@$_GET['login']) {
         $_SESSION['avisos'] = $sesion->exception;
         header('Location: ' . $_SERVER['HTTP_REFERER']);
     } else if ($_POST['usuario'] != 'root' && $sesion->exception) {
-        $_SESSION['avisos'] = 'Error al momento de iniciar sesión, intente nuevamente!';
+        $_SESSION['avisos'] = 'Error al momento de iniciar sesión, intente nuevamente.';
         header('Location: ' . $_SERVER['HTTP_REFERER']);
     } else if (!$sesion->estatus) {
-        $_SESSION['avisos'] = 'Datos invalidos';
+        $_SESSION['avisos'] = 'Datos invalidos!';
         header('Location: index.php');
     }
 
@@ -58,10 +58,10 @@ if (@$_GET['logout']) {
         $_SESSION['avisos'] = 'Sesión finalizada!';
         header('Location: index.php');
     } else if ($_SESSION['usuario'] != 'root' && $sesion->exception) {
-        $_SESSION['avisos'] = 'Error al momento de cerrar sesión, intente nuevamente!';
+        $_SESSION['avisos'] = 'Error al momento de cerrar sesión, intente nuevamente.';
         header('Location: ' . $_SERVER['HTTP_REFERER']);
     } else {
-        $_SESSION['avisos'] = 'Error de sistema, intente nuevamente!';
+        $_SESSION['avisos'] = 'Error de sistema, intente nuevamente.';
         header('Location: ' . $_SERVER['HTTP_REFERER']);
     }
 
@@ -151,17 +151,17 @@ if (@$_GET['analistasDepto']) {
 
     switch ($_SESSION['nivel']) {
         case 'gerente':
-            $nivel = 'analista';
+            $nivel = "IN ('analista', 'gerente')";
             break;
         case 'analista':
-            $nivel = 'analista';
+            $nivel = "= 'analista'";
             break;
         case 'admin':
-            $nivel = 'admin';
+            $nivel = "= 'admin'";
             break;
     }
 
-    $stmt    = $conn->query("SELECT nombre FROM usuarios WHERE empresa = $empresa AND depto = '$depto' AND nivel = '$nivel' ORDER BY nombre DESC");
+    $stmt    = $conn->query("SELECT nombre FROM usuarios WHERE empresa = $empresa AND depto = '$depto' AND nivel $nivel ORDER BY nombre DESC");
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $analistas[] = $row['nombre'];
     };
@@ -203,7 +203,7 @@ if (@$_GET['registrarUsuario']) {
             echo '<meta http-equiv="refresh" content="3;url=index.php">';
         }
     } else if ($usuario->exception) {
-        $_SESSION['avisos'] = "Error al momento del registro, intente nuevamente";
+        $_SESSION['avisos'] = "Error al momento del registro, intente nuevamente.";
         echo $usuario->exception;
         echo '<meta http-equiv="refresh" content="3;url=index.php">';
     }
@@ -214,8 +214,8 @@ if (@$_GET['registrarUsuario']) {
 // ACTUALIZAR CLAVE 
 if (@$_GET['actUsuario']) {
 
-    if ($_POST['clave'] == '' && $_POST['empresa'] == 'NULL') {
-        $_SESSION['avisos'] = "Los campos no pueden estar vacios";
+    if ($_POST['clave'] == '') {
+        $_SESSION['avisos'] = "Los campos no pueden estar vacios!";
         exit();
     }
 
@@ -226,7 +226,7 @@ if (@$_GET['actUsuario']) {
         $_SESSION['avisos'] = "Datos actualizados exitosamente!";
     } else if ($usuario->exception) {
         echo $usuario->exception;
-        $_SESSION['avisos'] = "Error al actualizar la clave, intente nuevamente";
+        $_SESSION['avisos'] = "Error al actualizar la clave, intente nuevamente.";
     }
 
     exit();
@@ -240,6 +240,7 @@ if (@$_GET['consultarUsuario']) {
     $data = [
         'nombre' => $datos['nombre'],
         'usuario' => $datos['usuario'],
+        'nivel' => $datos['nivel'],
         'clave' => $datos['clave']
     ];
 
@@ -248,15 +249,15 @@ if (@$_GET['consultarUsuario']) {
     exit();
 }
 
-// ACTUALIZdeptosEmpresaAR DATOS DE USUARIO 
+// ACTUALIZAR DATOS DE USUARIO 
 if (@$_GET['actualizarDatos']) {
     $usuario = new Usuario($_POST);
     $usuario->actualizar_usuario();
 
     if ($usuario->estatus) {
-        $_SESSION['avisos'] = "Datos de usuario actualizados satisfactiriamente";
+        $_SESSION['avisos'] = "Datos de usuario actualizados satisfactiriamente.";
     } else if ($usuario->exception) {
-        $_SESSION['avisos'] = "Error al actualizar datos del usuario, intente nuevamente";
+        $_SESSION['avisos'] = "Error al actualizar datos del usuario, intente nuevamente.";
     }
 
     exit();
@@ -274,7 +275,7 @@ if (@$_GET['eliminarCuenta']) {
             header("Location: index.php");
         }
     } else if ($cuenta->exception) {
-        $_SESSION['avisos'] = "Error al momento de eliminar el usuario, intente nuevamente!";
+        $_SESSION['avisos'] = "Error al momento de eliminar el usuario, intente nuevamente.";
     } else {
         if ($_SESSION['nivel'] != 'analista') {
             // CERRAR LAS SESIÓN
@@ -311,7 +312,7 @@ if (@$_GET['crearTicket']) {
     if ($ticket->estatus) {
         $_SESSION['avisos'] = 'Ticket creado exitosamente!';
     } else if ($ticket->exception) {
-        $_SESSION['avisos'] = 'Error al momento del crear el ticket, intente nuevamente';
+        $_SESSION['avisos'] = 'Error al momento del crear el ticket, intente nuevamente.';
     }
 
     exit();
@@ -324,9 +325,9 @@ if (@$_GET['cerrarTicket']) {
     $ticket->cerrar_ticket();
 
     if ($ticket->estatus) {
-        $_SESSION['avisos'] = "Ticket cerrado correctamente";
+        $_SESSION['avisos'] = "Ticket cerrado correctamente!";
     } else if ($ticket->exception) {
-        $_SESSION['avisos'] = "Error al momento del cerrar el ticket, intente nuevamente";
+        $_SESSION['avisos'] = "Error al momento del cerrar el ticket, intente nuevamente.";
     }
 
 
@@ -339,7 +340,7 @@ if (@$_GET['agregarBitacora']) {
     $bitacora->registrar_bitacora();
 
     if ($bitacora->estatus) {
-        $_SESSION['avisos'] = "Ticket cerrado correctamente";
+        $_SESSION['avisos'] = "Ticket cerrado correctamente!";
     } else if (!$bitacora->precierre) {
         $_SESSION['avisos'] = 'Error al cerrar el ticket!';
     } else if ($bitacora->exception) {
@@ -355,9 +356,9 @@ if (@$_GET['estatusTicket']) {
     $ticket->cambiar_estatus_ticket($_GET['estatus']);
 
     if ($ticket->estatus == 'espera') {
-        $_SESSION['avisos'] = "Ticket #{$_GET['id_ticket']} puesto en espera";
+        $_SESSION['avisos'] = "Ticket #{$_GET['id_ticket']} puesto en espera.";
     } else if ($ticket->estatus == 'abierto') {
-        $_SESSION['avisos'] = "Ticket #{$_GET['id_ticket']} movido a la bandeja de entrada";
+        $_SESSION['avisos'] = "Ticket #{$_GET['id_ticket']} movido a la bandeja de entrada.";
     }
 
     exit();
@@ -373,11 +374,11 @@ if (@$_GET['eliminarTicket']) {
         $ticket->enviar_ticket_papelera();
 
         if ($ticket->exception) {
-            $_SESSION['avisos'] = "Error al momento de eliminar el ticket, intente nuevamente!";
+            $_SESSION['avisos'] = "Error al momento de eliminar el ticket, intente nuevamente.";
         } else if ($ticket->estatus && $_SESSION['nivel'] == 'analista') {
-            $_SESSION['avisos'] = "Ticket enviado a la papelera";
+            $_SESSION['avisos'] = "Ticket enviado a la papelera!";
         } else {
-            $_SESSION['avisos'] = "Ticket eliminado";
+            $_SESSION['avisos'] = "Ticket eliminado!";
         }
 
         exit();
@@ -386,9 +387,9 @@ if (@$_GET['eliminarTicket']) {
         $ticket->eliminar_ticket();
 
         if ($ticket->exception) {
-            $_SESSION['avisos'] = "Error al momento de eliminar el ticket, intente nuevamente!";
+            $_SESSION['avisos'] = "Error al momento de eliminar el ticket, intente nuevamente.";
         } else if ($ticket->estatus) {
-            $_SESSION['avisos'] = "Ticket eliminado correctamente";
+            $_SESSION['avisos'] = "Ticket eliminado correctamente.";
         }
     }
 
@@ -414,9 +415,9 @@ if (@$_GET['asignarTicket']) {
     $ticket->asignar_ticket($_SESSION['nombre']);
 
     if ($ticket->estatus) {
-        $_SESSION['avisos'] = "Ticket asignado a {$_SESSION['nombre']}";
+        $_SESSION['avisos'] = "Ticket asignado a {$_SESSION['nombre']}.";
     } else {
-        $_SESSION['avisos'] = 'Error al momento de asignar el ticket, intente nuevamente!';
+        $_SESSION['avisos'] = 'Error al momento de asignar el ticket, intente nuevamente.';
     }
 
     exit();
@@ -611,7 +612,7 @@ if (@$_GET['registrarTarea']) {
         # Crear log
         Log::registrar_log('Nueva tarea registrada');
     } else {
-        $_SESSION['avisos'] = "Error: no se pudo crear la tarea, intente nuevamente";
+        $_SESSION['avisos'] = "Error: no se pudo crear la tarea, intente nuevamente.";
         echo $tarea->exception;
     }
 
@@ -636,7 +637,7 @@ if (@$_GET['actualizarTarea']) {
         $id_tarea = substr($_GET['id_tarea'], 3);
         Log::registrar_log("Tarea #{$id_tarea} actualizada");
     } else {
-        $_SESSION['avisos'] = "Error: tarea no actualizada, intente nuevamente";
+        $_SESSION['avisos'] = "Error: tarea no actualizada, intente nuevamente.";
         echo $tarea->exception;
     }
 
@@ -653,19 +654,19 @@ if (@$_GET['asignarTarea']) {
 
         if ($res == 'tareaTomada') {
 
-            $_SESSION['avisos'] = "Tarea asignada a {$_SESSION['nombre']}";
+            $_SESSION['avisos'] = "Tarea asignada a {$_SESSION['nombre']}.";
 
             #Crear log
             Log::registrar_log("Tarea #{$_GET['id_tarea']} atendida");
         } else if ($res == 'tareaLiberada') {
 
-            $_SESSION['avisos'] = "La tarea ha sido liberada";
+            $_SESSION['avisos'] = "La tarea ha sido liberada!";
 
             #Crear log
             Log::registrar_log("Tarea #{$_GET['id_tarea']} liberada");
         }
     } else {
-        $_SESSION['avisos'] = "Error: asignación no ejecutada, intente nuevamente";
+        $_SESSION['avisos'] = "Error: asignación no ejecutada, intente nuevamente.";
         echo $tarea->exception;
     }
 
@@ -685,7 +686,7 @@ if (@$_GET['eliminarTarea']) {
         # Crear log
         Log::registrar_log("Tarea #{$_GET['id_tarea']} eliminada");
     } else {
-        $_SESSION['avisos'] = "Error: tarea no eliminada, intente nuevamente";
+        $_SESSION['avisos'] = "Error: tarea no eliminada, intente nuevamente.";
         echo $tarea->exception;
     }
 
@@ -705,7 +706,7 @@ if (@$_GET['estatusTarea']) {
         $id_tarea = substr($_GET['id_tarea'], 3);
         Log::registrar_log("Tarea #{$id_tarea} estatus_act: {$_GET['estatus']}");
     } else {
-        $_SESSION['avisos'] = "Error: estatus de tarea no actualizado, intente nuevamente";
+        $_SESSION['avisos'] = "Error: estatus de tarea no actualizado, intente nuevamente.";
         echo $tarea->exception;
     }
 

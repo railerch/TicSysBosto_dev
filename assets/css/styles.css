@@ -1,6 +1,6 @@
 @media (min-width: 768px) {
     #sidebar>* {
-        margin-bottom: 3.5vh;
+        margin-bottom: 3vh;
     }
 }
 
@@ -10,11 +10,13 @@
 
 @media (max-width: 767px) {
     #sidebar>* {
-        margin-bottom: 0.6em;
+        margin-bottom: 0.5em;
     }
+
     #sidebar i {
         font-size: 3vw !important;
     }
+
     table {
         font-size: 0.8em !important;
     }
@@ -41,10 +43,12 @@ hr {
         text-shadow: 0 0 0px yellow;
         color: gray;
     }
+
     50% {
         text-shadow: 0 0 15px yellow;
         color: #fff;
     }
+
     100% {
         text-shadow: 0 0 0px yellow;
         color: gray;

@@ -16,10 +16,6 @@ $stmt->setFetchMode(PDO::FETCH_ASSOC);
 $stmt->execute();
 $datos = $stmt->fetch();
 
-// CONSULTAR DEPARTAMENTOS Y EMPRESAS PARA LA VENTANA MODAL
-$stmt_loc = $conn->prepare("SELECT * FROM miscelaneos WHERE tipo = 'empresa'");
-$stmt_loc->setFetchMode(PDO::FETCH_ASSOC);
-$stmt_loc->execute();
 ?>
 
 <div style="background: #5b5b5b;padding: 0.5em;border-radius: 1em;box-shadow: 0px 0px 10px rgb(0,0,0);border-width: 1px;border-style: none;border-top-style: none;border-right-style: none;border-bottom-style: none;color: #d7d7d7;">
@@ -33,7 +29,7 @@ $stmt_loc->execute();
                     <th>ID</th>
                     <th>Nombre</th>
                     <th>Usuario</th>
-                    <th>Ubicación</th>
+                    <th>Empresa</th>
                     <th>Departamento</th>
                     <th>Acciones</th>
                 </tr>
@@ -60,7 +56,7 @@ $stmt_loc->execute();
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" style="color: lightgray;"><i class="fa fa-user-o"></i>&nbsp;Cambiar datos de cuenta</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" style="color: #333;"><i class="fa fa-user-o"></i>&nbsp;Cambiar datos de cuenta</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                 </div>
                 <div class="modal-body">
                     <form id="datosUsuario" class="justify-content-around" id="edicionUsuario" style="margin: 1em;">
@@ -68,15 +64,6 @@ $stmt_loc->execute();
                             <input type="hidden" name="id" value="<?php echo $datos['id_usuario'] ?>">
                             <label for="clave" style="color: #333;">Definir nueva clave</label>
                             <input class="form-control" type="password" name="clave" placeholder="Definir una nueva clave" value="<?php echo $datos['clave'] ?>">
-                            <br>
-                            <label for="empresa" style="color: #333;">Cambiar empresa a la que pertenece</label>
-                            <select class="form-control" name="empresa" disabled>
-                                <option style="color:#555" value="NULL">Seleccionar empresa</option>
-                                <!-- UBICACIONES -->
-                                <?php while ($empresa = $stmt_loc->fetch()) {
-                                    echo "<option value='{$empresa["descripcion"]}' style='color:#555'>{$empresa['descripcion']}</option>";
-                                } ?>
-                            </select>
                             <button id="actualizar" class="btn btn-primary float-right" type="submit" data-dismiss="modal">ACTUALIZAR</button>
                         </fieldset>
                     </form>

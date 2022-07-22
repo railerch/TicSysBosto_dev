@@ -10,7 +10,6 @@
  */
 
 function opciones_select(selectId, textoPorDefecto, receptorPhp, empresa = null, depto = null) {
-    console.log("ReceptorPHP: " + receptorPhp)
     let emp = dep = '&';
     if (empresa) {
         emp = `&empresa=${empresa}`;
@@ -24,7 +23,7 @@ function opciones_select(selectId, textoPorDefecto, receptorPhp, empresa = null,
         .then(data => {
             let nodo = document.getElementById(selectId);
             if (data.length > 0) {
-                nodo.innerHTML = `<option style='color:#aaa' selected>${textoPorDefecto}</option>`;
+                nodo.innerHTML = `<option style='color:#aaa' value='NULL' selected>${textoPorDefecto}</option>`;
                 data.forEach(dep => {
                     let opt = document.createElement("option");
                     opt.setAttribute("value", dep);
@@ -32,7 +31,7 @@ function opciones_select(selectId, textoPorDefecto, receptorPhp, empresa = null,
                     nodo.append(opt);
                 })
             } else {
-                nodo.innerHTML = "<option style='color:#aaa' selected>Sin registros</option>";
+                nodo.innerHTML = "<option style='color:#aaa' value='NULL' selected>Sin registros</option>";
                 console.warn("AVISO: sin registros activos.")
             }
         })

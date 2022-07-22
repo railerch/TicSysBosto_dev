@@ -375,30 +375,24 @@
                     <form id="datosUsuario" class="justify-content-around" style="margin: 1em;">
                         <fieldset>
                             <input type="hidden" name="id" value="">
-                            <input class="form-control" type="text" name="nombre" placeholder="Nombre completo" disabled>
-                            <input class="form-control" type="text" name="usuario" placeholder="Usuario" disabled>
+                            <input id="editUsrNombre" class="form-control" type="text" name="nombre" placeholder="Nombre completo" disabled>
+                            <input id="editUsrUsuario" class="form-control" type="text" name="usuario" placeholder="Usuario" disabled>
                             <!-- NIVEL DE USUARIO -->
-                            <select class="form-control" name="nivel">
+                            <select id="editUsrNivel" class="form-control" name="nivel">
                                 <option style="color:#aaa" value="NULL">Nivel de usuario</option>
                                 <option value="admin">Admin</option>
                                 <option value="gerente">Gerente</option>
                                 <option value="analista">Analista</option>
                                 <option value="usuario">Usuario comun</option>
                             </select>
-                            <select class="form-control" name="empresa" id="editUsrEmpresa">
-                                <option style="color:#555" value="NULL">Seleccione nueva empresa</option>
-                                <!-- UBICACIONES -->
-                                <?php
-                                $stmt_65 = $conn->query("SELECT descripcion FROM miscelaneos WHERE tipo = 'empresa' ORDER BY descripcion ASC");
-                                while ($empresa = $stmt_65->fetch()) {
-                                    echo "<option value='{$empresa["descripcion"]}' style='color:#555'>{$empresa['descripcion']}</option>";
-                                } ?>
+                            <select id="editUsrEmpresa" class="form-control" name="empresa">
+                                <option style="color:#555" value="NULL">Seleccione la empresa</option>
                             </select>
-                            <select class="form-control" name="depto" id="editUsrDepto">
-                                <option style="color:#555" value="NULL">Seleccione nuevo departamento</option>
+                            <select id="editUsrDepto" class="form-control" name="depto">
+                                <option style="color:#555" value="NULL">Seleccione el depto</option>
                                 <!-- DEPARTAMENTOS -->
                             </select>
-                            <input class="form-control" type="password" name="clave" placeholder="Clave">
+                            <input id="editUsrClave" class="form-control" type="password" name="clave" placeholder="Clave">
                             <button class="btn btn-primary float-right actualizarBtn" data-user-id="" type="submit" data-dismiss="modal">ACTUALIZAR</button>
                         </fieldset>
                     </form>

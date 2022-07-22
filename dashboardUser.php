@@ -97,7 +97,7 @@ $config = cargar_config();
 
                     <a class="text-muted sidebtn" data-toggle="tooltip" data-bs-tooltip="" data-placement="right" id="crearTicket" href="#/" title="Crear ticket" data-btn="ticketUserCrear"><i class="fa fa-edit" style="font-size: 3vw"></i></a>
 
-                    <a class="text-muted sidebtn" data-toggle="tooltip" data-bs-tooltip="" data-placement="right" id="ticketsUsuario" href="#/" title="Tickets abiertos" data-btn="ticketsUsuario"><i class="fa fa-ticket" style="font-size: 3vw"></i></a>
+                    <a class="text-muted sidebtn" data-toggle="tooltip" data-bs-tooltip="" data-placement="right" id="ticketsUsuario" href="#/" title="Mis tickets" data-btn="ticketsUsuario"><i class="fa fa-ticket" style="font-size: 3vw"></i></a>
 
                     <a class="text-muted sidebtn" data-toggle="tooltip" data-bs-tooltip="" data-placement="right" id="datosCuenta" href="#/" title="Datos de cuenta" data-btn="datosCuenta"><i class="fa fa-user" style="font-size: 3vw"></i></a>
 
