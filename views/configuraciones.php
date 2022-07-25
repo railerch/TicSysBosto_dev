@@ -47,12 +47,12 @@ $stmt_1->execute();
                                     <tr>
                                         <td>
                                             <select class="form-control" name="empresa" id="regUsrEmpresa">
-                                                <option style="color:#aaa">Seleccione la empresa</option>
+                                                <option style="color:#aaa" value="NULL">Seleccione la empresa</option>
                                             </select>
                                         </td>
                                         <td>
                                             <select class="form-control" name="depto" id="regUsrDepto">
-                                                <option style="color:#aaa">Departamento</option>
+                                                <option style="color:#aaa" value="NULL">Departamento</option>
                                                 <!-- DEPARTAMENTOS -->
                                             </select>
                                         </td>
@@ -326,8 +326,8 @@ ocultar_aviso();
             // VALIDAR SELECCIONES
             <?php echo validar_selecciones("nombre", "") ?>
             <?php echo validar_selecciones("usuario", "") ?>
-            <?php echo validar_selecciones("empresa", "Seleccione la ubicación") ?>
-            <?php echo validar_selecciones("depto", "Seleccione el departamento") ?>
+            <?php echo validar_selecciones("regUsrEmpresa", "NULL") ?>
+            <?php echo validar_selecciones("regUsrDepto", "NULL") ?>
             <?php echo validar_selecciones("nivel", "Nivel de usuario") ?>
             <?php echo validar_selecciones("clave", "") ?>
 
@@ -339,9 +339,7 @@ ocultar_aviso();
                     url: "main_controller.php?registrarUsuario=true",
                     data: $("#regForm").serialize(),
                     success: function(data) {
-                        console.log(data);
                         $("#contenido").load("views/configuraciones.php");
-                        localStorage.clear();
                     }
                 });
             }
@@ -410,7 +408,6 @@ ocultar_aviso();
                     type: "GET",
                     url: `main_controller.php?eliminarCuenta=true&id=${id}`,
                     success: function(data) {
-                        console.log(data);
                         setTimeout(function() {
                             $("#contenido").load("views/configuraciones.php");
                         }, 500);

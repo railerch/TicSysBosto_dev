@@ -31,7 +31,7 @@ if (!$conn) {
                     </div>
                     <div class="form-check"><input class="form-check-input reporte" type="radio" name="reporte" value="empresa"><label class="form-check-label">Tickets por empresa</label>
                     </div>
-                    <div class="form-check"><input class="form-check-input reporte" type="radio" name="reporte" value="global"><label class="form-check-label">Reporte general</label>
+                    <div class="form-check"><input class="form-check-input reporte" type="radio" name="reporte" value="integral"><label class="form-check-label">Reporte integral</label>
                     </div>
                 <?php } else if ($_SESSION['nivel'] == 'gerente' || $_SESSION['nivel'] == 'analista') { ?>
                     <div class="form-check"><input class="form-check-input reporte" type="radio" name="reporte" value="analista"><label class="form-check-label">Tickets por analista</label>
@@ -46,35 +46,17 @@ if (!$conn) {
             </fieldset>
         </div>
         <div id="data">
-            <div id="tech">
+            <div id="tech-div">
                 <select id="analista" class="form-control" name="analista" style="width:50%">
-                    <option style="color:#aaa" value="">Seleccione el analista</option>
+                    <option style="color:#aaa" value="NULL">Seleccione el analista</option>
                     <!-- ANALISTAS DEL DEPTO -->
                 </select>
             </div>
 
             <div id="categoria-div">
                 <select id="categoria" class="form-control" name="categoria" style="width:50%">
-                    <option style="color:#aaa" value="">Seleccione la categoría</option>
+                    <option style="color:#aaa" value="NULL">Seleccione la categoría</option>
                     <!-- CATEGORIAS DEL DEPTO -->
-                </select>
-            </div>
-
-            <div id="depto-div">
-                <select id="empresaDepto" class="form-control d-inline-block mr-lg-2" name="empresaDepto" style="width:30%">
-                    <option style="color:#aaa" value="">Seleccione la empresa</option>
-                    <!-- EMPRESAS REGISTRADAS -->
-                </select>
-                <select id="depto" class="form-control d-inline-block" name="depto" style="width:30%">
-                    <option style="color:#aaa" value="">Seleccione el departamento</option>
-                    <!-- DEPTO EMISOR SEGUN EMPRESA -->
-                </select>
-            </div>
-
-            <div id="empresa-div">
-                <select id="empresa" class="form-control" name="empresa" style="width:50%">
-                    <option style="color:#aaa" value="">Seleccione la empresa</option>
-                    <!-- EMPRESAS REGISTRADAS -->
                 </select>
             </div>
 
@@ -105,14 +87,14 @@ if (!$conn) {
 
         // OCULTAR INPUT TECNICO/EMPRESA
         $("#data").hide();
-        $("#tech").hide();
+        $("#tech-div").hide();
         $("#depto-div").hide();
         $("#empresa-div").hide();
         $("#categoria-div").hide();
 
         $("input[value=analista]").focus(function() {
             $("#data").show();
-            $("#tech").show();
+            $("#tech-div").show();
             $("#categoria-div").hide();
             $("#depto-div").hide();
             $("#empresa-div").hide();
@@ -127,7 +109,7 @@ if (!$conn) {
 
         $("input[value=tareas]").focus(function() {
             $("#data").show();
-            $("#tech").show();
+            $("#tech-div").show();
             $("#categoria-div").hide();
             $("#depto-div").hide();
             $("#empresa-div").hide();
@@ -142,7 +124,7 @@ if (!$conn) {
 
         $("input[value=categoria]").focus(function() {
             $("#data").show();
-            $("#tech").hide();
+            $("#tech-div").hide();
             $("#categoria-div").show();
             $("#depto-div").hide();
             $("#empresa-div").hide();
@@ -157,32 +139,18 @@ if (!$conn) {
 
         $("input[value=depto]").focus(function() {
             $("#data").show();
-            $("#tech").hide();
+            $("#tech-div").hide();
             $("#categoria-div").hide();
-            $("#depto-div").show();
             $("#empresa-div").hide();
             $("#generarReporte").attr("data-tipo", "depto");
-
-            // Consultar empresas
-            let datosPhp = ["empresaDepto", "Seleccione la empresa", "empresasRegistradas"];
-            opciones_select(...datosPhp);
-
-            // Consultar departamentos
-            let empresa = document.getElementById("empresaDepto");
-            empresa.addEventListener("change", function() {
-                let datosPhp = ["depto", "Seleccione el depto", "empresaDeptos", `${this.value}`];
-                opciones_select(...datosPhp);
-            })
-
-            localStorage.setItem("inputOK", 0);
+            localStorage.setItem("inputOK", 1);
         })
 
         $("input[value=empresa]").focus(function() {
             $("#data").show();
-            $("#tech").hide();
+            $("#tech-div").hide();
             $("#categoria-div").hide();
             $("#depto-div").hide();
-            $("#empresa-div").show();
             $("#generarReporte").attr("data-tipo", "empresa");
 
             // Consultar categorias del departamento
@@ -192,25 +160,13 @@ if (!$conn) {
             localStorage.setItem("inputOK", 0);
         })
 
-        $("input[value=TicketsDepto]").focus(function() {
+        $("input[value=integral]").focus(function() {
             $("#data").show();
-            $("#tech").hide();
-            $("#categoria-div").hide();
-            $("#depto-div").show();
-            $("#empresa-div").hide();
-            $("#generarReporte").attr("data-tipo", "ticketsDepto");
-
-
-            localStorage.setItem("inputOK", 1);
-        })
-
-        $("input[value=global]").focus(function() {
-            $("#data").show();
-            $("#tech").hide();
+            $("#tech-div").hide();
             $("#categoria-div").hide();
             $("#depto-div").hide();
             $("#empresa-div").hide();
-            $("#generarReporte").attr("data-tipo", "global");
+            $("#generarReporte").attr("data-tipo", "integral");
             localStorage.setItem("inputOK", 1)
         })
 
@@ -223,11 +179,11 @@ if (!$conn) {
 
             // VALIDAR SELECCIONES
             if (tipo == "analista" || tipo == "tareas") {
-                <?php echo validar_selecciones("analista", "") ?>
+                <?php echo validar_selecciones("analista", "NULL") ?>
             } else if (tipo == "empresa") {
-                <?php echo validar_selecciones("empresa", "") ?>
+                <?php echo validar_selecciones("empresa", "NULL") ?>
             } else if (tipo == "categoria") {
-                <?php echo validar_selecciones("categoria", "") ?>
+                <?php echo validar_selecciones("categoria", "NULL") ?>
             }
 
             <?php echo validar_selecciones("fechaInicial", "") ?>

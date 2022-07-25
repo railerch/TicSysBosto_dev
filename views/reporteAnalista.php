@@ -13,12 +13,13 @@ if (!$conn) {
 Log::registrar_log('Reporte de tickets: ' . $_POST['analista']);
 
 // DATOS PARA EL REPORTE
+$area         = $_SESSION['depto'];
 $nombre       = isset($_POST['analista']) ? $_POST['analista'] : NULL;
 $fechaInicial = isset($_POST['fechaInicial']) ? $_POST['fechaInicial'] . ' 00:00:00' : "2020-01-01 00:00:00";
 $fechaFinal   = isset($_POST['fechaFinal']) ? $_POST['fechaFinal'] . ' 23:59:59' : date("Y-m-d 23:59:59");
 
 // CONSULTAR TICKETS GLOBALES DEL PERIODO
-$stmtG = $conn->prepare("SELECT analista FROM tickets WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' AND area = 'Sistemas' AND estatus <> 'eliminado'");
+$stmtG = $conn->prepare("SELECT analista FROM tickets WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' AND area = '$area' AND estatus <> 'eliminado'");
 $stmtG->execute();
 
 // OMITIR LOS TICKETS DEL ROOT
@@ -64,7 +65,7 @@ if ($ticketsGlobales > 0) {
 }
 
 // CONSULTAR TICKETS DE TECNICO
-$stmtTic = $conn->prepare("SELECT * FROM tickets WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' AND analista = '$nombre' AND estatus <> 'eliminado'");
+$stmtTic = $conn->prepare("SELECT * FROM tickets WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' AND area = '$area' AND analista = '$nombre' AND estatus <> 'eliminado'");
 $stmtTic->execute();
 
 ?>
@@ -151,7 +152,7 @@ $stmtTic->execute();
 <div id="docReporte" style="background: #5b5b5b; padding: 0.5em; border-radius: 1em; box-shadow: 0px 0px 10px rgb(0,0,0);border-width: 1px;border-style: none;border-top-style: none;border-right-style: none;border-bottom-style: none;color: #d7d7d7;">
     <div id="locDiv">
         <i class="fa fa-user-circle-o" style="font-size: 5vw;margin-right: 0.3em;"></i>
-        <h1 class="d-inline-block">Reporte: <span style="font-weight:lighter"><?php echo $nombre ?></span></h1>
+        <h1 class="d-inline-block">Reporte: <span style="font-weight:lighter">Tickets por analista</span></h1>
     </div>
     <h5 id="fechaReporte">
         <!-- FECHA DEL REPORTE -->
@@ -160,7 +161,7 @@ $stmtTic->execute();
     <p style="text-align:right">
         <?php echo '<b>Periodo:</b> ' . $_POST['fechaInicial'] . ' <b>al</b> ' . $_POST['fechaFinal'] ?></p>
 
-    <h3>Historial de tickets atendidos</h3>
+    <h3>ANALISTA - <?php echo $nombre ?></h3>
     <hr style="background: #969696; margin-top:1em;">
     <div id="datosTecnico">
         <table>
@@ -210,7 +211,7 @@ $stmtTic->execute();
                     <th>Empresa</th>
                     <th>Departamento</th>
                     <th>Usuario</th>
-                    <th>Incidencia</th>
+                    <th>Categoria</th>
                     <th>Estatus</th>
                 </tr>
             </thead>
@@ -227,7 +228,7 @@ $stmtTic->execute();
                         <td><?php echo $ticket['empresa'] ?></td>
                         <td><?php echo $ticket['depto'] ?></td>
                         <td><?php echo $ticket['nombre'] ?></td>
-                        <td><?php echo $ticket['asunto'] ?></td>
+                        <td><?php echo $ticket['categoria'] ?></td>
                         <td><?php echo $ticket['estatus'] ?></td>
                     </tr>
 

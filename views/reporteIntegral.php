@@ -173,7 +173,7 @@ $totaltareas = $pendienteG + $colaG + $procesandoG + $finalizadaG + $verificadaG
 <div id="docReporte" style="background: #5b5b5b; padding: 0.5em; border-radius: 1em; box-shadow: 0px 0px 10px rgb(0,0,0);border-width: 1px;border-style: none;border-top-style: none;border-right-style: none;border-bottom-style: none;color: #d7d7d7;">
     <div id="locDiv">
         <i class="fa fa-globe" style="font-size: 5vw;margin-right: 0.3em;"></i>
-        <h1 class="d-inline-block">Reporte: <span style="font-weight:lighter">Global <br><?php echo strtolower($_SESSION['depto']) ?></span></h1>
+        <h1 class="d-inline-block">Reporte: <span style="font-weight:lighter">Integral</span></h1>
     </div>
     <h5 id="fechaReporte">
         <!-- FECHA DEL REPORTE -->
@@ -236,7 +236,7 @@ $totaltareas = $pendienteG + $colaG + $procesandoG + $finalizadaG + $verificadaG
             <tbody>
                 <?php
                 // CONSULTAR TECNICOS
-                $stmt_tck = $conn->prepare("SELECT * FROM usuarios WHERE nivel = 'analista' ORDER BY nombre");
+                $stmt_tck = $conn->prepare("SELECT * FROM usuarios WHERE nivel = 'admin' ORDER BY nombre");
                 $stmt_tck->execute();
 
                 // ID DE FILA EN TABLA
@@ -347,14 +347,15 @@ $totaltareas = $pendienteG + $colaG + $procesandoG + $finalizadaG + $verificadaG
     <div id="historial" class="table-striped" style="background: #ffffff;margin-bottom: 1em;width: 100%;margin-top: 1em;padding:0.5em; overflow:scroll">
         <table class="table table-bordered">
             <thead>
-                <tr style="text-align: center;background: lightgray;color: rgb(255,255,255);">
+                <tr style="text-align: center;background: #505050;color: rgb(255,255,255);">
                     <th>ID</th>
                     <th>Analista</th>
                     <th>T/pendientes</th>
-                    <th>T/en cola</th>
+                    <th>T/en espera</th>
                     <th>T/en proceso</th>
                     <th>T/finalizadas</th>
                     <th>T/verificadas</th>
+                    <th>T/totales</th>
                     <th>Puntaje</th>
                     <th>Efectividad</th>
                 </tr>
@@ -362,7 +363,7 @@ $totaltareas = $pendienteG + $colaG + $procesandoG + $finalizadaG + $verificadaG
             <tbody>
                 <?php
                 // CONSULTAR TECNICOS
-                $stmt_tsk = $conn->prepare("SELECT * FROM usuarios WHERE nivel = 'analista' AND usuario <> 'root' ORDER BY nombre");
+                $stmt_tsk = $conn->prepare("SELECT * FROM usuarios WHERE nivel = 'admin' AND usuario <> 'root' ORDER BY nombre");
                 $stmt_tsk->execute();
 
                 // ID DE FILA EN TABLA
@@ -425,6 +426,7 @@ $totaltareas = $pendienteG + $colaG + $procesandoG + $finalizadaG + $verificadaG
                         <td><?php echo $procesando ?></td>
                         <td><?php echo $finalizada ?></td>
                         <td><?php echo $verificada ?></td>
+                        <td><?php echo $totalTareas ?></td>
                         <td><?php echo $puntaje ?></td>
                         <td><?php echo number_format($efectividad, 2) ?>%</td>
                     </tr>
@@ -440,7 +442,7 @@ $totaltareas = $pendienteG + $colaG + $procesandoG + $finalizadaG + $verificadaG
     <div id="historial" class="table-striped" style="background: #ffffff;margin-bottom: 1em;width: 100%;margin-top: 1em;padding:0.5em; overflow:scroll">
         <table class="table table-bordered">
             <thead>
-                <tr style="text-align: center;background: lightgray;color: rgb(255,255,255);">
+                <tr style="text-align: center;background: #505050;color: rgb(255,255,255);">
                     <th>ID</th>
                     <th>Empresa</th>
                     <th>T/abiertos</th>
@@ -448,7 +450,7 @@ $totaltareas = $pendienteG + $colaG + $procesandoG + $finalizadaG + $verificadaG
                     <th>T/Pre-cierre</th>
                     <th>T/cerrados</th>
                     <th>T/totales</th>
-                    <th>Nvl/Incidencias</th>
+                    <th>Nvl/incidencias</th>
                 </tr>
             </thead>
             <tbody>
@@ -517,6 +519,92 @@ $totaltareas = $pendienteG + $colaG + $procesandoG + $finalizadaG + $verificadaG
 
                 <?php }
                     $cont++;
+                } ?>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- ESTADITISCAS DE TICKETS POR DEPARTAMENTO -->
+    <h3>Estadistica de tickets por departamento</h3>
+    <div id="historial" class="table-striped" style="background: #ffffff;margin-bottom: 1em;width: 100%;margin-top: 1em;padding:0.5em; overflow:scroll">
+        <table class="table table-bordered">
+            <thead>
+                <tr style="text-align: center;background: #505050;color: rgb(255,255,255);">
+                    <th>ID</th>
+                    <th>Empresa</th>
+                    <th>Departamento</th>
+                    <th>T/abiertos</th>
+                    <th>T/espera</th>
+                    <th>T/Pre-cierre</th>
+                    <th>T/cerrados</th>
+                    <th>T/totales</th>
+                    <th>Nvl/incidencias</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                // CONSULTAR EMPRESAS
+                $stmt_D = $conn->query("SELECT descripcion FROM miscelaneos WHERE tipo = 'depto' ORDER BY 'descripcion' ");
+
+                // ID DE FILA EN TABLA
+                $cont = 1;
+
+                while ($row = $stmt_D->fetch(PDO::FETCH_ASSOC)) {
+                    //*******************************************************************************
+                    // DEPTO EN CURSO
+                    $tmp     = explode('-', $row['descripcion']);
+                    $empresa = $tmp[0];
+                    $depto   = $tmp[1];
+                    $area    = $_SESSION['depto'];
+
+                    // CONSULTAR TICKETS DEL PERIODO
+                    $stmtLoc = $conn->query("SELECT estatus FROM tickets WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' AND empresa = '$empresa' AND depto = '$depto' AND area = '$area' AND estatus <> 'eliminado'");
+
+                    $abiertosL = $esperaL = $preCierreL = $cerradosL = 0;
+
+                    while ($ticket = $stmtLoc->fetch(PDO::FETCH_ASSOC)) {
+                        switch ($ticket['estatus']) {
+                            case 'abierto':
+                                $abiertosL++;
+                                break;
+                            case 'espera':
+                                $esperaL++;
+                                break;
+                            case 'precierre':
+                                $preCierreL++;
+                                break;
+                            case 'cerrado':
+                                $cerradosL++;
+                                break;
+                        }
+                    }
+
+                    // PORCENTAJE DE TICKETS POR DEPTO
+                    $ticketsLoc = $abiertosL + $esperaL + $preCierreL + $cerradosL;
+                    if ($ticketsGlobales > 0) {
+                        $porcentajeLoc = (100 / $ticketsGlobales) * $ticketsLoc;
+                    } else {
+                        $porcentajeLoc = 0;
+                    }
+
+                    if ($ticketsLoc != 0) {
+                        //*******************************************************************************
+                ?>
+
+                        <tr class="ticketRow" style="text-align:center">
+                            <td><?php echo $cont ?></td>
+                            <td><?php echo $empresa ?></td>
+                            <td><?php echo $depto ?></td>
+                            <td><?php echo $abiertosL ?></td>
+                            <td><?php echo $esperaL ?></td>
+                            <td><?php echo $preCierreL ?></td>
+                            <td><?php echo $cerradosL ?></td>
+                            <td><?php echo $ticketsLoc ?></td>
+                            <td><?php echo number_format($porcentajeLoc, 2) ?>%</td>
+                        </tr>
+
+                <?php $cont++;
+                    }
                 } ?>
             </tbody>
         </table>

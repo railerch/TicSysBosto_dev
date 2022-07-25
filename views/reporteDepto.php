@@ -16,9 +16,10 @@ Log::registrar_log("Reporte de tickets de {$_SESSION['depto']} generado");
 $fechaInicial = isset($_POST['fechaInicial']) ? $_POST['fechaInicial'] . ' 00:00:00' : "2020-01-01 00:00:00";
 $fechaFinal   = isset($_POST['fechaFinal']) ? $_POST['fechaFinal'] . ' 23:59:59' : date("Y-m-d 23:59:59");
 
-// CONSULTAR TICKETS GLOBALES DEL PERIODO
-$depto = $_SESSION['depto'];
-$stmt_st = $conn->prepare("SELECT analista, estatus FROM tickets WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' AND estatus <> 'eliminado' AND area = '$depto'");
+// CONSULTAR TICKETS GLOBALES DEL PERIODO PARA EL DEPTO INDICADO
+$area = $_SESSION['depto'];
+
+$stmt_st = $conn->prepare("SELECT analista, estatus FROM tickets WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' AND area = '$area' AND estatus <> 'eliminado'");
 $stmt_st->execute();
 
 $abiertos = $espera = $preCierre = $cerrados = 0;
@@ -133,7 +134,7 @@ $ticketsTotales = $abiertos + $espera + $preCierre + $cerrados;
 <div id="docReporte" style="background: #5b5b5b; padding: 0.5em; border-radius: 1em; box-shadow: 0px 0px 10px rgb(0,0,0);border-width: 1px;border-style: none;border-top-style: none;border-right-style: none;border-bottom-style: none;color: #d7d7d7;">
     <div id="locDiv">
         <i class="fa fa-ticket" style="font-size: 5vw;margin-right: 0.3em;"></i>
-        <h1 class="d-inline-block">Reporte: <span style="font-weight:lighter">Tickets totales <br><?php echo $_SESSION['empresa'] . ' - ' . $_SESSION['depto'] ?></span></h1>
+        <h1 class="d-inline-block">Reporte: <span style="font-weight:lighter">Tickets por departamento</span></h1>
     </div>
     <h5 id="fechaReporte">
         <!-- FECHA DEL REPORTE -->
@@ -143,7 +144,7 @@ $ticketsTotales = $abiertos + $espera + $preCierre + $cerrados;
         <?php echo '<b>Periodo:</b> ' . $_POST['fechaInicial'] . ' <b>al</b> ' . $_POST['fechaFinal'] ?></p>
 
     <!-- ESTADISTICAS DE TICKETS POR TECNICO -->
-    <h3>Historial de tickets por departamento</h3>
+    <h3><?php echo strtoupper($_SESSION['empresa']) . ' - ' . $_SESSION['depto'] ?></h3>
     <hr style="background: #969696; margin-top:1em;">
     <div id="datosTecnico">
         <table>
@@ -186,40 +187,38 @@ $ticketsTotales = $abiertos + $espera + $preCierre + $cerrados;
                 <tr style="text-align: center;background: #505050;color: rgb(255,255,255);">
                     <th>ID</th>
                     <th>Empresa</th>
+                    <th>Departamento</th>
                     <th>T/abiertos</th>
                     <th>T/espera</th>
                     <th>T/Pre-cierre</th>
                     <th>T/cerrados</th>
                     <th>T/totales</th>
-                    <th>Nvl/Incidencias</th>
+                    <th>Nvl/incidencias</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
                 // CONSULTAR EMPRESAS
-                $stmt_L = $conn->prepare("SELECT descripcion FROM miscelaneos WHERE tipo = 'empresa' ORDER BY 'empresa' ");
-                $stmt_L->execute();
+                $stmt_D = $conn->query("SELECT descripcion FROM miscelaneos WHERE tipo = 'depto' ORDER BY 'descripcion' ");
 
                 // ID DE FILA EN TABLA
                 $cont = 1;
 
-                while ($empresa = $stmt_L->fetch(PDO::FETCH_ASSOC)) {
+                while ($row = $stmt_D->fetch(PDO::FETCH_ASSOC)) {
                     //*******************************************************************************
-                    // EMPRESA EN CURSO
-                    $empresa = $empresa['descripcion'];
+                    // DEPTO EN CURSO
+                    $tmp     = explode('-', $row['descripcion']);
+                    $empresa = $tmp[0];
+                    $depto   = $tmp[1];
+                    $area    = $_SESSION['depto'];
 
                     // CONSULTAR TICKETS DEL PERIODO
-                    $depto = $_SESSION['depto'];
-                    $stmtLoc = $conn->prepare("SELECT analista, estatus FROM tickets WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' AND empresa = '$empresa' AND estatus <> 'eliminado' AND area = '$depto'");
-                    $stmtLoc->execute();
+                    $stmtLoc = $conn->query("SELECT estatus FROM tickets WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' AND empresa = '$empresa' AND depto = '$depto' AND area = '$area' AND estatus <> 'eliminado'");
 
                     $abiertosL = $esperaL = $preCierreL = $cerradosL = 0;
 
                     while ($ticket = $stmtLoc->fetch(PDO::FETCH_ASSOC)) {
-
-                        $estatusL = $ticket['estatus'];
-
-                        switch ($estatusL) {
+                        switch ($ticket['estatus']) {
                             case 'abierto':
                                 $abiertosL++;
                                 break;
@@ -250,6 +249,7 @@ $ticketsTotales = $abiertos + $espera + $preCierre + $cerrados;
                         <tr class="ticketRow" style="text-align:center">
                             <td><?php echo $cont ?></td>
                             <td><?php echo $empresa ?></td>
+                            <td><?php echo $depto ?></td>
                             <td><?php echo $abiertosL ?></td>
                             <td><?php echo $esperaL ?></td>
                             <td><?php echo $preCierreL ?></td>

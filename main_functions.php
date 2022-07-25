@@ -24,10 +24,8 @@ function cargar_config(bool $goParent = NULL)
 function avisos($aviso)
 {
 
-    $mensaje = isset($aviso) ? $aviso : NULL;
-
-    if ($mensaje != NULL) {
-        echo "<div id='avisos' style='width:100vw;position:fixed;top:45%;left:0;padding:0.5em;background-color:#000;color:gray;text-align:center'><h3>{$mensaje}</h3></div>";
+    if ($aviso != NULL) {
+        echo "<div id='avisos' style='width:100vw;position:fixed;top:45%;left:0;padding:0.5em;background-color:#000;color:gray;text-align:center'><h3>{$aviso}</h3></div>";
 
         // REINICIAR LA VARIABLE DE AVISOS
         $_SESSION['avisos'] = NULL;
@@ -58,7 +56,7 @@ function validar_selecciones(string $selector, string $valor)
                     $("#' . $selector . ' option").css("color", "white");
                 } else {
                     $("#' . $selector . '").css("background", "");
-                    $("#' . $selector . '").css("color", "unset");
+                    $("#' . $selector . '").css("color", "#333");
                     $("#' . $selector . ' option").css("color", "initial");
                     localStorage.setItem("' . $selector . '","ok")
                     var cont = localStorage.getItem("inputOK");

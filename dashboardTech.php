@@ -33,7 +33,7 @@ $_SESSION['dashboard'] = __FILE__;
             <div class="row" style="height: 100vh;">
 
                 <!-- HEADER -->
-                <div class="col-xl-12 d-flex flex-row justify-content-between" id="topBar" style="background: #505050;color: rgb(255,255,255);padding-top: 2vh;height: 10%;padding-left: 2vw;padding-right: 4vw;padding-bottom: 2vh;">
+                <div class="col-xl-12 d-flex flex-row justify-content-between" id="topBar" style="height:10%;background: #505050;color: rgb(255,255,255);padding-top: 2vh;padding-left: 2vw;padding-right: 4vw;padding-bottom: 2vh;">
 
                     <!-- AYUDA 
                     <div id="help">
@@ -92,7 +92,7 @@ $_SESSION['dashboard'] = __FILE__;
                         <!-- *********************************************************************************************** -->
                     </div>
 
-                    <div id="logo" style="width:fit-content;display:flex;align-items:center;">
+                    <div id="logo" style="width:fit-content;height:3.5em;display:flex;align-items:center;padding:5px;">
                         <img class="img-fluid float-left" src="<?php echo $config[2]->logo2 ?>" style="height: 3.5vw;">
                     </div>
 

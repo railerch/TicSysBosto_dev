@@ -161,7 +161,7 @@ if (@$_GET['analistasDepto']) {
             break;
     }
 
-    $stmt    = $conn->query("SELECT nombre FROM usuarios WHERE empresa = $empresa AND depto = '$depto' AND nivel $nivel ORDER BY nombre DESC");
+    $stmt = $conn->query("SELECT nombre FROM usuarios WHERE empresa = $empresa AND depto = '$depto' AND nivel $nivel ORDER BY nombre DESC");
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $analistas[] = $row['nombre'];
     };
@@ -198,7 +198,7 @@ if (@$_GET['registrarUsuario']) {
     if ($usuario->estatus) {
         $_SESSION['avisos'] = "Usuario registrado exitosamente!";
 
-        if ($_SESSION['nivel'] != 'analista') {
+        if (!isset($_SESSION['nivel'])) {
             header("Location: index.php");
             echo '<meta http-equiv="refresh" content="3;url=index.php">';
         }
@@ -268,19 +268,14 @@ if (@$_GET['eliminarCuenta']) {
     $cuenta = new Usuario($_GET);
     $cuenta->eliminar_usuario();
 
-
     if ($cuenta->estatus) {
         $_SESSION['avisos'] = "Usuario eliminado correctamente!";
-        if ($_SESSION['nivel'] != 'analista') {
+
+        if ($_SESSION['nivel'] != 'admin') {
             header("Location: index.php");
         }
     } else if ($cuenta->exception) {
         $_SESSION['avisos'] = "Error al momento de eliminar el usuario, intente nuevamente.";
-    } else {
-        if ($_SESSION['nivel'] != 'analista') {
-            // CERRAR LAS SESIÓN
-            header("Location: logout.php");
-        }
     }
 
     exit();

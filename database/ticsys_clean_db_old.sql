@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 25-07-2022 a las 04:41:28
+-- Tiempo de generación: 18-07-2022 a las 21:45:45
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 8.1.6
 
@@ -111,8 +111,8 @@ CREATE TABLE `tickets` (
   `usuario` varchar(15) COLLATE utf8_spanish2_ci NOT NULL,
   `area` varchar(50) COLLATE utf8_spanish2_ci NOT NULL,
   `categoria` varchar(50) COLLATE utf8_spanish2_ci NOT NULL,
-  `asunto` varchar(250) COLLATE utf8_spanish2_ci NOT NULL,
-  `descripcion` varchar(1000) COLLATE utf8_spanish2_ci NOT NULL,
+  `asunto` varchar(50) COLLATE utf8_spanish2_ci NOT NULL,
+  `descripcion` varchar(250) COLLATE utf8_spanish2_ci NOT NULL,
   `prioridad` varchar(10) COLLATE utf8_spanish2_ci NOT NULL,
   `analista` varchar(30) COLLATE utf8_spanish2_ci DEFAULT NULL,
   `estatus` varchar(50) COLLATE utf8_spanish2_ci NOT NULL COMMENT 'Abierto | Espera | Cerrado | Eliminado',

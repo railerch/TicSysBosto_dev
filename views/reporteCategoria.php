@@ -14,25 +14,29 @@ Log::registrar_log('Reporte de tickets por categoria: ' . $_POST['categoria']);
 
 // DATOS PARA EL REPORTE
 $categoria    = isset($_POST['categoria']) ? $_POST['categoria'] : NULL;
-$empresa      = $_SESSION['empresa'];
+if ($_SESSION['nivel'] == 'admin') {
+    $empresa = 'empresa';
+} else {
+    $empresa = '\'' . $_SESSION['empresa'] . '\'';
+}
+
 $depto        = $_SESSION['depto'];
 $fechaInicial = isset($_POST['fechaInicial']) ? $_POST['fechaInicial'] . ' 00:00:00' : "2020-01-01 00:00:00";
 $fechaFinal   = isset($_POST['fechaFinal']) ? $_POST['fechaFinal'] . ' 23:59:59' : date("Y-m-d 23:59:59");
 
 // PORCENTAJE DE INCIDENCIAS CON RESPECTO A OTROS DEPTOS
-$stmtTicDepto = $conn->prepare("SELECT depto, estatus FROM tickets WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' AND empresa = '$empresa' AND categoria = '$categoria' AND estatus <> 'eliminado'");
-$stmtTicDepto->execute();
+$stmtTicDepto = $conn->query("SELECT empresa, depto, estatus FROM tickets WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' AND empresa = $empresa AND categoria = '$categoria' AND estatus <> 'eliminado'");
 
 $abiertos = $espera = $preCierre = $cerrados = 0;
-$incidenciasDepto = [];
+$incidencias = [];
 $ticketsTotales = 0;
 $porcTicket = 0;
 
 while ($incDepto = $stmtTicDepto->fetch(PDO::FETCH_ASSOC)) {
     // Ticket por depto
-    @$incidenciasDepto[$incDepto['depto']] += 1;
 
     // Total por estatus
+    @$incidencias['<b>' . $incDepto['empresa'] . '</b>' . ' - ' . $incDepto['depto']] += 1;
     switch ($incDepto['estatus']) {
         case 'abierto':
             $abiertos++;
@@ -141,7 +145,7 @@ if ($ticketsTotales > 0) {
 <div id="docReporte" style="background: #5b5b5b; padding: 0.5em; border-radius: 1em; box-shadow: 0px 0px 10px rgb(0,0,0);border-width: 1px;border-style: none;border-top-style: none;border-right-style: none;border-bottom-style: none;color: #d7d7d7;">
     <div id="locDiv">
         <i class="fa fa-user-circle-o" style="font-size: 5vw;margin-right: 0.3em;"></i>
-        <h1 class="d-inline-block">Reporte: <span style="font-weight:lighter">Categoria <br><?php echo $_SESSION['empresa'] . '-' . $_SESSION['depto'] ?></span></h1>
+        <h1 class="d-inline-block">Reporte: <span style="font-weight:lighter">Tickets por categoría</span></h1>
     </div>
     <h5 id="fechaReporte">
         <!-- FECHA DEL REPORTE -->
@@ -150,7 +154,7 @@ if ($ticketsTotales > 0) {
     <p style="text-align:right">
         <?php echo '<b>Periodo:</b> ' . $_POST['fechaInicial'] . ' <b>al</b> ' . $_POST['fechaFinal'] ?></p>
 
-    <h3>Nivel de incidencias, categoria: <?php echo $categoria ?></h3>
+    <h3><?php echo strtoupper($_SESSION['empresa']) . ' - ' . $_SESSION['depto'] ?> [<span style="font-weight:lighter"><?php echo $categoria ?></span>]</h3>
     <hr style="background: #969696; margin-top:1em;">
     <div id="ticketsCategoria">
         <table>
@@ -190,9 +194,9 @@ if ($ticketsTotales > 0) {
             <thead>
                 <tr style="text-align: center;background: #505050;color: rgb(255,255,255);">
                     <th>ID</th>
-                    <th>Departamento</th>
+                    <th>Emisor</th>
                     <th>Tickets totales</th>
-                    <th>% Incidencia</th>
+                    <th>Nvl/incidencias</th>
                 </tr>
             </thead>
             <tbody>
@@ -200,15 +204,15 @@ if ($ticketsTotales > 0) {
                 // ID DE FILA EN TABLA
                 $cont = 1;
 
-                foreach ($incidenciasDepto as $key => $val) {
+                foreach ($incidencias as $key => $val) {
 
                 ?>
 
-                    <tr class="ticketRow" style="text-align:center">
+                    <tr class="ticketRow">
                         <td><?php echo $cont ?></td>
                         <td><?php echo $key ?></td>
-                        <td><?php echo $val ?></td>
-                        <td><?php echo number_format(($val * $porcTicket), 2, '.') ?></td>
+                        <td style="text-align:center"><?php echo $val ?></td>
+                        <td style="text-align:center"><?php echo number_format(($val * $porcTicket), 2, '.') ?>%</td>
                     </tr>
 
                 <?php $cont++;

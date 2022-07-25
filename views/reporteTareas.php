@@ -148,7 +148,7 @@ if ($totalTareas > 0) {
 <div id="docReporte" style="background: #5b5b5b; padding: 0.5em; border-radius: 1em; box-shadow: 0px 0px 10px rgb(0,0,0);border-width: 1px;border-style: none;border-top-style: none;border-right-style: none;border-bottom-style: none;color: #d7d7d7;">
     <div id="locDiv">
         <i class="fa fa-user-circle-o" style="font-size: 5vw;margin-right: 0.3em;"></i>
-        <h1 class="d-inline-block">Reporte: <span style="font-weight:lighter"><?php echo $analista['nombre'] ?></span></h1>
+        <h1 class="d-inline-block">Reporte: <span style="font-weight:lighter">Tareas por analista</span></h1>
     </div>
     <h5 id="fechaReporte">
         <!-- FECHA DEL REPORTE -->
@@ -157,7 +157,7 @@ if ($totalTareas > 0) {
     <p style="text-align:right">
         <?php echo '<b>Periodo:</b> ' . $_POST['fechaInicial'] . ' <b>al</b> ' . $_POST['fechaFinal'] ?></p>
 
-    <h3>Historial de tareas realizadas</h3>
+    <h3>ANALISTA - <?php echo $analista['nombre'] ?></h3>
     <hr style="background: #969696; margin-top:1em;">
     <div id="datosTecnico">
         <table>

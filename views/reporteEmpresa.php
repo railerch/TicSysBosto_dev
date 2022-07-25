@@ -10,26 +10,22 @@ if (!$conn) {
 }
 
 // CREAR LOG
-Log::registrar_log('Reporte de empresa generado');
+Log::registrar_log("Reporte de tickets de {$_SESSION['depto']} generado");
 
-// DATOS PARA EL REPORTE
-$empresa     = isset($_POST['empresa']) ? $_POST['empresa'] : NULL;
+// PERIODO DE FECHA PARA EL REPORTE
 $fechaInicial = isset($_POST['fechaInicial']) ? $_POST['fechaInicial'] . ' 00:00:00' : "2020-01-01 00:00:00";
 $fechaFinal   = isset($_POST['fechaFinal']) ? $_POST['fechaFinal'] . ' 23:59:59' : date("Y-m-d 23:59:59");
 
-// CONSULTAR TICKETS POR EMPRESA
-$depto = $_SESSION['depto'];
-$stmtLoc = $conn->prepare("SELECT * FROM tickets WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' AND empresa = '$empresa' AND area = '$depto' AND estatus <> 'eliminado'");
-$stmtLoc->execute();
+// CONSULTAR TICKETS GLOBALES DEL PERIODO PARA EL DEPTO INDICADO
+$area = $_SESSION['depto'];
 
-// CONSULTAR ESTATUS DE TICKETS
-$stmtSt = $conn->prepare("SELECT analista, estatus FROM tickets WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' AND empresa = '$empresa' AND area = '$depto' AND estatus <> 'eliminado'");
-$stmtSt->execute();
+$stmt_st = $conn->prepare("SELECT analista, estatus FROM tickets WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' AND area = '$area' AND estatus <> 'eliminado'");
+$stmt_st->execute();
 
 $abiertos = $espera = $preCierre = $cerrados = 0;
 $sinTecnico = NULL;
 
-while ($ticket = $stmtSt->fetch(PDO::FETCH_ASSOC)) {
+while ($ticket = $stmt_st->fetch(PDO::FETCH_ASSOC)) {
 
     if ($ticket['analista'] == NULL) {
         $sinTecnico++;
@@ -51,20 +47,8 @@ while ($ticket = $stmtSt->fetch(PDO::FETCH_ASSOC)) {
     }
 }
 
-// TICKETS TOTALES
+// TOTAL TICKETS
 $ticketsTotales = $abiertos + $espera + $preCierre + $cerrados;
-
-// TICKETS GENERADOS
-$stmtGlob = $conn->prepare("SELECT count(id_ticket) AS total FROM tickets WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' AND area = '$depto' AND estatus <> 'eliminado'");
-$stmtGlob->execute();
-$totalGlob = $stmtGlob->fetch(PDO::FETCH_ASSOC);
-
-// PORCENTAJE DE INCIDENCIA
-if ($totalGlob['total'] > 0) {
-    $porcentajeLoc = (100 / $totalGlob['total']) * $ticketsTotales;
-} else {
-    $porcentajeLoc = 0;
-}
 
 ?>
 
@@ -149,8 +133,8 @@ if ($totalGlob['total'] > 0) {
 
 <div id="docReporte" style="background: #5b5b5b; padding: 0.5em; border-radius: 1em; box-shadow: 0px 0px 10px rgb(0,0,0);border-width: 1px;border-style: none;border-top-style: none;border-right-style: none;border-bottom-style: none;color: #d7d7d7;">
     <div id="locDiv">
-        <i class="fa fa-building-o" style="font-size: 5vw;margin-right: 0.3em;"></i>
-        <h1 class="d-inline-block">Reporte: <span style="font-weight:lighter">Tickets totales <br><?php echo $_SESSION['depto'] ?> - <?php echo $empresa ?></span></h1>
+        <i class="fa fa-ticket" style="font-size: 5vw;margin-right: 0.3em;"></i>
+        <h1 class="d-inline-block">Reporte: <span style="font-weight:lighter">Tickets por empresa</span></h1>
     </div>
     <h5 id="fechaReporte">
         <!-- FECHA DEL REPORTE -->
@@ -159,13 +143,15 @@ if ($totalGlob['total'] > 0) {
     <p style="text-align:right">
         <?php echo '<b>Periodo:</b> ' . $_POST['fechaInicial'] . ' <b>al</b> ' . $_POST['fechaFinal'] ?></p>
 
-    <h3>Historial de tickets generados</h3>
+    <!-- ESTADISTICAS DE TICKETS POR TECNICO -->
+    <h3><?php echo strtoupper($_SESSION['empresa']) . ' - ' . $_SESSION['depto'] ?></h3>
     <hr style="background: #969696; margin-top:1em;">
     <div id="datosTecnico">
         <table>
             <tr>
                 <td><b>Abiertos:</b></td>
-                <td><?php echo isset($abiertos) ? $abiertos : 0 ?> <?php echo isset($sinTecnico) ? '<sup>(' . $sinTecnico . ' Sin atención )</sup>' : NULL ?></td>
+                <td><?php echo isset($abiertos) ? $abiertos : 0 ?>
+                    <?php echo isset($sinTecnico) ? '<sup>(' . $sinTecnico . ' Sin atención )</sup>' : NULL ?></td>
             </tr>
         </table>
         <table>
@@ -192,60 +178,90 @@ if ($totalGlob['total'] > 0) {
                 <td><?php echo isset($ticketsTotales) ? $ticketsTotales : 0 ?></td>
             </tr>
         </table>
-        <table>
-            <tr>
-                <td><b>Nivel global de incidencias:</b></td>
-                <td><?php echo isset($porcentajeLoc) ? number_format($porcentajeLoc, 2) . '%' : 0 ?></td>
-            </tr>
-        </table>
     </div>
     <hr>
+    <!-- ESTADITISCAS DE TICKETS POR EMPRESA -->
     <div id="historial" class="table-striped" style="background: #ffffff;margin-bottom: 1em;width: 100%;margin-top: 1em;padding:0.5em; overflow:scroll">
         <table class="table table-bordered">
             <thead>
                 <tr style="text-align: center;background: #505050;color: rgb(255,255,255);">
                     <th>ID</th>
-                    <th>Fecha</th>
-                    <th>Depto</th>
-                    <th>Usuario</th>
-                    <th>Area</th>
-                    <th>Analista</th>
-                    <th>Estatus</th>
+                    <th>Empresa</th>
+                    <th>T/abiertos</th>
+                    <th>T/espera</th>
+                    <th>T/Pre-cierre</th>
+                    <th>T/cerrados</th>
+                    <th>T/totales</th>
+                    <th>Nvl/incidencias</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
+                // CONSULTAR EMPRESAS
+                $stmt_E = $conn->query("SELECT descripcion FROM miscelaneos WHERE tipo = 'empresa' ORDER BY 'descripcion' ");
+
                 // ID DE FILA EN TABLA
                 $cont = 1;
 
-                while ($ticket = $stmtLoc->fetch(PDO::FETCH_ASSOC)) {
-                    // DEPARTAMENTO DEL USUARIO
-                    $nombre = $ticket['nombre'];
-                    $stmt_dpto = $conn->prepare("SELECT depto FROM usuarios WHERE nombre = '$nombre'");
-                    $stmt_dpto->execute();
-                    $usuario = $stmt_dpto->fetch(PDO::FETCH_ASSOC);
+                while ($row = $stmt_E->fetch(PDO::FETCH_ASSOC)) {
+                    //*******************************************************************************
+                    // EMPRESA EN CURSO
+                    $empresa = $row['descripcion'];
+                    $area    = $_SESSION['depto'];
+
+                    // CONSULTAR TICKETS DEL PERIODO
+                    $stmtEmp = $conn->query("SELECT estatus FROM tickets WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' AND empresa = '$empresa' AND area = '$area' AND estatus <> 'eliminado'");
+
+                    $abiertosE = $esperaE = $preCierreE = $cerradosE = 0;
+
+                    while ($ticket = $stmtEmp->fetch(PDO::FETCH_ASSOC)) {
+                        switch ($ticket['estatus']) {
+                            case 'abierto':
+                                $abiertosE++;
+                                break;
+                            case 'espera':
+                                $esperaE++;
+                                break;
+                            case 'precierre':
+                                $preCierreE++;
+                                break;
+                            case 'cerrado':
+                                $cerradosE++;
+                                break;
+                        }
+                    }
+
+                    // PORCENTAJE DE TICKETS TOMADOS
+                    $ticketsEmp = $abiertosE + $esperaE + $preCierreE + $cerradosE;
+                    if ($ticketsTotales > 0) {
+                        $porcentajeEmp = (100 / $ticketsTotales) * $ticketsEmp;
+                    } else {
+                        $porcentajeEmp = 0;
+                    }
+
+                    if ($ticketsEmp != 0) {
+                        //*******************************************************************************
                 ?>
 
-                    <tr class="ticketRow" style="text-align:center">
-                        <td><?php echo $cont ?></td>
-                        <td><?php echo $ticket['fecha'] ?></td>
-                        <td><?php if (@$usuario['depto']) {
-                                echo $usuario['depto'];
-                            } else {
-                                echo 'N/A';
-                            }
-                            ?></td>
-                        <td><?php echo $ticket['nombre'] ?></td>
-                        <td><?php echo $ticket['area'] ?></td>
-                        <td><?php echo $ticket['analista'] ?></td>
-                        <td><?php echo $ticket['estatus'] ?></td>
-                    </tr>
+                        <tr class="ticketRow" style="text-align:center">
+                            <td><?php echo $cont ?></td>
+                            <td><?php echo $empresa ?></td>
+                            <td><?php echo $abiertosE ?></td>
+                            <td><?php echo $esperaE ?></td>
+                            <td><?php echo $preCierreE ?></td>
+                            <td><?php echo $cerradosE ?></td>
+                            <td><?php echo $ticketsEmp ?></td>
+                            <td><?php echo number_format($porcentajeEmp, 2) ?>%</td>
+                        </tr>
+
                 <?php $cont++;
+                    }
                 } ?>
             </tbody>
         </table>
     </div>
 
+    <!-- BOTONES DEL REPORTE -->
     <div id="botones" style="width:80%; margin: 0 auto;">
         <button id="volverReportes" class="btn btn-primary" type="button" style="width:45%;" onclick="location.reload()">
             Atras
