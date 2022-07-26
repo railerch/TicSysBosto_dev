@@ -20,12 +20,11 @@ $stmt = $conn->query("SELECT * FROM tickets $area AND estatus = 'eliminado'");
     <h1 class="d-inline-block">Tickets eliminados</h1>
     <hr style="background: #969696;">
     <div class="table-striped" style="background: #ffffff;margin-bottom: 1em;width: 100%;margin-top: 1em;padding:0.5em; overflow:scroll">
-        <table class="table table-bordered" style="text-align:center">
+        <table class="table table-bordered">
             <thead>
-                <tr style="background: #505050;color: rgb(255,255,255);">
+                <tr style="background: #505050;color:rgb(255,255,255);text-align:center">
                     <th>ID</th>
                     <th>Fecha</th>
-                    <th>Empresa</th>
                     <th>Emisor</th>
                     <?php if ($_SESSION['usuario'] == 'root') { ?>
                         <th>Receptor</th>
@@ -40,12 +39,11 @@ $stmt = $conn->query("SELECT * FROM tickets $area AND estatus = 'eliminado'");
                 <?php while ($ticket = $stmt->fetch(PDO::FETCH_ASSOC)) { ?>
 
                     <tr id="<?php echo $ticket['id_ticket'] ?>">
-                        <td><?php echo $ticket['id_ticket'] ?></td>
-                        <td><?php echo $ticket['fecha'] ?></td>
-                        <td><?php echo $ticket['empresa'] ?></td>
-                        <td><?php echo $ticket['depto'] ?></td>
+                        <td style="text-align:center;"><?php echo $ticket['id_ticket'] ?></td>
+                        <td style="text-align:center;"><?php echo $ticket['fecha'] ?></td>
+                        <td><b><?php echo $ticket['empresa'] ?></b> - <?php echo $ticket['depto'] ?></td>
                         <?php if ($_SESSION['usuario'] == 'root') { ?>
-                            <td><?php echo $ticket['area'] ?></td>
+                            <td><b><?php echo $ticket['empresa_receptora'] ?></b> - <?php echo $ticket['depto_receptor'] ?></td>
                         <?php } ?>
                         <td><?php echo $ticket['categoria'] ?>
                         <td><?php echo $ticket['analista'] ?></td>
@@ -53,16 +51,16 @@ $stmt = $conn->query("SELECT * FROM tickets $area AND estatus = 'eliminado'");
                         <?php
                         switch ($ticket['prioridad']) {
                             case 'baja':
-                                $style = "style='background-color:lightskyblue;color:white'";
+                                $style = "style='background-color:lightskyblue;color:white;text-align:center;'";
                                 break;
                             case 'media':
-                                $style = "style='background-color:lightsalmon;color:white'";
+                                $style = "style='background-color:lightsalmon;color:white;text-align:center;'";
                                 break;
                             case 'alta':
-                                $style = "style='background-color:orange;color:white'";
+                                $style = "style='background-color:orange;color:white;text-align:center;'";
                                 break;
                             case 'urgente':
-                                $style = "style='background-color:red;color:white'";
+                                $style = "style='background-color:red;color:white;text-align:center;'";
                                 break;
                         }
                         ?>

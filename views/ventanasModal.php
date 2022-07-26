@@ -401,6 +401,81 @@
         </div>
     </div>
 
+    <!-- VENTANA MODAL VER EMPRESAS -->
+    <div class="modal fade" role="dialog" tabindex="-1" id="verEmpresas">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" style="color: #333;"><i class="fa fa-building"></i> Empresas</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="modal-body">
+                    <table id="empresasRegistradas" class="table table-striped table-hover">
+                        <thead style="background: #505050;color:rgb(255,255,255);text-align:center">
+                            <tr>
+                                <th>id</th>
+                                <th>Descripción</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- REGISTROS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- VENTANA MODAL VER DEPARTAMENTOS -->
+    <div class="modal fade" role="dialog" tabindex="-1" id="verDeptos">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" style="color: #333;"><i class="fa fa-building"></i> Departamentos</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="modal-body">
+                    <table id="empresaDeptos" class="table table-striped table-hover">
+                        <thead style="background: #505050;color:rgb(255,255,255);text-align:center">
+                            <tr>
+                                <th>id</th>
+                                <th>Descripción</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- REGISTROS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- VENTANA MODAL VER CATEGORIAS -->
+    <div class="modal fade" role="dialog" tabindex="-1" id="verCats">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" style="color: #333;"><i class="fa fa-tags"></i> Categorias</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="modal-body">
+                    <table id="deptoCats" class="table table-striped table-hover">
+                        <thead style="background: #505050;color:rgb(255,255,255);text-align:center">
+                            <tr>
+                                <th>id</th>
+                                <th>Descripción</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- REGISTROS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- VENTANA MODAL ELIMINAR USUARIO -->
     <div class="modal fade" role="dialog" tabindex="-1" id="eliminarUsuario" style="color: #212529;">
         <div class="modal-dialog" role="document">

@@ -30,7 +30,7 @@ class Interchat implements metodos_chats
         $id_chat    = $this->info['id_chat'];
         $remitente  = $this->info['emisor'];
         $receptor   = $this->info['receptor'];
-        $mensaje    = filter_var($this->info[1], FILTER_SANITIZE_STRING);
+        $mensaje    = $this->info[1];
         $leido      =  "0";
 
         try {
@@ -97,8 +97,8 @@ class Interchat implements metodos_chats
     }
 
     public function id_chat_comun(string $emisor, string $receptor): string | NULL
-    {   
-        
+    {
+
         /*
         * Metodo para verificar si hay un chat activo entre el emisor y el receptor
         */
@@ -109,9 +109,8 @@ class Interchat implements metodos_chats
             $stmt = $conn->prepare("SELECT id_chat FROM interchat WHERE emisor IN ('$emisor', '$receptor') AND receptor IN ('$emisor', '$receptor')");
             $stmt->execute();
             $id_chat = $stmt->fetch(PDO::FETCH_ASSOC);
-            
-            return isset($id_chat['id_chat']) ? $id_chat['id_chat'] : NULL;
 
+            return isset($id_chat['id_chat']) ? $id_chat['id_chat'] : NULL;
         } catch (PDOException $e) {
 
             $this->exception = $e->getMessage();
@@ -119,7 +118,7 @@ class Interchat implements metodos_chats
         }
     }
 
-    public function msjs_no_leidos(string $usuario) : array | NULL
+    public function msjs_no_leidos(string $usuario): array | NULL
     {
         /*
         * Verificar si el usuario tiene mensajes no leidos de otros usuarios para activar la notificacion visual
@@ -131,12 +130,11 @@ class Interchat implements metodos_chats
             $stmt = $conn->prepare("SELECT DISTINCT id_chat FROM interchat WHERE receptor = '$usuario' AND leido = 0");
             $stmt->execute();
 
-            while($chat = $stmt->fetch(PDO::FETCH_ASSOC)){
-                $id_chats [] = $chat['id_chat'];
+            while ($chat = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $id_chats[] = $chat['id_chat'];
             }
-            
-            return isset($id_chats) ? $id_chats : NULL;
 
+            return isset($id_chats) ? $id_chats : NULL;
         } catch (PDOException $e) {
 
             $this->exception = $e->getMessage();

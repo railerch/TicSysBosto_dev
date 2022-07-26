@@ -85,6 +85,33 @@ if (@$_GET['ultSesion'] && $_SESSION['usuario'] != 'root') {
 //////////////////////////// EMPRESA
 //---------------------------------------------------------------------------------------------
 
+// CONSULTA INTEGRAL EMPRESA/DEPTO/CAT
+if (@$_GET['empDepCat']) {
+    $stmt = $conn->query("SELECT * FROM miscelaneos");
+
+    while ($row  = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        switch ($row['tipo']) {
+            case 'empresa':
+                $datos[] = ["id" => $row['id'], "tipo" => $row['tipo'], "nombre" => $row['descripcion']];
+                break;
+            case 'depto':
+                $emp        = explode('-', $row['descripcion'])[0];
+                $depto      = explode('-', $row['descripcion'])[1];
+                $datos[]    = ["id" => $row['id'], "tipo" => $row['tipo'], "empresa" => $emp, "nombre" => $depto];
+                break;
+            case 'cat':
+                $emp        = explode('-', $row['descripcion'])[0];
+                $depto      = explode('-', $row['descripcion'])[1];
+                $cat        = explode('-', $row['descripcion'])[2];
+                $datos[]    = ["id" => $row['id'], "tipo" => $row['tipo'], "empresa" => $emp, "depto" => $depto, "nombre" => $cat];
+                break;
+        }
+    }
+
+    echo json_encode($datos);
+    exit();
+}
+
 // EMPRESAS REGISTRADAS
 if (@$_GET['empresasRegistradas']) {
     $stmt = $conn->query("SELECT descripcion FROM miscelaneos WHERE tipo = 'empresa'");
@@ -129,8 +156,7 @@ if (@$_GET['deptoUsuarios']) {
 
 // CATEGORIAS SEGUN EL DEPTO
 if (@$_GET['deptoCats']) {
-    $empresaTmp = isset($_GET['empresa']) ? $_GET['empresa'] : $_SESSION['empresa'];
-    $empresa    = $_SESSION['usuario'] == 'root' ? 'Lior Cosmetics' : $empresaTmp;
+    $empresa    = $_GET['empresa'];
     $depto      = isset($_GET['depto']) ? $_GET['depto'] : $_SESSION['depto'];
     $desc       =  $empresa . '-' . $depto;
     $stmt       = $conn->query("SELECT descripcion FROM miscelaneos WHERE descripcion LIKE '$desc%' AND tipo = 'cat' ORDER BY descripcion ASC");
@@ -168,6 +194,18 @@ if (@$_GET['analistasDepto']) {
 
     echo isset($analistas) ? json_encode($analistas) : json_encode([]);
 
+    exit();
+}
+
+// ELIMINAR MISCELANEO
+if (@$_GET['eliminarMiscelaneo']) {
+    $id = $_GET['id'];
+    try {
+        $conn->query("DELETE FROM miscelaneos WHERE id = '$id'");
+        echo true;
+    } catch (PDOException $e) {
+        echo "ERROR: " . $e->getMessage();
+    }
     exit();
 }
 
@@ -748,7 +786,7 @@ if (@$_GET['crearEmpresa']) {
 
     try {
 
-        $empresa = trim($_POST['empresa']);
+        $empresa = ucwords(strtolower(trim($_POST['empresa'])));
         $stmt_loc = $conn->prepare("INSERT INTO miscelaneos (id, descripcion, tipo) VALUES (NULL, '$empresa', 'empresa')");
         $stmt_loc->execute();
 
@@ -771,7 +809,7 @@ if (@$_GET['crearDepto']) {
         $empresa = isset($_POST['empresa']) ? $_POST['empresa'] : $_SESSION['empresa'];
         $stmt_dpt = $conn->prepare("INSERT INTO miscelaneos (descripcion, tipo) VALUES (?, ?)");
 
-        $desc = $empresa . '-' . trim($_POST['departamento']);
+        $desc = $empresa . '-' . ucwords(strtolower(trim($_POST['departamento'])));
         $tipo = 'depto';
         $stmt_dpt->bindParam(1, $desc);
         $stmt_dpt->bindParam(2, $tipo);
@@ -798,7 +836,7 @@ if (@$_GET['crearCat']) {
         $depto = isset($_POST['depto']) ? $_POST['depto'] : $_SESSION['depto'];
         $stmt_dpt = $conn->prepare("INSERT INTO miscelaneos (descripcion, tipo) VALUES (?, ?)");
 
-        $desc = $empresa . '-' . $depto . '-' . trim($_POST['categoria']);
+        $desc = $empresa . '-' . $depto . '-' . ucwords(strtolower(trim($_POST['categoria'])));
         $tipo = 'cat';
         $stmt_dpt->bindParam(1, $desc);
         $stmt_dpt->bindParam(2, $tipo);

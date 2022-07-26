@@ -23,12 +23,12 @@ class Ticket
         global $conn;
 
         try {
-            $stmt       = $conn->prepare("INSERT INTO tickets (id_ticket, fecha, empresa, depto, nombre, usuario, area, categoria, asunto, descripcion, prioridad, analista, estatus, comentarios) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt       = $conn->prepare("INSERT INTO tickets (id_ticket, fecha, empresa, depto, nombre, usuario, empresa_receptora, depto_receptor, categoria, asunto, descripcion, prioridad, analista, estatus, comentarios) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             $id_ticket  = NULL;
             $fecha      = date('Y-m-d H:i:s');
             $empresa    = isset($this->info['empresa']) ? $this->info['empresa'] : $_SESSION['empresa'];
-            $depto      = isset($this->info['deptoEmisor']) ? $this->info['deptoEmisor'] : $_SESSION['depto'];
-            $nombre    = isset($this->info['nombre']) ? $this->info['nombre'] : $_SESSION['nombre'];
+            $depto      = isset($this->info['depto-emisor']) ? $this->info['depto-emisor'] : $_SESSION['depto'];
+            $nombre     = isset($this->info['nombre']) ? $this->info['nombre'] : $_SESSION['nombre'];
 
             if (isset($this->info['nombre'])) {
                 // BUSCAR USUARIO EN CASO DE QUE EL TICKET LO HAYA CREADO UN ANALISTA
@@ -39,10 +39,11 @@ class Ticket
                 $usrTmp    = $usuario['usuario'];
             }
 
-            $usuario    = isset($usrTmp) ? $usrTmp : $_SESSION['usuario'];
-            $area       = isset($this->info['area']) ? $this->info['area'] : $_SESSION['depto'];
-            $categoria  = $this->info['categoria'];
-            $asunto     = $this->info['asunto'];
+            $usuario            = isset($usrTmp) ? $usrTmp : $_SESSION['usuario'];
+            $empresa_receptora  = $this->info['empresa-receptora'];
+            $depto_receptor     = $this->info['depto-receptor'];
+            $categoria          = $this->info['categoria'];
+            $asunto             = $this->info['asunto'];
 
             if ($this->info['descripcion'] != "") {
                 $descripcion = $this->info['descripcion'];
@@ -62,14 +63,15 @@ class Ticket
             $stmt->bindParam(4, $depto);
             $stmt->bindParam(5, $nombre);
             $stmt->bindParam(6, $usuario);
-            $stmt->bindParam(7, $area);
-            $stmt->bindParam(8, $categoria);
-            $stmt->bindParam(9, $asunto);
-            $stmt->bindParam(10, $descripcion);
-            $stmt->bindParam(11, $prioridad);
-            $stmt->bindParam(12, $analista);
-            $stmt->bindParam(13, $estatus);
-            $stmt->bindParam(14, $comentarios);
+            $stmt->bindParam(7, $empresa_receptora);
+            $stmt->bindParam(8, $depto_receptor);
+            $stmt->bindParam(9, $categoria);
+            $stmt->bindParam(10, $asunto);
+            $stmt->bindParam(11, $descripcion);
+            $stmt->bindParam(12, $prioridad);
+            $stmt->bindParam(13, $analista);
+            $stmt->bindParam(14, $estatus);
+            $stmt->bindParam(15, $comentarios);
 
             $stmt->execute();
 
@@ -144,9 +146,9 @@ class Ticket
         try {
 
             if ($_SESSION['usuario'] == 'root') {
-                $depto = "AND area = area";
+                $depto = "AND depto_receptor = depto_receptor";
             } else {
-                $depto = "AND area = '$departamento'";
+                $depto = "AND depto_receptor = '$departamento'";
             }
 
             $stmt = $conn->prepare("SELECT count(id_ticket) AS total FROM tickets WHERE estatus = 'abierto' $depto");

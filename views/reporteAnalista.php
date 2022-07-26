@@ -19,7 +19,7 @@ $fechaInicial = isset($_POST['fechaInicial']) ? $_POST['fechaInicial'] . ' 00:00
 $fechaFinal   = isset($_POST['fechaFinal']) ? $_POST['fechaFinal'] . ' 23:59:59' : date("Y-m-d 23:59:59");
 
 // CONSULTAR TICKETS GLOBALES DEL PERIODO
-$stmtG = $conn->prepare("SELECT analista FROM tickets WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' AND area = '$area' AND estatus <> 'eliminado'");
+$stmtG = $conn->prepare("SELECT analista FROM tickets WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' AND depto_receptor = '$area' AND estatus <> 'eliminado'");
 $stmtG->execute();
 
 // OMITIR LOS TICKETS DEL ROOT
@@ -65,7 +65,7 @@ if ($ticketsGlobales > 0) {
 }
 
 // CONSULTAR TICKETS DE TECNICO
-$stmtTic = $conn->prepare("SELECT * FROM tickets WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' AND area = '$area' AND analista = '$nombre' AND estatus <> 'eliminado'");
+$stmtTic = $conn->prepare("SELECT * FROM tickets WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' AND depto_receptor = '$area' AND analista = '$nombre' AND estatus <> 'eliminado'");
 $stmtTic->execute();
 
 ?>

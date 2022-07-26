@@ -17,6 +17,8 @@ class Log
 
     static public function registrar_log(string $cadena = NULL): void
     {
+        global $conn;
+
         // Datos
         $fecha      = date('Y-m-d h:i:s');
         $user_addr  = $_SERVER['REMOTE_ADDR'];
@@ -26,20 +28,16 @@ class Log
 
         // Si no se indica la actividad se tomara la URI como parametro de actividad
         if ($cadena == NULL) {
-            $actividad = $uri[0];
+            $accion = $uri[0];
         } else {
-            $actividad = $cadena;
+            $accion = $cadena;
         }
 
         // Registro
-        $log = $fecha . ' | ' . $user_addr . ' | ' . $user_name . ' | ' . $user_agent . ' | ' . $actividad . "\n";
-        file_put_contents('../log.md', $log, FILE_APPEND);
-
-        if (strpos($uri[0], 'reporte')) {
-            file_put_contents('../log.md', $log, FILE_APPEND);
-        } else {
-            file_put_contents('log.md', $log, FILE_APPEND);
-        }
+        $conn->query("INSERT INTO logs 
+        (id, fecha, ip, usuario, plataforma, accion) 
+        VALUES 
+        (NULL, '$fecha', '$user_addr', '$user_name', '$user_agent', '$accion')");
 
         $_SESSION['new_conn'] = $_SERVER['REMOTE_ADDR'];
     }

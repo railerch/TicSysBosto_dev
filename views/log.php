@@ -1,3 +1,16 @@
+<?php
+include('../main_functions.php');
+
+// CONEXION DB
+$conexion = new Connection('../config/config.json');
+$conn = $conexion->db_conn();
+
+if (!$conn) {
+    Log::registrar_log($conexion->error);
+}
+
+?>
+
 <table id="sysLogs" class="table table-bordered align-middle" style="text-align:center; width:100% !important; font-family:monospace; font-size:0.8em;">
     <thead>
         <tr style="background: #505050;color: rgb(255,255,255);">
@@ -11,34 +24,19 @@
     </thead>
     <tbody>
         <?php
-        // ABRIR ARCHIVO DE REGISTROS
-        $logsHandle = fopen('../log.md', 'r');
-        $contador = 1;
-
-        while ($registro = fgets($logsHandle)) {
-            $datos = explode('|', $registro);
-
-            // FORMATEAR CONTADOR
-            if ($contador < 10) {
-                $contador = '0' . $contador;
-            } else {
-                $contador = $contador;
-            }
+        // CARGAR LOGS
+        $stmt = $conn->query("SELECT * FROM logs");
+        while ($log = $stmt->fetch(PDO::FETCH_ASSOC)) {
         ?>
             <tr>
-                <td style="width: 5% !important"><?php echo $contador ?></td>
-                <td><?php echo $datos[0] ?></td>
-                <td><?php echo $datos[1] ?></td>
-                <td><?php if ($datos[2] != '  () ') {
-                        echo $datos[2];
-                    } else {
-                        echo 'N/A';
-                    } ?></td>
-                <td style="max-width:35%"><?php echo $datos[3] ?></td>
-                <td><?php echo $datos[4] ?></td>
+                <td style="width: 5% !important"><?php echo $log['id'] ?></td>
+                <td><?php echo $log['fecha'] ?></td>
+                <td><?php echo $log['ip'] ?></td>
+                <td><?php echo $log['usuario'] ?></td>
+                <td style="max-width:35%"><?php echo $log['plataforma'] ?></td>
+                <td><?php echo $log['accion'] ?></td>
             </tr>
-        <?php $contador++;
-        } ?>
+        <?php } ?>
     </tbody>
 </table>
 

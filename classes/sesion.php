@@ -21,7 +21,7 @@ class Sesion
     {
         global $conn;
 
-        $usuario = filter_var($this->info['usuario'], FILTER_SANITIZE_STRING);
+        $usuario = strtolower($this->info['usuario']);
         $clave   = md5($this->info['clave']);
 
 
@@ -42,8 +42,8 @@ class Sesion
                 $_SESSION['nombre']         = 'SU Root';
                 $_SESSION['usuario']        = 'root';
                 $_SESSION['nivel']          = 'admin';
-                $_SESSION['empresa']        = 'Grupo Bosto';
-                $_SESSION['depto']          = 'Sistemas';
+                $_SESSION['empresa']        = 'Bosto Group';
+                $_SESSION['depto']          = 'Tecnologia';
                 $_SESSION['sesion_estatus'] = 1;
 
                 $this->estatus = true;

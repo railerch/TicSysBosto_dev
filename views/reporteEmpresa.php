@@ -19,7 +19,7 @@ $fechaFinal   = isset($_POST['fechaFinal']) ? $_POST['fechaFinal'] . ' 23:59:59'
 // CONSULTAR TICKETS GLOBALES DEL PERIODO PARA EL DEPTO INDICADO
 $area = $_SESSION['depto'];
 
-$stmt_st = $conn->prepare("SELECT analista, estatus FROM tickets WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' AND area = '$area' AND estatus <> 'eliminado'");
+$stmt_st = $conn->prepare("SELECT analista, estatus FROM tickets WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' AND depto_receptor = '$area' AND estatus <> 'eliminado'");
 $stmt_st->execute();
 
 $abiertos = $espera = $preCierre = $cerrados = 0;
@@ -210,7 +210,7 @@ $ticketsTotales = $abiertos + $espera + $preCierre + $cerrados;
                     $area    = $_SESSION['depto'];
 
                     // CONSULTAR TICKETS DEL PERIODO
-                    $stmtEmp = $conn->query("SELECT estatus FROM tickets WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' AND empresa = '$empresa' AND area = '$area' AND estatus <> 'eliminado'");
+                    $stmtEmp = $conn->query("SELECT estatus FROM tickets WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' AND empresa = '$empresa' AND depto_receptor = '$area' AND estatus <> 'eliminado'");
 
                     $abiertosE = $esperaE = $preCierreE = $cerradosE = 0;
 

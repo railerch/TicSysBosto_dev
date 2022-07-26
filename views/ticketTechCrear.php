@@ -24,23 +24,26 @@ if (!$conn) {
         <div class="form-group">
             <h4>Datos del ticket</h4>
             <div class="d-inline-flex flex-wrap" style="width:100%">
-                <select id="empresa" class="form-control" name="empresa" style="min-width:200px;max-width:20%;margin: 0 0.5em 0.5em 0;">
-                    <option style="color:#aaa" selected>Empresa que emite</option>
+                <select id="empresa-emisora" class="form-control" name="empresa-emisora" style="min-width:200px;max-width:20%;margin: 0 0.5em 0.5em 0;">
+                    <option style="color:#aaa" value="" selected>Empresa que emite</option>
                 </select>
-                <select id="deptoEmisor" class="form-control" name="deptoEmisor" style="min-width:200px;max-width:20%;margin: 0 0.5em 0.5em 0;">
-                    <option style="color:#aaa" selected>Depto emisor</option>
+                <select id="depto-emisor" class="form-control" name="depto-emisor" style="min-width:200px;max-width:20%;margin: 0 0.5em 0.5em 0;">
+                    <option style="color:#aaa" value="" selected>Depto emisor</option>
                 </select>
                 <select id="nombre" class="form-control" name="nombre" style="min-width:200px;max-width:20%;margin: 0 0.5em 0.5em 0;">
-                    <option style="color:#aaa" selected>Usuario emisor</option>
+                    <option style="color:#aaa" value="" selected>Usuario emisor</option>
                 </select>
-                <select id="area" class="form-control" name="area" style="min-width:200px;max-width:20%;margin: 0 0.5em 0.5em 0;">
-                    <option style="color:#aaa" selected>Depto receptor</option>
+                <select id="empresa-receptora" class="form-control" name="empresa-receptora" style="min-width:200px;max-width:20%;margin: 0 0.5em 0.5em 0;">
+                    <option style="color:#aaa" value="" selected>Empresa que recibe</option>
+                </select>
+                <select id="depto-receptor" class="form-control" name="depto-receptor" style="min-width:200px;max-width:20%;margin: 0 0.5em 0.5em 0;">
+                    <option style="color:#aaa" value="" selected>Depto receptor</option>
                 </select>
                 <select id="categoria" class="form-control" name="categoria" style="min-width:200px;max-width:20%;margin: 0 0.5em 0.5em 0;" <?php echo @$deshabilitar ?>>
-                    <option style="color:#aaa" selected>Categoría</option>
+                    <option style="color:#aaa" value="" selected>Categoría</option>
                 </select>
                 <select id="prioridad" class="form-control" name="prioridad" style="min-width:200px;max-width:15%;margin: 0 0.5em 0.5em 0;">
-                    <option selected>Prioridad</option>
+                    <option value="" selected>Prioridad</option>
                     <option value="baja">Baja</option>
                     <option value="media">Media</option>
                     <option value="alta">Alta</option>
@@ -74,37 +77,41 @@ ocultar_aviso();
         // ESTABLECER LA PAGINA ACTUAL
         sessionStorage.setItem("pagina_actual", "views/ticketTechCrear.php");
 
-        // CARGAR EMPRESAS EN REGISTRO DE USUARIO
-        let datosPhp = ["empresa", "Seleccione la empresa", "empresasRegistradas"]
-        opciones_select(...datosPhp)
+        // CARGAR EMPRESAS EMISORA
+        let datosPhpRt = ["empresa-emisora", "Empresa emisora", "empresasRegistradas"]
+        opciones_select(...datosPhpRt)
 
-        // FILTRAR DEPTOS SEGUN LA EMPRESA SELECCIONADA
-        $("#empresa").change(function() {
+        // CARGAR EMPRESAS RECEPTORA
+        let datosPhpRx = ["empresa-receptora", "Empresa receptora", "empresasRegistradas"]
+        opciones_select(...datosPhpRx)
+
+        // CARGAR DEPTO EMISOR SEGUN EMPRESA EMISORA
+        $("#empresa-emisora").change(function() {
             let empresa = $(this).val();
-            let deptoRt = document.getElementById("deptoEmisor");
-
             // Depto emisor
-            let datosPhpRt = ["deptoEmisor", "Depto emisor", "empresaDeptos", empresa]
+            let datosPhpRt = ["depto-emisor", "Depto emisor", "empresaDeptos", empresa]
             opciones_select(...datosPhpRt)
+        })
 
+        // CARGAR DEPTO RECEPTOR SEGUN EMPRESA RECEPTORA
+        $("#empresa-receptora").change(function() {
+            let empresa = $(this).val();
             // Depto receptor
-            let datosPhpRx = ["area", "Depto receptor", "empresaDeptos", empresa]
+            let datosPhpRx = ["depto-receptor", "Depto receptor", "empresaDeptos", empresa]
             opciones_select(...datosPhpRx)
         })
 
         // FILTRAR USUARIOS EMISORES SEGUN EL DEPTO
-        $("#deptoEmisor").change(function() {
-            let empresa = $("#empresa").val();
+        $("#depto-emisor").change(function() {
+            let empresa = $("#empresa-emisora").val();
             let depto = $(this).val();
             let datosPhp = ["nombre", "Usuario emisor", "deptoUsuarios", empresa, depto]
             opciones_select(...datosPhp)
         })
 
         // FILTRAR CATEGORIAS SEGUN EL DEPTO SELECCIONADO
-        let tipoSesion = sessionStorage.getItem("tipoSesion");
-
-        $("#area").change(function() {
-            let empresa = $("#empresa").val();
+        $("#depto-receptor").change(function() {
+            let empresa = $("#empresa-receptora").val();
             let depto = $(this).val();
             let datosPhp = ["categoria", "Categoria", "deptoCats", empresa, depto]
             opciones_select(...datosPhp)
@@ -116,24 +123,26 @@ ocultar_aviso();
 
             // VALIDAR CAMPOS Y SELECCIONES
             <?php
-            echo validar_selecciones("empresa", "Empresa");
-            echo validar_selecciones("nombre", "Usuario");
-            echo validar_selecciones("area", "Departamento al que va dirigida la solicitud");
+            echo validar_selecciones("empresa-emisora", "");
+            echo validar_selecciones("depto-emisor", "");
+            echo validar_selecciones("nombre", "");
+            echo validar_selecciones("empresa-receptora", "");
+            echo validar_selecciones("depto-receptor", "");
+            echo validar_selecciones("categoria", "");
             echo validar_selecciones("asunto", "");
-            echo validar_selecciones("prioridad", "Prioridad");
+            echo validar_selecciones("prioridad", "");
             echo validar_selecciones("descripcion", "");
 
             ?>
 
             // ENVIAR DATOS
-            if (localStorage.getItem("inputOK") == 6) {
+            if (localStorage.getItem("inputOK") == 9) {
                 $.ajax({
                     type: "POST",
                     url: "main_controller.php?crearTicket=true",
                     data: $("#ticketForm").serialize(),
                     success: function(data) {
                         $("#contenido").load("views/ticketTechCrear.php");
-                        console.log(data);
                     }
                 })
             }

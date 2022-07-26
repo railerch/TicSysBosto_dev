@@ -48,24 +48,22 @@ if (@$_SESSION['avisos'] != "Ticket creado exitosamente!") {
     <h1 class="d-inline-block">Crear Ticket</h1>
     <hr>
     <form id="ticketForm">
-        <h4>Datos del ticket</h4>
+        <h4>Ticket para:</h4>
         <div class="form-group d-inline-flex flex-wrap" style="width:100%">
-            <select id="area" class="form-control" name="area" style="min-width:200px;max-width:30%;margin: 0 0.5em 0.5em 0;" <?php echo $deshabilitar ?>>
-                <option style="color:#aaa" selected>Departamento receptor</option>
-                <?php while ($depto = $stmt_0->fetch()) {
-                    $depto = explode("-", $depto['descripcion'])[1];
-                ?>
-                    <option style='color:#555' value="<?php echo $depto ?>">
-                        <?php echo $depto ?></option>
-                <?php } ?>
+            <select id="empresa-receptora" class="form-control" name="empresa-receptora" style="min-width:200px;max-width:20%;margin: 0 0.5em 0.5em 0;">
+                <option style="color:#aaa" value="" selected>Empresa receptora</option>
+            </select>
+
+            <select id="depto-receptor" class="form-control" name="depto-receptor" style="min-width:200px;max-width:30%;margin: 0 0.5em 0.5em 0;" <?php echo $deshabilitar ?>>
+                <option style="color:#aaa" value="" selected>Depto receptor</option>
             </select>
 
             <select id="categoria" class="form-control" name="categoria" style="min-width:200px;max-width:30%;margin: 0 0.5em 0.5em 0;" <?php echo $deshabilitar ?>>
-                <option style="color:#aaa" selected>Categoría</option>
+                <option style="color:#aaa" value="" selected>Categoría</option>
             </select>
 
             <select id="prioridad" class="form-control" name="prioridad" style="min-width:200px;max-width:20%;margin: 0 0.5em 0.5em 0;" <?php echo $deshabilitar ?>>
-                <option selected>Prioridad</option>
+                <option value="" selected>Prioridad</option>
                 <option value="baja">Baja</option>
                 <option value="media">Media</option>
                 <option value="alta">Alta</option>
@@ -101,27 +99,24 @@ ocultar_aviso();
         // ESTABLECER LA PAGINA ACTUAL
         sessionStorage.setItem("pagina_actual", "views/ticketUserCrear.php");
 
-        // FILTRAR CATEGORIAS SEGUN EL DEPTO SELECCIONADO
-        $("#area").change(function() {
-            let depto = $(this).val();
-            let categoria = document.getElementById("categoria");
-            fetch(`main_controller.php?deptoCats=true&depto=${depto}`)
-                .then(res => res.json())
-                .then(data => {
-                    if (data != "") {
-                        categoria.innerHTML = "<option style='color:#aaa' selected>Categoría</option>";
-                        data.forEach(cat => {
-                            let opt = document.createElement("option");
-                            opt.setAttribute("value", cat);
-                            opt.innerText = cat;
-                            $("#categoria").append(opt);
-                        })
+        // CARGAR EMPRESAS RECEPTORA
+        let datosPhpRx = ["empresa-receptora", "Empresa receptora", "empresasRegistradas"]
+        opciones_select(...datosPhpRx)
 
-                    } else {
-                        categoria.innerHTML = "<option style='color:#aaa' selected>Sin registros</option>";
-                        console.warn("AVISO: Sin registros.")
-                    }
-                })
+        // CARGAR DEPTO RECEPTOR SEGUN EMPRESA 
+        $("#empresa-receptora").change(function() {
+            let empresa = $(this).val();
+            // Depto emisor
+            let datosPhpRt = ["depto-receptor", "Depto receptor", "empresaDeptos", empresa]
+            opciones_select(...datosPhpRt)
+        })
+
+        // FILTRAR CATEGORIAS SEGUN EL DEPTO SELECCIONADO
+        $("#depto-receptor").change(function() {
+            let empresa = $("#empresa-receptora").val();
+            let depto = $(this).val();
+            let datosPhp = ["categoria", "Categoria", "deptoCats", empresa, depto]
+            opciones_select(...datosPhp)
         })
 
         // CREAR TICKET
@@ -130,7 +125,7 @@ ocultar_aviso();
 
             // VALIDAR CAMPOS Y SELECCIONES
             <?php
-            echo validar_selecciones("area", "Seleccione el departamento");
+            echo validar_selecciones("depto_receptor", "Seleccione el departamento");
             echo validar_selecciones("asunto", "");
             echo validar_selecciones("prioridad", "Prioridad");
             echo validar_selecciones("descripcion", "");

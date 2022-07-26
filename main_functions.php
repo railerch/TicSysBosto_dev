@@ -364,9 +364,9 @@ function consultarMsjs($id_ticket)
 // de lo contrario se arrojara un error en el dashboard
 function filtrar_depto()
 {
-    if ($_SESSION['depto'] != 'Sistemas') {
+    if ($_SESSION['depto'] != 'Tecnologia') {
         if ($_SESSION['nivel'] == 'gerente' || $_SESSION['nivel'] == 'analista') {
-            return "WHERE area = '{$_SESSION['depto']}' AND empresa = '{$_SESSION['empresa']}'";
+            return "WHERE depto_receptor = '{$_SESSION['depto']}' AND empresa = empresa";
         } else {
             echo '<span style="background-color:red; padding:10px; border-radius:5px;">ERROR: el nivel de usuario no corresponde con el departamento asignado.</span>';
             exit();
@@ -374,9 +374,9 @@ function filtrar_depto()
     } else {
         if ($_SESSION['nivel'] == 'admin') {
             if ($_SESSION['usuario'] == 'root') {
-                return "WHERE area = area AND empresa = empresa";
+                return "WHERE depto_receptor = depto_receptor AND empresa = empresa";
             } else {
-                return "WHERE area = '{$_SESSION['depto']}' AND empresa = empresa";
+                return "WHERE depto_receptor = '{$_SESSION['depto']}' AND empresa = empresa";
             }
         } else {
             echo '<span style="background-color:red; padding:10px; border-radius:5px;">ERROR: el nivel de usuario no corresponde con el departamento asignado.</span>';

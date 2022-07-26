@@ -27,7 +27,6 @@ $stmt->execute();
                 <tr style="background: #505050;color: rgb(255,255,255);">
                     <th>ID</th>
                     <th>Fecha</th>
-                    <th>Empresa</th>
                     <th>Emisor</th>
                     <?php if ($_SESSION['usuario'] == 'root') { ?>
                         <th>Receptor</th>
@@ -44,7 +43,7 @@ $stmt->execute();
                     $color = 'transparent';
                     if (!$ticket['analista']) {
                         $color   = "#aeffae";
-                        $pointer = 'cursor:pointer;';
+                        $pointer = 'cursor:pointer';
                         $title   = "Doble clic para tomar el ticket";
                     } else {
                         $pointer = 'cursor:pointer;';
@@ -53,13 +52,12 @@ $stmt->execute();
 
                 ?>
 
-                    <tr id="<?php echo $ticket['id_ticket'] ?>" class="ticketRow" style="<?php echo $pointer ?>background-color:<?php echo $color ?>" title="<?php echo $title ?>">
+                    <tr id="<?php echo $ticket['id_ticket'] ?>" class="ticketRow" style="text-align:center;<?php echo $pointer ?>background-color:<?php echo $color ?>" title="<?php echo $title ?>">
                         <td><?php echo $ticket['id_ticket'] ?></td>
                         <td><?php echo $ticket['fecha'] ?></td>
-                        <td><?php echo $ticket['empresa'] ?></td>
-                        <td><?php echo $ticket['depto'] ?></td>
+                        <td><b><?php echo $ticket['empresa'] ?></b> - <?php echo $ticket['depto'] ?></td>
                         <?php if ($_SESSION['usuario'] == 'root') { ?>
-                            <td><?php echo $ticket['area'] ?></td>
+                            <td><b><?php echo $ticket['empresa_receptora'] ?></b> - <?php echo $ticket['depto_receptor'] ?></td>
                         <?php } ?>
                         <td><?php echo $ticket['categoria'] ?></td>
                         <td><?php echo $ticket['analista'] ?></td>

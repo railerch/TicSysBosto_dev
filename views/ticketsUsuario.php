@@ -74,13 +74,13 @@ $stmt->execute();
     <h1 class="d-inline-block">Mis tickets</h1>
     <hr style="background: #969696;">
     <div class="table-striped" style="background: #ffffff;margin-bottom: 1em;width: 100%;margin-top: 1em;padding:0.5em; overflow:scroll">
-        <table class="table table-bordered" style="text-align:center">
+        <table class="table table-bordered">
             <thead>
-                <tr style="background: #505050;color: rgb(255,255,255);">
+                <tr style="background: #505050;color:rgb(255,255,255);text-align:center">
                     <th>ID</th>
                     <th>Fecha</th>
-                    <th>Asunto</th>
                     <th>Receptor</th>
+                    <th>Asunto</th>
                     <th>Prioridad</th>
                     <th>Analista</th>
                     <th>Estatus</th>
@@ -94,24 +94,24 @@ $stmt->execute();
                         $_SESSION['gracias'] = true;
                     }
                 ?>
-                    <tr id="<?php echo $ticket['id_ticket'] ?>" style="background-color:<?php echo $color ?>">
-                        <td><?php echo $ticket['id_ticket'] ?></td>
-                        <td><?php echo $ticket['fecha'] ?></td>
+                    <tr id="<?php echo $ticket['id_ticket'] ?>">
+                        <td style="text-align:center;"><?php echo $ticket['id_ticket'] ?></td>
+                        <td style="text-align:center;"><?php echo $ticket['fecha'] ?></td>
+                        <td><b><?php echo $ticket['empresa_receptora'] ?></b> - <?php echo $ticket['depto_receptor'] ?></td>
                         <td><?php echo $ticket['asunto'] ?></td>
-                        <td><?php echo $ticket['area'] ?></td>
                         <?php
                         switch ($ticket['prioridad']) {
                             case 'baja':
-                                $style = "style='background-color:lightskyblue;color:white'";
+                                $style = "style='background-color:lightskyblue;color:white;text-align:center;'";
                                 break;
                             case 'media':
-                                $style = "style='background-color:lightsalmon;color:white'";
+                                $style = "style='background-color:lightsalmon;color:white;text-align:center;'";
                                 break;
                             case 'alta':
-                                $style = "style='background-color:orange;color:white'";
+                                $style = "style='background-color:orange;color:white;text-align:center;'";
                                 break;
                             case 'urgente':
-                                $style = "style='background-color:red;color:white'";
+                                $style = "style='background-color:red;color:white;text-align:center;'";
                                 break;
                         }
 
@@ -129,7 +129,7 @@ $stmt->execute();
                                 $color = 'color: #28a745';
                                 break;
                         } ?>
-                        <td style="<?php echo $color ?>"><?php echo $ticket['estatus'] ?></td>
+                        <td style="<?php echo $color ?>;text-align:center;"><?php echo $ticket['estatus'] ?></td>
                         <td>
                             <div class="btn-toolbar d-flex flex-row justify-content-center">
                                 <div class="btn-group" role="group">

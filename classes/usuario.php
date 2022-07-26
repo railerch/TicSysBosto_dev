@@ -25,12 +25,12 @@ class Usuario
         try {
             $stmt = $conn->prepare("INSERT INTO usuarios (id_usuario, nombre, empresa, depto, usuario, nivel, clave, clave_enc, estatus, ult_sesion) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             $id_usuario = NULL;
-            $nombre     = filter_var($this->info['nombre'], FILTER_SANITIZE_STRING);
-            $empresa   = $this->info['empresa'];
+            $nombre     = ucwords(strtolower($this->info['nombre']));
+            $empresa    = $this->info['empresa'];
             $depto      = $this->info['depto'];
-            $usuario    = filter_var($this->info['usuario'], FILTER_SANITIZE_STRING);
+            $usuario    = strtolower($this->info['usuario']);
             $nivel      = isset($this->info['nivel']) ? $this->info['nivel'] : "usuario";
-            $clave      = filter_var($this->info['clave'], FILTER_SANITIZE_STRING);
+            $clave      = $this->info['clave'];
             $clave_enc  = md5($clave);
             $estatus    = 0;
             $ult_sesion = NULL;
