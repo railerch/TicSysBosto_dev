@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 25-07-2022 a las 04:41:28
+-- Tiempo de generación: 26-07-2022 a las 23:04:53
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 8.1.6
 
@@ -71,6 +71,21 @@ CREATE TABLE `interchat` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `logs`
+--
+
+CREATE TABLE `logs` (
+  `id` int(11) NOT NULL,
+  `fecha` datetime NOT NULL,
+  `ip` varchar(15) COLLATE utf8_spanish2_ci NOT NULL,
+  `usuario` varchar(25) COLLATE utf8_spanish2_ci NOT NULL,
+  `plataforma` varchar(100) COLLATE utf8_spanish2_ci NOT NULL,
+  `accion` varchar(250) COLLATE utf8_spanish2_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `miscelaneos`
 --
 
@@ -109,7 +124,8 @@ CREATE TABLE `tickets` (
   `depto` varchar(50) COLLATE utf8_spanish2_ci NOT NULL,
   `nombre` varchar(30) COLLATE utf8_spanish2_ci NOT NULL,
   `usuario` varchar(15) COLLATE utf8_spanish2_ci NOT NULL,
-  `area` varchar(50) COLLATE utf8_spanish2_ci NOT NULL,
+  `empresa_receptora` varchar(50) COLLATE utf8_spanish2_ci NOT NULL,
+  `depto_receptor` varchar(50) COLLATE utf8_spanish2_ci NOT NULL,
   `categoria` varchar(50) COLLATE utf8_spanish2_ci NOT NULL,
   `asunto` varchar(250) COLLATE utf8_spanish2_ci NOT NULL,
   `descripcion` varchar(1000) COLLATE utf8_spanish2_ci NOT NULL,
@@ -161,6 +177,12 @@ ALTER TABLE `interchat`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `logs`
+--
+ALTER TABLE `logs`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `miscelaneos`
 --
 ALTER TABLE `miscelaneos`
@@ -204,6 +226,12 @@ ALTER TABLE `chats`
 -- AUTO_INCREMENT de la tabla `interchat`
 --
 ALTER TABLE `interchat`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `logs`
+--
+ALTER TABLE `logs`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
