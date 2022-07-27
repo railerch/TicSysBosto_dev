@@ -678,7 +678,9 @@ if (@$_GET['verRespaldos']) {
         } else {
             $last = NULL;
         }
-        echo "<li><a href='database/BKP/{$scan[$i]}' download>{$scan[$i]} {$last}</a></li>";
+        if ($scan[$i] != '.gitkeep') {
+            echo "<li><a href='database/BKP/{$scan[$i]}' download>{$scan[$i]} {$last}</a></li>";
+        }
     };
     echo '</ul>';
 
