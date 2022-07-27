@@ -422,6 +422,7 @@
                         </tbody>
                     </table>
                 </div>
+                <hr>
             </div>
         </div>
     </div>
@@ -448,6 +449,7 @@
                         </tbody>
                     </table>
                 </div>
+                <hr>
             </div>
         </div>
     </div>
@@ -475,6 +477,7 @@
                         </tbody>
                     </table>
                 </div>
+                <hr>
             </div>
         </div>
     </div>
