@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 26-07-2022 a las 23:04:53
+-- Tiempo de generación: 27-07-2022 a las 22:07:33
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 8.1.6
 
@@ -77,10 +77,10 @@ CREATE TABLE `interchat` (
 CREATE TABLE `logs` (
   `id` int(11) NOT NULL,
   `fecha` datetime NOT NULL,
-  `ip` varchar(15) COLLATE utf8_spanish2_ci NOT NULL,
-  `usuario` varchar(25) COLLATE utf8_spanish2_ci NOT NULL,
-  `plataforma` varchar(100) COLLATE utf8_spanish2_ci NOT NULL,
-  `accion` varchar(250) COLLATE utf8_spanish2_ci NOT NULL
+  `ip` varchar(25) COLLATE utf8_spanish2_ci NOT NULL,
+  `usuario` varchar(50) COLLATE utf8_spanish2_ci NOT NULL,
+  `plataforma` varchar(1000) COLLATE utf8_spanish2_ci NOT NULL,
+  `accion` varchar(300) COLLATE utf8_spanish2_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 -- --------------------------------------------------------
