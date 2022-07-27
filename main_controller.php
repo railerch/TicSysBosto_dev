@@ -82,134 +82,6 @@ if (@$_GET['ultSesion'] && $_SESSION['usuario'] != 'root') {
 }
 
 //---------------------------------------------------------------------------------------------
-//////////////////////////// EMPRESA
-//---------------------------------------------------------------------------------------------
-
-// CONSULTA INTEGRAL EMPRESA/DEPTO/CAT
-if (@$_GET['empDepCat']) {
-    $stmt = $conn->query("SELECT * FROM miscelaneos");
-
-    while ($row  = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        switch ($row['tipo']) {
-            case 'empresa':
-                $datos[] = ["id" => $row['id'], "tipo" => $row['tipo'], "nombre" => $row['descripcion']];
-                break;
-            case 'depto':
-                $emp        = explode('-', $row['descripcion'])[0];
-                $depto      = explode('-', $row['descripcion'])[1];
-                $datos[]    = ["id" => $row['id'], "tipo" => $row['tipo'], "empresa" => $emp, "nombre" => $depto];
-                break;
-            case 'cat':
-                $emp        = explode('-', $row['descripcion'])[0];
-                $depto      = explode('-', $row['descripcion'])[1];
-                $cat        = explode('-', $row['descripcion'])[2];
-                $datos[]    = ["id" => $row['id'], "tipo" => $row['tipo'], "empresa" => $emp, "depto" => $depto, "nombre" => $cat];
-                break;
-        }
-    }
-
-    echo json_encode($datos);
-    exit();
-}
-
-// EMPRESAS REGISTRADAS
-if (@$_GET['empresasRegistradas']) {
-    $stmt = $conn->query("SELECT descripcion FROM miscelaneos WHERE tipo = 'empresa'");
-
-    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        $empresas[] = $row['descripcion'];
-    }
-
-    echo isset($empresas) ? json_encode($empresas) : json_encode([]);
-
-    exit();
-}
-
-// DEPARTAMENTO SEGUN LA EMPRESA
-if (@$_GET['empresaDeptos']) {
-    $empresa = isset($_GET['empresa']) ? $_GET['empresa'] : $_SESSION['empresa'];
-    $stmt = $conn->query("SELECT descripcion FROM miscelaneos WHERE descripcion LIKE '$empresa%' AND tipo = 'depto' ORDER BY descripcion ASC");
-
-    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        $deptos[] = explode('-', $row['descripcion'])[1];
-    }
-
-    echo isset($deptos) ? json_encode($deptos) : json_encode([]);
-
-    exit();
-}
-
-// USUARIOS SEGUN EL DEPTO 
-if (@$_GET['deptoUsuarios']) {
-    $empresa = $_GET['empresa'];
-    $depto   = $_GET['depto'];
-    $stmt    = $conn->query("SELECT nombre FROM usuarios WHERE empresa = '$empresa' AND depto = '$depto' ORDER BY nombre");
-
-    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        $usuarios[] = $row['nombre'];
-    };
-
-    echo isset($usuarios) ? json_encode($usuarios) : json_encode([]);
-
-    exit();
-}
-
-// CATEGORIAS SEGUN EL DEPTO
-if (@$_GET['deptoCats']) {
-    $empresa    = $_GET['empresa'];
-    $depto      = isset($_GET['depto']) ? $_GET['depto'] : $_SESSION['depto'];
-    $desc       =  $empresa . '-' . $depto;
-    $stmt       = $conn->query("SELECT descripcion FROM miscelaneos WHERE descripcion LIKE '$desc%' AND tipo = 'cat' ORDER BY descripcion ASC");
-
-    while ($cat = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        $categorias[] = explode("-", $cat['descripcion'])[2];
-    };
-
-    echo isset($categorias) ? json_encode($categorias) : json_encode([]);
-
-    exit();
-}
-
-// ANALISTAS DEL DEPTO
-if (@$_GET['analistasDepto']) {
-    $empresa = $_SESSION['usuario'] == 'root' ? 'empresa' : '\'' . $_SESSION['empresa'] . '\'';
-    $depto   = isset($_GET['depto']) ? $_GET['depto'] : $_SESSION['depto'];
-
-    switch ($_SESSION['nivel']) {
-        case 'gerente':
-            $nivel = "IN ('analista', 'gerente')";
-            break;
-        case 'analista':
-            $nivel = "= 'analista'";
-            break;
-        case 'admin':
-            $nivel = "= 'admin'";
-            break;
-    }
-
-    $stmt = $conn->query("SELECT nombre FROM usuarios WHERE empresa = $empresa AND depto = '$depto' AND nivel $nivel ORDER BY nombre DESC");
-    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        $analistas[] = $row['nombre'];
-    };
-
-    echo isset($analistas) ? json_encode($analistas) : json_encode([]);
-
-    exit();
-}
-
-// ELIMINAR MISCELANEO
-if (@$_GET['eliminarMiscelaneo']) {
-    $id = $_GET['id'];
-    try {
-        $conn->query("DELETE FROM miscelaneos WHERE id = '$id'");
-        echo true;
-    } catch (PDOException $e) {
-        echo "ERROR: " . $e->getMessage();
-    }
-    exit();
-}
-
-//---------------------------------------------------------------------------------------------
 //////////////////////////// USUARIOS
 //---------------------------------------------------------------------------------------------
 
@@ -554,6 +426,20 @@ if (@$_GET['actualizarMsjUsuario']) {
     echo comprobar_no_leidos($col, $user, $remit);
 }
 
+// ALERTA DE CIERRE PARA TICKETS EN CHAT DE TICKET
+if (@$_GET['activarAlerta']) {
+    $id_ticket = $_GET['id_ticket'];
+    try {
+        $stmt = $conn->prepare("UPDATE tickets SET comentarios = 'Alerta de cierre activada' WHERE id_ticket = '$id_ticket'");
+        $stmt->execute();
+        echo 'OK';
+    } catch (PDOException $e) {
+        echo 'ERROR: ' . $e;
+    }
+
+    exit();
+}
+
 //---------------------------------------------------------------------------------------------
 //////////////////////////// MENSAJES CHATS INTERUSUARIO
 //---------------------------------------------------------------------------------------------
@@ -759,102 +645,6 @@ if (@$_GET['revisarTareas']) {
 //////////////////////////// MISCELANEOS
 //---------------------------------------------------------------------------------------------
 
-// COMPROBAR EXISTENCIA DE EMPRESA/DEPTO/AREA
-if (@$_GET['comprobarMiscelaneo']) {
-
-    try {
-        $tipo = $_GET['tipo'];
-        $val  = strtolower(trim(strval($_GET['val'])));
-        $stmt = $conn->prepare("SELECT * FROM miscelaneos WHERE descripcion LIKE '$val' AND tipo = '$tipo'");
-        $stmt->setFetchMode(PDO::FETCH_ASSOC);
-        $stmt->execute();
-        $miscelaneo = $stmt->fetch();
-
-        if (@strtolower(trim($miscelaneo['descripcion'])) === $val) {
-            echo true;
-        }
-    } catch (PDOException $e) {
-
-        echo 'ERROR: ' . $e;
-    }
-
-    exit();
-}
-
-// CREAR EMPRESA
-if (@$_GET['crearEmpresa']) {
-
-    try {
-
-        $empresa = ucwords(strtolower(trim($_POST['empresa'])));
-        $stmt_loc = $conn->prepare("INSERT INTO miscelaneos (id, descripcion, tipo) VALUES (NULL, '$empresa', 'empresa')");
-        $stmt_loc->execute();
-
-        echo 'Empresa creada exitosamente!';
-
-        // CREAR LOG
-        Log::registrar_log("Nueva empresa registrada: {$empresa}");
-    } catch (PDOException $e) {
-
-        echo 'ERROR: ' . $e;
-    }
-
-    exit();
-}
-
-// CREAR DEPARTAMENTO
-if (@$_GET['crearDepto']) {
-
-    try {
-        $empresa = isset($_POST['empresa']) ? $_POST['empresa'] : $_SESSION['empresa'];
-        $stmt_dpt = $conn->prepare("INSERT INTO miscelaneos (descripcion, tipo) VALUES (?, ?)");
-
-        $desc = $empresa . '-' . ucwords(strtolower(trim($_POST['departamento'])));
-        $tipo = 'depto';
-        $stmt_dpt->bindParam(1, $desc);
-        $stmt_dpt->bindParam(2, $tipo);
-
-        $stmt_dpt->execute();
-
-        echo 'Departamento creado exitosamente!';
-
-        // CREAR LOG
-        Log::registrar_log("Nuevo departamento registrado: {$desc}");
-    } catch (PDOException $e) {
-
-        echo 'ERROR: ' . $e;
-    }
-
-    exit();
-}
-
-// CREAR CATEGORIA
-if (@$_GET['crearCat']) {
-
-    try {
-        $empresa = isset($_POST['empresa']) ? $_POST['empresa'] : $_SESSION['empresa'];
-        $depto = isset($_POST['depto']) ? $_POST['depto'] : $_SESSION['depto'];
-        $stmt_dpt = $conn->prepare("INSERT INTO miscelaneos (descripcion, tipo) VALUES (?, ?)");
-
-        $desc = $empresa . '-' . $depto . '-' . ucwords(strtolower(trim($_POST['categoria'])));
-        $tipo = 'cat';
-        $stmt_dpt->bindParam(1, $desc);
-        $stmt_dpt->bindParam(2, $tipo);
-
-        $stmt_dpt->execute();
-
-        echo 'Categoria creada exitosamente!';
-
-        // CREAR LOG
-        Log::registrar_log("Nueva categoria registrada: {$desc}");
-    } catch (PDOException $e) {
-
-        echo 'ERROR: ' . $e;
-    }
-
-    exit();
-}
-
 // RESPALDAR BD
 if (@$_GET['respaldarBD']) {
 
@@ -923,16 +713,264 @@ if (@$_GET['desconectarUsuarios']) {
     exit();
 }
 
-// ALERTA DE CIERRA DE TICKET
-if (@$_GET['activarAlerta']) {
-    $id_ticket = $_GET['id_ticket'];
+//---------------------------------------------------------------------------------------------
+//////////////////////////// MISCELANEOS - EMPRESA
+//---------------------------------------------------------------------------------------------
+
+// CONSULTA INTEGRAL EMPRESA/DEPTO/CAT
+if (@$_GET['empDepCat']) {
+    $stmt = $conn->query("SELECT * FROM miscelaneos");
+
+    while ($row  = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        switch ($row['tipo']) {
+            case 'empresa':
+                $datos[] = ["id" => $row['id'], "tipo" => $row['tipo'], "empresa" => $row['descripcion']];
+                break;
+            case 'depto':
+                $emp        = explode('-', $row['descripcion'])[0];
+                $depto      = explode('-', $row['descripcion'])[1];
+                $datos[]    = ["id" => $row['id'], "tipo" => $row['tipo'], "empresa" => $emp, "depto" => $depto];
+                break;
+            case 'cat':
+                $emp        = explode('-', $row['descripcion'])[0];
+                $depto      = explode('-', $row['descripcion'])[1];
+                $cat        = explode('-', $row['descripcion'])[2];
+                $datos[]    = ["id" => $row['id'], "tipo" => $row['tipo'], "empresa" => $emp, "depto" => $depto, "cat" => $cat];
+                break;
+        }
+    }
+
+    echo json_encode($datos);
+    exit();
+}
+
+// COMPROBAR EXISTENCIA DE EMPRESA/DEPTO/AREA
+if (@$_GET['comprobarMiscelaneo']) {
+
     try {
-        $stmt = $conn->prepare("UPDATE tickets SET comentarios = 'Alerta de cierre activada' WHERE id_ticket = '$id_ticket'");
+        $tipo = $_GET['tipo'];
+        $val  = strtolower(trim(strval($_GET['val'])));
+        $stmt = $conn->prepare("SELECT * FROM miscelaneos WHERE descripcion LIKE '$val' AND tipo = '$tipo'");
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
         $stmt->execute();
-        echo 'OK';
+        $miscelaneo = $stmt->fetch();
+
+        if (@strtolower(trim($miscelaneo['descripcion'])) === $val) {
+            echo true;
+        }
     } catch (PDOException $e) {
+
         echo 'ERROR: ' . $e;
     }
 
+    exit();
+}
+
+// CREAR EMPRESA
+if (@$_GET['crearEmpresa']) {
+
+    try {
+
+        // Nombre recibido
+        $empresaTmp = explode(' ', trim($_POST['empresa']));
+
+        // Capitalizar o poner en mayusculas si es una palabra o siglas
+        $empresa = '';
+        foreach ($empresaTmp as $val) {
+            if (preg_match('/[AaEeIiOoUu]/', $val)) {
+                $empresa .= ucfirst($val) . ' ';
+            } else {
+                $empresa .= strtoupper($val) . ' ';
+            }
+        }
+
+        $stmt_loc = $conn->prepare("INSERT INTO miscelaneos (id, descripcion, tipo) VALUES (NULL, '$empresa', 'empresa')");
+        $stmt_loc->execute();
+
+        echo 'Empresa creada exitosamente!';
+
+        // CREAR LOG
+        Log::registrar_log("Nueva empresa registrada: {$empresa}");
+    } catch (PDOException $e) {
+
+        echo 'ERROR: ' . $e;
+    }
+
+    exit();
+}
+
+// EMPRESAS REGISTRADAS
+if (@$_GET['empresasRegistradas']) {
+    $stmt = $conn->query("SELECT descripcion FROM miscelaneos WHERE tipo = 'empresa'");
+
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $empresas[] = $row['descripcion'];
+    }
+
+    echo isset($empresas) ? json_encode($empresas) : json_encode([]);
+
+    exit();
+}
+
+// CREAR DEPARTAMENTO
+if (@$_GET['crearDepto']) {
+
+    // Nombre recibido
+    $deptoTmp = explode(' ', trim($_POST['departamento']));
+
+    // Capitalizar o poner en mayusculas si es una palabra o siglas
+    $depto = '';
+    foreach ($deptoTmp as $val) {
+        if (preg_match('/[AaEeIiOoUu]/', $val)) {
+            $depto .= ucfirst($val) . ' ';
+        } else {
+            $depto .= strtoupper($val) . ' ';
+        }
+    }
+
+    try {
+        $empresa  = $_POST['empresa'];
+        $stmt_dpt = $conn->prepare("INSERT INTO miscelaneos (descripcion, tipo) VALUES (?, ?)");
+
+        $desc = $empresa . '-' . $depto;
+        $tipo = 'depto';
+        $stmt_dpt->bindParam(1, $desc);
+        $stmt_dpt->bindParam(2, $tipo);
+
+        $stmt_dpt->execute();
+
+        echo 'Departamento creado exitosamente!';
+
+        // CREAR LOG
+        Log::registrar_log("Nuevo departamento registrado: {$desc}");
+    } catch (PDOException $e) {
+
+        echo 'ERROR: ' . $e;
+    }
+
+    exit();
+}
+
+// DEPARTAMENTO SEGUN LA EMPRESA
+if (@$_GET['empresaDeptos']) {
+    $empresa = isset($_GET['empresa']) ? $_GET['empresa'] : $_SESSION['empresa'];
+    $stmt = $conn->query("SELECT descripcion FROM miscelaneos WHERE descripcion LIKE '$empresa%' AND tipo = 'depto' ORDER BY descripcion ASC");
+
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $deptos[] = explode('-', $row['descripcion'])[1];
+    }
+
+    echo isset($deptos) ? json_encode($deptos) : json_encode([]);
+
+    exit();
+}
+
+// CREAR CATEGORIA
+if (@$_GET['crearCat']) {
+
+    // Nombre recibido
+    $catTmp = explode(' ', trim($_POST['categoria']));
+
+    // Capitalizar o poner en mayusculas si es una palabra o siglas
+    $cat = '';
+    foreach ($catTmp as $val) {
+        if (preg_match('/[AaEeIiOoUu]/', $val)) {
+            $cat .= ucfirst($val) . ' ';
+        } else {
+            $cat .= strtoupper($val) . ' ';
+        }
+    }
+
+    try {
+        $empresa    = $_POST['empresa'];
+        $depto      = $_POST['depto'];
+        $stmt_dpt   = $conn->prepare("INSERT INTO miscelaneos (descripcion, tipo) VALUES (?, ?)");
+
+        $desc = $empresa . '-' . $depto . '-' . $cat;
+        $tipo = 'cat';
+        $stmt_dpt->bindParam(1, $desc);
+        $stmt_dpt->bindParam(2, $tipo);
+
+        $stmt_dpt->execute();
+
+        echo 'Categoria creada exitosamente!';
+
+        // CREAR LOG
+        Log::registrar_log("Nueva categoria registrada: {$desc}");
+    } catch (PDOException $e) {
+
+        echo 'ERROR: ' . $e;
+    }
+
+    exit();
+}
+
+// CATEGORIAS SEGUN EL DEPTO
+if (@$_GET['deptoCats']) {
+    $empresa    = isset($_GET['empresa']) ? $_GET['empresa'] : $_SESSION['empresa'];
+    $depto      = isset($_GET['depto']) ? $_GET['depto'] : $_SESSION['depto'];
+    $desc       =  $empresa . '-' . $depto;
+    $stmt       = $conn->query("SELECT descripcion FROM miscelaneos WHERE descripcion LIKE '$desc%' AND tipo = 'cat' ORDER BY descripcion ASC");
+
+    while ($cat = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $categorias[] = explode("-", $cat['descripcion'])[2];
+    };
+
+    echo isset($categorias) ? json_encode($categorias) : json_encode([]);
+
+    exit();
+}
+
+// USUARIOS SEGUN EL DEPTO 
+if (@$_GET['deptoUsuarios']) {
+    $empresa = $_GET['empresa'];
+    $depto   = $_GET['depto'];
+    $stmt    = $conn->query("SELECT nombre FROM usuarios WHERE empresa = '$empresa' AND depto = '$depto' ORDER BY nombre");
+
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $usuarios[] = $row['nombre'];
+    };
+
+    echo isset($usuarios) ? json_encode($usuarios) : json_encode([]);
+
+    exit();
+}
+
+// ANALISTAS DEL DEPTO
+if (@$_GET['analistasDepto']) {
+    $empresa = $_SESSION['usuario'] == 'root' ? 'empresa' : '\'' . $_SESSION['empresa'] . '\'';
+    $depto   = isset($_GET['depto']) ? $_GET['depto'] : $_SESSION['depto'];
+
+    switch ($_SESSION['nivel']) {
+        case 'gerente':
+            $nivel = "IN ('analista', 'gerente')";
+            break;
+        case 'analista':
+            $nivel = "= 'analista'";
+            break;
+        case 'admin':
+            $nivel = "= 'admin'";
+            break;
+    }
+
+    $stmt = $conn->query("SELECT nombre FROM usuarios WHERE empresa = $empresa AND depto = '$depto' AND nivel $nivel ORDER BY nombre DESC");
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $analistas[] = $row['nombre'];
+    };
+
+    echo isset($analistas) ? json_encode($analistas) : json_encode([]);
+
+    exit();
+}
+
+// ELIMINAR MISCELANEO
+if (@$_GET['eliminarMiscelaneo']) {
+    $id = $_GET['id'];
+    try {
+        $conn->query("DELETE FROM miscelaneos WHERE id = '$id'");
+        echo true;
+    } catch (PDOException $e) {
+        echo "ERROR: " . $e->getMessage();
+    }
     exit();
 }

@@ -17,7 +17,7 @@ $fechaInicial = isset($_POST['fechaInicial']) ? $_POST['fechaInicial'] . ' 00:00
 $fechaFinal   = isset($_POST['fechaFinal']) ? $_POST['fechaFinal'] . ' 23:59:59' : date("Y-m-d 23:59:59");
 
 // CONSULTAR TICKETS GLOBALES DEL PERIODO
-$stmt_st = $conn->prepare("SELECT analista, estatus FROM tickets WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' AND depto_receptor = 'Tecnologia' AND estatus <> 'eliminado'");
+$stmt_st = $conn->prepare("SELECT analista, estatus FROM tickets WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' AND depto_receptor = '{$_SESSION['depto']}' AND estatus <> 'eliminado'");
 $stmt_st->execute();
 
 $abiertosG = $esperaG = $preCierreG = $cerradosG = 0;
@@ -92,25 +92,25 @@ $totaltareas = $pendienteG + $colaG + $procesandoG + $finalizadaG + $verificadaG
 ?>
 
 <style>
-    #datosTecnico {
+    .metricas {
         display: flex;
         justify-content: space-around;
         margin-bottom: 1em;
     }
 
-    #datosTecnico div {
+    .metricas div {
         width: 30%;
     }
 
-    #datosTecnico table {
+    .metricas table {
         color: #d7d7d7;
     }
 
-    #datosTecnico table tr td:first-child {
+    .metricas table tr td:first-child {
         text-align: right;
     }
 
-    #datosTecnico table tr td:last-child {
+    .metricas table tr td:last-child {
         padding-left: 1em;
     }
 
@@ -185,7 +185,7 @@ $totaltareas = $pendienteG + $colaG + $procesandoG + $finalizadaG + $verificadaG
     <!-- ESTADISTICAS DE TICKETS POR TECNICO -->
     <h3>Estadistica de tickets por analista</h3>
     <hr style="background: #969696; margin-top:1em;">
-    <div id="datosTecnico">
+    <div class="metricas">
         <table>
             <tr>
                 <td><b>Abiertos:</b></td>
@@ -214,7 +214,7 @@ $totaltareas = $pendienteG + $colaG + $procesandoG + $finalizadaG + $verificadaG
         <table>
             <tr>
                 <td><b>Tickets totales:</b></td>
-                <td><?php echo isset($ticketsGlobales) ? $ticketsGlobales : 0 ?></td>
+                <td><?php echo isset($ticketsGlobales) ? $ticketsGlobales : 0 ?> <sup>(100%)</sup></td>
             </tr>
         </table>
     </div>
@@ -304,7 +304,7 @@ $totaltareas = $pendienteG + $colaG + $procesandoG + $finalizadaG + $verificadaG
     <!-- ESTADISTICAS DE TAREAS -->
     <h3>Estadistica de tareas por analista</h3>
     <hr style="background: #969696; margin-top:1em;">
-    <div id="datosTecnico">
+    <div class="metricas">
         <table>
             <tr>
                 <td><b>Pendientes:</b></td>
@@ -339,7 +339,7 @@ $totaltareas = $pendienteG + $colaG + $procesandoG + $finalizadaG + $verificadaG
         <table>
             <tr>
                 <td><b>Tareas totales:</b></td>
-                <td><?php echo isset($totaltareas) ? $totaltareas : 0 ?></td>
+                <td><?php echo isset($totaltareas) ? $totaltareas : 0 ?> <sup>(100%)</sup></td>
             </tr>
         </table>
     </div>
@@ -439,6 +439,41 @@ $totaltareas = $pendienteG + $colaG + $procesandoG + $finalizadaG + $verificadaG
 
     <!-- ESTADITISCAS DE TICKETS POR EMPRESA -->
     <h3>Estadistica de tickets por empresaes</h3>
+    <hr style="background: #969696; margin-top:1em;">
+    <div class="metricas">
+        <table>
+            <tr>
+                <td><b>Abiertos:</b></td>
+                <td><?php echo isset($abiertosG) ? $abiertosG : 0 ?>
+                    <?php echo isset($sinTecnico) ? '<sup>(' . $sinTecnico . ' Sin atención )</sup>' : NULL ?></td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <td><b>En espera:</b></td>
+                <td><?php echo isset($esperaG) ? $esperaG : 0 ?></td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <td><b>Pre-cierre:</b></td>
+                <td><?php echo isset($preCierreG) ? $preCierreG : 0 ?></td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <td><b>Cerrados:</b></td>
+                <td><?php echo isset($cerradosG) ? $cerradosG : 0 ?></td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <td><b>Tickets totales:</b></td>
+                <td><?php echo isset($ticketsGlobales) ? $ticketsGlobales : 0 ?> <sup>(100%)</sup></td>
+            </tr>
+        </table>
+    </div>
+    <hr>
     <div id="historial" class="table-striped" style="background: #ffffff;margin-bottom: 1em;width: 100%;margin-top: 1em;padding:0.5em; overflow:scroll">
         <table class="table table-bordered">
             <thead>
@@ -526,6 +561,41 @@ $totaltareas = $pendienteG + $colaG + $procesandoG + $finalizadaG + $verificadaG
 
     <!-- ESTADITISCAS DE TICKETS POR DEPARTAMENTO -->
     <h3>Estadistica de tickets por departamento</h3>
+    <hr style="background: #969696; margin-top:1em;">
+    <div class="metricas">
+        <table>
+            <tr>
+                <td><b>Abiertos:</b></td>
+                <td><?php echo isset($abiertosG) ? $abiertosG : 0 ?>
+                    <?php echo isset($sinTecnico) ? '<sup>(' . $sinTecnico . ' Sin atención )</sup>' : NULL ?></td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <td><b>En espera:</b></td>
+                <td><?php echo isset($esperaG) ? $esperaG : 0 ?></td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <td><b>Pre-cierre:</b></td>
+                <td><?php echo isset($preCierreG) ? $preCierreG : 0 ?></td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <td><b>Cerrados:</b></td>
+                <td><?php echo isset($cerradosG) ? $cerradosG : 0 ?></td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <td><b>Tickets totales:</b></td>
+                <td><?php echo isset($ticketsGlobales) ? $ticketsGlobales : 0 ?> <sup>(100%)</sup></td>
+            </tr>
+        </table>
+    </div>
+    <hr>
     <div id="historial" class="table-striped" style="background: #ffffff;margin-bottom: 1em;width: 100%;margin-top: 1em;padding:0.5em; overflow:scroll">
         <table class="table table-bordered">
             <thead>

@@ -25,7 +25,7 @@ class Tarea
             $stmt        = $conn->prepare("INSERT INTO tareas (id_tarea, fecha, descripcion, adjunto, analista, valoracion, estatus) VALUES (?, ?, ?, ?, ?, ?, ?)");
             $id_tarea    = NULL;
             $fecha       = date('Y-m-d H:i:s');
-            $descripcion = htmlspecialchars($this->info['descripcion']);
+            $descripcion = ucfirst(htmlspecialchars($this->info['descripcion']));
             $adjunto     = $this->info[0];
             $analista     = $this->info['analista'];
             $valoracion  = $this->info['valoracion'];
@@ -67,7 +67,7 @@ class Tarea
     }
 
     public function actualizar_tarea()
-    {   
+    {
         /* 
         Actualizar tareas desde la cuenta de root
         */
@@ -78,7 +78,7 @@ class Tarea
 
             $id_tarea    = substr($this->info[0], 3);
             $valoracion  = $this->info['valoracion'];
-            $descripcion = addslashes($this->info['descripcion']);
+            $descripcion = ucfirst(addslashes($this->info['descripcion']));
 
             $stmt_up = $conn->prepare("UPDATE tareas SET valoracion = '$valoracion', descripcion = '$descripcion' WHERE id_tarea = '$id_tarea'");
             $stmt_up->execute();
@@ -160,8 +160,8 @@ class Tarea
 
 
     public function eliminar_Tarea(mixed $id_tarea)
-    {   
-    
+    {
+
         global $conn;
 
         try {

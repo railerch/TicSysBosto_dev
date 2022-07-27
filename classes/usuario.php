@@ -64,7 +64,7 @@ class Usuario
 
         $id = $this->info['id'];
 
-        if (isset($this->info['empresa']) and $this->info['empresa'] != 'NULL') {
+        if (isset($this->info['empresa']) and $this->info['empresa'] != '') {
 
             $empresa = "empresa = '{$this->info['empresa']}',";
 
@@ -75,7 +75,7 @@ class Usuario
             $empresa = NULL;
         }
 
-        if (isset($this->info['depto']) and $this->info['depto'] != 'NULL') {
+        if (isset($this->info['depto']) and $this->info['depto'] != '') {
             $depto = "depto = '{$this->info['depto']}',";
 
             if ($_SESSION['nivel'] != 'admin') {
@@ -85,7 +85,7 @@ class Usuario
             $depto = NULL;
         }
 
-        if (isset($this->info['nivel']) and $this->info['nivel'] != 'NULL') {
+        if (isset($this->info['nivel']) and $this->info['nivel'] != '') {
             $nivel = "nivel = '{$this->info['nivel']}',";
         } else {
             $nivel = NULL;

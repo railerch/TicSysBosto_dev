@@ -175,7 +175,7 @@ $ticketsTotales = $abiertos + $espera + $preCierre + $cerrados;
         <table>
             <tr>
                 <td><b>Tickets totales:</b></td>
-                <td><?php echo isset($ticketsTotales) ? $ticketsTotales : 0 ?></td>
+                <td><?php echo isset($ticketsTotales) ? $ticketsTotales : 0 ?> <sup>(100%)</sup></td>
             </tr>
         </table>
     </div>

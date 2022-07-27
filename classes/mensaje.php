@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /*
@@ -26,10 +27,10 @@ class Mensaje implements metodos_chats
 
         $id         = NULL;
         $fecha      = date('Y-m-d H:i:s');
-        $empresa   = $this->info['empresa'];
+        $empresa    = $this->info['empresa'];
         $id_ticket  = $this->info['id_ticket'];
         $remitente  = $this->info['remitente'];
-        $mensaje    = filter_var($this->info[1], FILTER_SANITIZE_STRING);
+        $mensaje    = ucfirst($this->info[1]);
         $leido      =  "0";
 
         try {
@@ -88,7 +89,6 @@ class Mensaje implements metodos_chats
             };
 
             return $mensajes;
-            
         } catch (PDOException $e) {
 
             $this->exception = $e->getMessage();

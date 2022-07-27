@@ -153,10 +153,6 @@ if (!$conn) {
             $("#depto-div").hide();
             $("#generarReporte").attr("data-tipo", "empresa");
 
-            // Consultar categorias del departamento
-            let datosPhp = ["empresa", "Seleccione la empresa", "empresasRegistradas"]
-            opciones_select(...datosPhp)
-
             localStorage.setItem("inputOK", 0);
         })
 
@@ -196,7 +192,7 @@ if (!$conn) {
                     data: $("#formularioReporte").serialize(),
                     success: function(data) {
                         $("#contenido").html(data);
-                        console.log(data);
+                        // console.log(data);
                     }
                 })
             } else {

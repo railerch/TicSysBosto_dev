@@ -102,7 +102,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title"><i class="fa fa-trash-o"></i>&nbsp;Eliminar ticket<br></h4>
+                    <h4 class="modal-title"><i class="fa fa-trash"></i>&nbsp;Eliminar ticket<br></h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                 </div>
                 <div class="modal-body">
@@ -193,7 +193,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title"><i class="fa fa-trash-o"></i>&nbsp;Eliminar ticket<br></h4>
+                    <h4 class="modal-title"><i class="fa fa-trash"></i>&nbsp;Eliminar ticket<br></h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                 </div>
                 <div id="" class="modal-body">
@@ -296,7 +296,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title"><i class="fa fa-trash-o"></i>&nbsp;Eliminar ticket<br></h4>
+                    <h4 class="modal-title"><i class="fa fa-trash"></i>&nbsp;Eliminar ticket<br></h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                 </div>
                 <div id="" class="modal-body">
@@ -368,7 +368,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" style="color: lightgray;"><i class="fa fa-user-o"></i>&nbsp;Editar datos de
+                    <h4 class="modal-title" style="color: lightgray;"><i class="fa fa-user"></i>&nbsp;Editar datos de
                         usuario</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                 </div>
                 <div class="modal-body">
@@ -377,19 +377,19 @@
                             <input type="hidden" name="id" value="">
                             <input id="editUsrNombre" class="form-control" type="text" name="nombre" placeholder="Nombre completo" disabled>
                             <input id="editUsrUsuario" class="form-control" type="text" name="usuario" placeholder="Usuario" disabled>
-                            <!-- NIVEL DE USUARIO -->
                             <select id="editUsrNivel" class="form-control" name="nivel">
-                                <option style="color:#aaa" value="NULL">Nivel de usuario</option>
+                                <option style="color:#aaa" value="">Nivel de usuario</option>
                                 <option value="admin">Admin</option>
                                 <option value="gerente">Gerente</option>
                                 <option value="analista">Analista</option>
                                 <option value="usuario">Usuario comun</option>
                             </select>
                             <select id="editUsrEmpresa" class="form-control" name="empresa">
-                                <option style="color:#555" value="NULL">Seleccione la empresa</option>
+                                <option style="color:#555" value="" selected>Seleccione la empresa</option>
+                                <!-- EMPRESAS -->
                             </select>
                             <select id="editUsrDepto" class="form-control" name="depto">
-                                <option style="color:#555" value="NULL">Seleccione el depto</option>
+                                <option style="color:#555" value="" selected>Seleccione el depto</option>
                                 <!-- DEPARTAMENTOS -->
                             </select>
                             <input id="editUsrClave" class="form-control" type="password" name="clave" placeholder="Clave">
@@ -403,17 +403,17 @@
 
     <!-- VENTANA MODAL VER EMPRESAS -->
     <div class="modal fade" role="dialog" tabindex="-1" id="verEmpresas">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
+        <div class="modal-dialog" role="document" style="max-width:unset;margin:unset;">
+            <div class="modal-content" style="width:30vw;margin:25vh auto;">
                 <div class="modal-header">
                     <h4 class="modal-title" style="color: #333;"><i class="fa fa-building"></i> Empresas</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" style="max-height:250px;overflow-y:scroll">
                     <table id="empresasRegistradas" class="table table-striped table-hover">
                         <thead style="background: #505050;color:rgb(255,255,255);text-align:center">
                             <tr>
                                 <th>id</th>
-                                <th>Descripción</th>
+                                <th>Empresa</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
@@ -428,17 +428,18 @@
 
     <!-- VENTANA MODAL VER DEPARTAMENTOS -->
     <div class="modal fade" role="dialog" tabindex="-1" id="verDeptos">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
+        <div class="modal-dialog" role="document" style="max-width:unset;margin:unset;">
+            <div class="modal-content" style="width:35vw;margin:25vh auto;">
                 <div class="modal-header">
-                    <h4 class="modal-title" style="color: #333;"><i class="fa fa-building"></i> Departamentos</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title" style="color: #333;"><i class="fa fa-briefcase"></i> Departamentos</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" style="max-height:250px;overflow-y:scroll">
                     <table id="empresaDeptos" class="table table-striped table-hover">
                         <thead style="background: #505050;color:rgb(255,255,255);text-align:center">
                             <tr>
                                 <th>id</th>
-                                <th>Descripción</th>
+                                <th>Empresa</th>
+                                <th>Depto</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
@@ -453,17 +454,19 @@
 
     <!-- VENTANA MODAL VER CATEGORIAS -->
     <div class="modal fade" role="dialog" tabindex="-1" id="verCats">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
+        <div class="modal-dialog" role="document" style="max-width:unset;margin:unset;">
+            <div class="modal-content" style="width:40vw;margin:25vh auto;">
                 <div class="modal-header">
                     <h4 class="modal-title" style="color: #333;"><i class="fa fa-tags"></i> Categorias</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body" style="max-height:250px;overflow-y:scroll">
                     <table id="deptoCats" class="table table-striped table-hover">
                         <thead style="background: #505050;color:rgb(255,255,255);text-align:center">
                             <tr>
                                 <th>id</th>
-                                <th>Descripción</th>
+                                <th>Empresa</th>
+                                <th>Departamento</th>
+                                <th>Categoria</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
@@ -481,7 +484,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title"><i class="fa fa-trash-o"></i>&nbsp;Eliminar cuenta<br></h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title"><i class="fa fa-trash"></i>&nbsp;Eliminar cuenta<br></h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                 </div>
                 <div class="modal-body">
                     <p>Esta a punto de eliminar su cuenta de usuario, desea continuar?</p>

@@ -30,7 +30,7 @@ class Interchat implements metodos_chats
         $id_chat    = $this->info['id_chat'];
         $remitente  = $this->info['emisor'];
         $receptor   = $this->info['receptor'];
-        $mensaje    = $this->info[1];
+        $mensaje    = ucfirst($this->info[1]);
         $leido      =  "0";
 
         try {

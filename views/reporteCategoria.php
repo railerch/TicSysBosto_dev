@@ -25,19 +25,23 @@ $fechaInicial = isset($_POST['fechaInicial']) ? $_POST['fechaInicial'] . ' 00:00
 $fechaFinal   = isset($_POST['fechaFinal']) ? $_POST['fechaFinal'] . ' 23:59:59' : date("Y-m-d 23:59:59");
 
 // PORCENTAJE DE INCIDENCIAS CON RESPECTO A OTROS DEPTOS
-$stmtTicDepto = $conn->query("SELECT empresa, depto, estatus FROM tickets WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' AND empresa = $empresa AND categoria = '$categoria' AND estatus <> 'eliminado'");
+$stmtTicCat = $conn->query("SELECT empresa, depto, analista, estatus FROM tickets WHERE fecha BETWEEN '$fechaInicial' AND '$fechaFinal' AND empresa = $empresa AND categoria = '$categoria' AND estatus <> 'eliminado'");
 
 $abiertos = $espera = $preCierre = $cerrados = 0;
+$sinTecnico = NULL;
 $incidencias = [];
 $ticketsTotales = 0;
 $porcTicket = 0;
 
-while ($incDepto = $stmtTicDepto->fetch(PDO::FETCH_ASSOC)) {
-    // Ticket por depto
+while ($incCat = $stmtTicCat->fetch(PDO::FETCH_ASSOC)) {
+
+    if ($incCat['analista'] == NULL) {
+        $sinTecnico++;
+    }
 
     // Total por estatus
-    @$incidencias['<b>' . $incDepto['empresa'] . '</b>' . ' - ' . $incDepto['depto']] += 1;
-    switch ($incDepto['estatus']) {
+    @$incidencias['<b>' . $incCat['empresa'] . '</b>' . ' - ' . $incCat['depto']] += 1;
+    switch ($incCat['estatus']) {
         case 'abierto':
             $abiertos++;
             break;
@@ -160,7 +164,8 @@ if ($ticketsTotales > 0) {
         <table>
             <tr>
                 <td><b>Abiertos:</b></td>
-                <td><?php echo isset($abiertos) ? $abiertos : 0 ?></td>
+                <td><?php echo isset($abiertos) ? $abiertos : 0 ?>
+                    <?php echo isset($sinTecnico) ? '<sup>(' . $sinTecnico . ' Sin atención )</sup>' : NULL ?></td>
             </tr>
         </table>
         <table>
@@ -184,7 +189,7 @@ if ($ticketsTotales > 0) {
         <table>
             <tr>
                 <td><b>Tickets totales:</b></td>
-                <td><?php echo isset($ticketsTotales) ? $ticketsTotales : 0 ?></td>
+                <td><?php echo isset($ticketsTotales) ? $ticketsTotales : 0 ?> <sup>(100%)</sup></td>
             </tr>
         </table>
     </div>

@@ -43,10 +43,10 @@ class Ticket
             $empresa_receptora  = $this->info['empresa-receptora'];
             $depto_receptor     = $this->info['depto-receptor'];
             $categoria          = $this->info['categoria'];
-            $asunto             = $this->info['asunto'];
+            $asunto             = ucfirst($this->info['asunto']);
 
             if ($this->info['descripcion'] != "") {
-                $descripcion = $this->info['descripcion'];
+                $descripcion = ucfirst($this->info['descripcion']);
             } else {
                 $descripcion = 'Sin descripción';
             }

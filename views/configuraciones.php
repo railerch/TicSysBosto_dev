@@ -22,8 +22,8 @@ $stmt_1->execute();
 </style>
 <div>
     <ul class="nav nav-tabs" role="tablist">
-        <li class="nav-item" role="presentation"><a class="nav-link active" role="tab" data-toggle="tab" href="#tab-1" style="color:#fff"><i class="fa fa-user-o" style="color:#fff"></i>&nbsp;Usuarios</a></li>
-        <li class="nav-item" role="presentation"><a class="nav-link" role="tab" data-toggle="tab" href="#tab-2" style="color:#fff"><i class="fa fa-paperclip" style="color:#fff"></i>&nbsp;Miscelaneos</a></li>
+        <li class="nav-item" role="presentation"><a class="nav-link active" role="tab" data-toggle="tab" href="#tab-1" style="color:#fff"><i class="fa fa-user" style="color:#fff"></i>&nbsp;Usuarios</a></li>
+        <li class="nav-item" role="presentation"><a class="nav-link" role="tab" data-toggle="tab" href="#tab-2" style="color:#fff"><i class="fa fa-archive" style="color:#fff"></i>&nbsp;Miscelaneos</a></li>
         <li class="nav-item" role="presentation"><a class="nav-link" role="tab" data-toggle="tab" data-name="logs" href="#tab-3" style="color:#fff"><i class="fa fa-edit" style="color:#fff"></i>&nbsp;Logs</a></li>
         </li>
     </ul>
@@ -31,7 +31,7 @@ $stmt_1->execute();
         <!-- PESTAÑA 01 - USUARIOS -->
         <div class="tab-pane active" role="tabpanel" id="tab-1">
             <div style="background: #505050;padding: 0.5em;border-radius: 0 0 1em 1em;box-shadow: 0px 0px 10px rgb(0,0,0);border-width: 1px;border-style: none;border-top-style: none;border-right-style: none;border-bottom-style: none;color: #d7d7d7;">
-                <i class="fa fa-user-o" style="font-size: 5vw;margin-right: 0.3em;"></i>
+                <i class="fa fa-user" style="font-size: 5vw;margin-right: 0.3em;"></i>
                 <h1 class="d-inline-block">Usuarios</h1>
                 <hr style="background: #969696;">
                 <div id="formulario">
@@ -135,7 +135,7 @@ $stmt_1->execute();
         <!-- PESTAÑA 02 - MISCELANEOS -->
         <div class="tab-pane" role="tabpanel" id="tab-2">
             <div style="background: #505050;padding: 0.5em;border-radius: 0 0 1em 1em;box-shadow: 0px 0px 10px rgb(0,0,0);border-width: 1px;border-style: none;border-top-style: none;border-right-style: none;border-bottom-style: none;color: #d7d7d7;">
-                <i class="fa fa-paperclip" style="font-size: 5vw;margin-right: 0.3em;"></i>
+                <i class="fa fa-archive" style="font-size: 5vw;margin-right: 0.3em;"></i>
                 <h1 class="d-inline-block">Miscelaneos</h1>
                 <hr style="background: #969696;">
                 <div id="misceForms" class="d-flex flex-wrap">
@@ -483,16 +483,56 @@ ocultar_aviso();
                             let tdId = document.createElement("td");
                             let txtId = document.createTextNode(tmp.id);
                             tdId.appendChild(txtId);
+                            tr.append(tdId);
 
-                            let tdNombre = document.createElement("td");
-                            let txtNombre = document.createTextNode(tmp.nombre);
-                            tdNombre.appendChild(txtNombre);
+                            switch (tipo) {
+                                case "empresa":
+                                    let tdEmpresa1 = document.createElement("td");
+                                    let txtEmpresa1 = document.createTextNode(tmp.empresa);
+                                    tdEmpresa1.appendChild(txtEmpresa1);
+                                    tr.append(tdEmpresa1);
+                                    break;
+
+                                case "depto":
+                                    let tdEmpresa2 = document.createElement("td");
+                                    let txtEmpresa2 = document.createTextNode(tmp.empresa);
+                                    tdEmpresa2.appendChild(txtEmpresa2);
+                                    tr.append(tdEmpresa2);
+
+                                    let tdDepto1 = document.createElement("td");
+                                    let txtDepto1 = document.createTextNode(tmp.depto);
+                                    tdDepto1.appendChild(txtDepto1);
+                                    tr.append(tdDepto1);
+                                    break;
+                                case "cat":
+                                    let tdEmpresa3 = document.createElement("td");
+                                    let txtEmpresa3 = document.createTextNode(tmp.empresa);
+                                    tdEmpresa3.appendChild(txtEmpresa3);
+                                    tr.append(tdEmpresa3);
+
+                                    let tdDepto2 = document.createElement("td");
+                                    let txtDepto2 = document.createTextNode(tmp.depto);
+                                    tdDepto2.appendChild(txtDepto2);
+                                    tr.append(tdDepto2);
+
+                                    let tdCat = document.createElement("td");
+                                    let txtCat = document.createTextNode(tmp.cat);
+                                    tdCat.appendChild(txtCat);
+                                    tr.append(tdCat);
+                                    break;
+                            }
 
                             let tdAcciones = document.createElement("td");
+                            let txtAcciones = document.createTextNode("Eliminar");
+                            tdAcciones.setAttribute("class", "btn btn-danger btn-sm");
                             tdAcciones.setAttribute("data-id", tmp.id);
+                            tdAcciones.style.width = "100%";
                             tdAcciones.style.textAlign = "center";
                             tdAcciones.style.cursor = "pointer";
-                            let txtAcciones = document.createTextNode("Eliminar");
+                            tdAcciones.appendChild(txtAcciones);
+                            tr.append(tdAcciones);
+
+                            // Activar btn eliminar
                             tdAcciones.addEventListener("click", function() {
                                 let id = this.getAttribute("data-id");
                                 fetch(`main_controller.php?eliminarMiscelaneo=true&id=${id}`)
@@ -505,11 +545,7 @@ ocultar_aviso();
                                     });
                             })
 
-                            tdAcciones.appendChild(txtAcciones);
-
-                            tr.append(tdId);
-                            tr.append(tdNombre);
-                            tr.append(tdAcciones);
+                            // Cargar fila en tabla
                             tabla.append(tr);
                         }
                     })
@@ -630,11 +666,12 @@ ocultar_aviso();
         // CREAR DEPARTAMENTO
         $(".crearDepto").click(function() {
             // VALIDAR SELECCIONES
+            <?php echo validar_selecciones("empresaDepto", "") ?>
             <?php echo validar_selecciones("departamento", "") ?>
 
             event.preventDefault();
 
-            if (localStorage.getItem("inputOK") == 1) {
+            if (localStorage.getItem("inputOK") == 2) {
                 $.ajax({
                     type: "POST",
                     url: "main_controller.php?crearDepto=true",
@@ -660,7 +697,7 @@ ocultar_aviso();
                 })
             } else {
                 $("#avisoDpt").css("color", "crimson");
-                $("#avisoDpt").text("Error al crear depto");
+                $("#avisoDpt").text("Error al crear el departamento");
 
                 setTimeout(function() {
                     $("#avisoDpt").text("");
@@ -672,19 +709,21 @@ ocultar_aviso();
         $(".crearCat").click(function() {
 
             // VALIDAR SELECCIONES
+            <?php echo validar_selecciones("empresaCat", "") ?>
+            <?php echo validar_selecciones("deptoCat", "") ?>
             <?php echo validar_selecciones("categoria", "") ?>
 
             event.preventDefault();
 
-            if (localStorage.getItem("inputOK") == 1) {
+            if (localStorage.getItem("inputOK") == 3) {
                 $.ajax({
                     type: "POST",
                     url: "main_controller.php?crearCat=true",
                     data: $("#crearCat").serialize(),
                     success: function(data) {
-                        console.log(data);
 
                         $("#empresaCat").val("");
+                        $("#deptoCat").html("<option style='color:#aaa' value=''>Departamento</option>");
                         $("#deptoCat, #categoria").val("").attr("disabled", true);
 
                         $("#avisoCat").css("color", "lightgreen");
@@ -701,7 +740,7 @@ ocultar_aviso();
                 })
             } else {
                 $("#avisoCat").css("color", "crimson");
-                $("#avisoCat").text("Error al crear depto");
+                $("#avisoCat").text("Error al crear la categoria");
 
                 setTimeout(function() {
                     $("#avisoCat").text("");
