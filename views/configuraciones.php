@@ -185,7 +185,7 @@ $stmt_1->execute();
                     <!-- RESPALDAR BD -->
                     <form id="respaldarBd" class="form-block d-flex flex-column mt-2" style="background: #7c7c7c;border-radius: 10px;padding: 1em; min-width: 30%;">
                         <h3>Respaldar Base de Datos<br></h3>
-                        <span id=" avisoBD" style="height:2vh"></span>
+                        <span id="avisoBD" style="height:2vh"></span>
                         <br>
                         <button class="btn btn-primary btn-inline respaldarBD">Respaldar BD</button>
                         <button class="btn btn-primary btn-inline verRespaldos" data-toggle="modal" data-target="#listaRespaldos" style="margin-top: 10px;">Lista de respaldos</button>
