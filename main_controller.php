@@ -721,7 +721,7 @@ if (@$_GET['desconectarUsuarios']) {
 
 // CONSULTA INTEGRAL EMPRESA/DEPTO/CAT
 if (@$_GET['empDepCat']) {
-    $stmt = $conn->query("SELECT * FROM miscelaneos");
+    $stmt = $conn->query("SELECT * FROM miscelaneos ORDER BY descripcion");
 
     while ($row  = $stmt->fetch(PDO::FETCH_ASSOC)) {
         switch ($row['tipo']) {
@@ -803,7 +803,7 @@ if (@$_GET['crearEmpresa']) {
 
 // EMPRESAS REGISTRADAS
 if (@$_GET['empresasRegistradas']) {
-    $stmt = $conn->query("SELECT descripcion FROM miscelaneos WHERE tipo = 'empresa'");
+    $stmt = $conn->query("SELECT descripcion FROM miscelaneos WHERE tipo = 'empresa' ORDER BY descripcion");
 
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         $empresas[] = $row['descripcion'];
