@@ -26,7 +26,7 @@ class Ticket
             $stmt       = $conn->prepare("INSERT INTO tickets (id_ticket, fecha, empresa, depto, nombre, usuario, empresa_receptora, depto_receptor, categoria, asunto, descripcion, prioridad, analista, estatus, comentarios) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             $id_ticket  = NULL;
             $fecha      = date('Y-m-d H:i:s');
-            $empresa    = isset($this->info['empresa']) ? $this->info['empresa'] : $_SESSION['empresa'];
+            $empresa    = isset($this->info['empresa-emisora']) ? $this->info['empresa-emisora'] : $_SESSION['empresa'];
             $depto      = isset($this->info['depto-emisor']) ? $this->info['depto-emisor'] : $_SESSION['depto'];
             $nombre     = isset($this->info['nombre']) ? $this->info['nombre'] : $_SESSION['nombre'];
 

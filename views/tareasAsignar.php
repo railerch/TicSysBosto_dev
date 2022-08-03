@@ -143,7 +143,7 @@ $stmt_tsk->execute();
                 <h5 class="modal-title" style="color: #333;"><strong>TAREA:
                         #<span data-tag="id_tarea"></span></strong>
                     <br>
-                    <strong>Valoración: </strong><span data-tag="valoracion"></span>%
+                    <strong>Valoración: </strong><span data-tag="valoracion"></span>Pts
                     <br>
 
                 </h5>

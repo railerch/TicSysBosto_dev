@@ -214,7 +214,7 @@ if ($ticketsTotales > 0) {
                 ?>
 
                     <tr class="ticketRow">
-                        <td><?php echo $cont ?></td>
+                        <td style="text-align:center"><?php echo $cont ?></td>
                         <td><?php echo $key ?></td>
                         <td style="text-align:center"><?php echo $val ?></td>
                         <td style="text-align:center"><?php echo number_format(($val * $porcTicket), 2, '.') ?>%</td>
