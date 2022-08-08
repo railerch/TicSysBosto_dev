@@ -605,11 +605,11 @@ $config = cargar_config();
 
                                     // HACER SCROLL HASTA EL ULTIMO MENSAJE
                                     setTimeout(function() {
-                                        $("#chatWindow #msjWindow").scrollTop(9999999);
+                                        $("#chatWindow #msjWindow").scrollTop = $("#chatWindow #msjWindow").scrollHeight;
                                     }, 500);
 
                                     $("#textoMensaje").focus(function() {
-                                        $("#chatWindow #msjWindow").scrollTop(9999999);
+                                        $("#chatWindow #msjWindow").scrollTop = $("#chatWindow #msjWindow").scrollHeight;
                                     })
 
                                     // PONER EN BLANCO VARIABLE $_FILES
@@ -677,7 +677,7 @@ $config = cargar_config();
 
                     // HACER SCROLL HASTA EL ULTIMO MENSAJE
                     setTimeout(function() {
-                        $("#chatWindow #msjWindow").scrollTop(9999999);
+                        $("#chatWindow #msjWindow").scrollTop = $("#chatWindow #msjWindow").scrollHeight;
                     }, 500);
 
 

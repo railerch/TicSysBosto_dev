@@ -615,11 +615,11 @@ $_SESSION['dashboard'] = __FILE__;
 
                                     // HACER SCROLL HASTA EL ULTIMO MENSAJE
                                     setTimeout(function() {
-                                        $("#chatWindow #msjWindow").scrollTop(9999999);
+                                        $("#chatWindow #msjWindow").scrollTop = $("#chatWindow #msjWindow").scrollHeight;
                                     }, 500);
 
                                     $("#textoMensaje").focus(function() {
-                                        $("#chatWindow #msjWindow").scrollTop(9999999);
+                                        $("#chatWindow #msjWindow").scrollTop = $("#chatWindow #msjWindow").scrollHeight;
                                     })
 
                                     // PONER EN BLANCO VARIABLE $_FILES
@@ -687,7 +687,7 @@ $_SESSION['dashboard'] = __FILE__;
 
                     // HACER SCROLL HASTA EL ULTIMO MENSAJE
                     setTimeout(function() {
-                        $("#chatWindow #msjWindow").scrollTop(9999999);
+                        $("#chatWindow #msjWindow").scrollTop = $("#chatWindow #msjWindow").scrollHeight;
                     }, 500);
 
 
