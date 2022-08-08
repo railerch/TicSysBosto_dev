@@ -30,7 +30,11 @@ class Interchat implements metodos_chats
         $id_chat    = $this->info['id_chat'];
         $remitente  = $this->info['emisor'];
         $receptor   = $this->info['receptor'];
-        $mensaje    = ucfirst($this->info[1]);
+        if (preg_match('/uploads/i', $this->info[1])) {
+            $mensaje = $this->info[1];
+        } else {
+            $mensaje = ucfirst($this->info[1]);
+        }
         $leido      =  "0";
 
         try {
