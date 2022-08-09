@@ -21,26 +21,26 @@ if (!$conn) {
             <fieldset>
                 <legend>Tipo de reporte</legend>
                 <?php if ($_SESSION['nivel'] == 'admin') { ?>
-                    <div class="form-check"><input class="form-check-input reporte" type="radio" name="reporte" value="analista"><label class="form-check-label">Tickets por analista</label>
+                    <div class="form-check"><input class="form-check-input reporte" type="radio" name="reporte" value="Analista"><label class="form-check-label">Tickets por analista</label>
                     </div>
-                    <div class="form-check"><input class="form-check-input reporte" type="radio" name="reporte" value="tareas"><label class="form-check-label">Tareas por analista</label>
+                    <div class="form-check"><input class="form-check-input reporte" type="radio" name="reporte" value="Tareas"><label class="form-check-label">Tareas por analista</label>
                     </div>
-                    <div class="form-check"><input class="form-check-input reporte" type="radio" name="reporte" value="categoria"><label class="form-check-label">Tickets por categoria</label>
+                    <div class="form-check"><input class="form-check-input reporte" type="radio" name="reporte" value="Categoria"><label class="form-check-label">Tickets por categoria</label>
                     </div>
-                    <div class="form-check"><input class="form-check-input reporte" type="radio" name="reporte" value="depto"><label class="form-check-label">Tickets por departamento</label>
+                    <div class="form-check"><input class="form-check-input reporte" type="radio" name="reporte" value="Depto"><label class="form-check-label">Tickets por departamento</label>
                     </div>
-                    <div class="form-check"><input class="form-check-input reporte" type="radio" name="reporte" value="empresa"><label class="form-check-label">Tickets por empresa</label>
+                    <div class="form-check"><input class="form-check-input reporte" type="radio" name="reporte" value="Empresa"><label class="form-check-label">Tickets por empresa</label>
                     </div>
-                    <div class="form-check"><input class="form-check-input reporte" type="radio" name="reporte" value="integral"><label class="form-check-label">Reporte integral</label>
+                    <div class="form-check"><input class="form-check-input reporte" type="radio" name="reporte" value="Integral"><label class="form-check-label">Reporte integral</label>
                     </div>
                 <?php } else if ($_SESSION['nivel'] == 'gerente' || $_SESSION['nivel'] == 'analista') { ?>
-                    <div class="form-check"><input class="form-check-input reporte" type="radio" name="reporte" value="analista"><label class="form-check-label">Tickets por analista</label>
+                    <div class="form-check"><input class="form-check-input reporte" type="radio" name="reporte" value="Analista"><label class="form-check-label">Tickets por analista</label>
                     </div>
-                    <div class="form-check"><input class="form-check-input reporte" type="radio" name="reporte" value="categoria"><label class="form-check-label">Tickets por categoria</label>
+                    <div class="form-check"><input class="form-check-input reporte" type="radio" name="reporte" value="Categoria"><label class="form-check-label">Tickets por categoria</label>
                     </div>
-                    <div class="form-check"><input class="form-check-input reporte" type="radio" name="reporte" value="depto"><label class="form-check-label">Tickets por departamento</label>
+                    <div class="form-check"><input class="form-check-input reporte" type="radio" name="reporte" value="Depto"><label class="form-check-label">Tickets por departamento</label>
                     </div>
-                    <div class="form-check"><input class="form-check-input reporte" type="radio" name="reporte" value="empresa"><label class="form-check-label">Tickets por empresa</label>
+                    <div class="form-check"><input class="form-check-input reporte" type="radio" name="reporte" value="Empresa"><label class="form-check-label">Tickets por empresa</label>
                     </div>
                 <?php } ?>
             </fieldset>
@@ -92,7 +92,7 @@ if (!$conn) {
         $("#empresa-div").hide();
         $("#categoria-div").hide();
 
-        $("input[value=analista]").focus(function() {
+        $("input[value=Analista]").focus(function() {
             $("#data").show();
             $("#tech-div").show();
             $("#categoria-div").hide();
@@ -107,7 +107,7 @@ if (!$conn) {
             localStorage.setItem("inputOK", 0);
         })
 
-        $("input[value=tareas]").focus(function() {
+        $("input[value=Tareas]").focus(function() {
             $("#data").show();
             $("#tech-div").show();
             $("#categoria-div").hide();
@@ -122,7 +122,7 @@ if (!$conn) {
             localStorage.setItem("inputOK", 0);
         })
 
-        $("input[value=categoria]").focus(function() {
+        $("input[value=Categoria]").focus(function() {
             $("#data").show();
             $("#tech-div").hide();
             $("#categoria-div").show();
@@ -137,7 +137,7 @@ if (!$conn) {
             localStorage.setItem("inputOK", 0);
         })
 
-        $("input[value=depto]").focus(function() {
+        $("input[value=Depto]").focus(function() {
             $("#data").show();
             $("#tech-div").hide();
             $("#categoria-div").hide();
@@ -146,7 +146,7 @@ if (!$conn) {
             localStorage.setItem("inputOK", 1);
         })
 
-        $("input[value=empresa]").focus(function() {
+        $("input[value=Empresa]").focus(function() {
             $("#data").show();
             $("#tech-div").hide();
             $("#categoria-div").hide();
@@ -156,7 +156,7 @@ if (!$conn) {
             localStorage.setItem("inputOK", 0);
         })
 
-        $("input[value=integral]").focus(function() {
+        $("input[value=Integral]").focus(function() {
             $("#data").show();
             $("#tech-div").hide();
             $("#categoria-div").hide();

@@ -368,7 +368,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" style="color: lightgray;"><i class="fa fa-user"></i>&nbsp;Editar datos de
+                    <h4 class="modal-title" style="color: #333;"><i class="fa fa-user"></i>&nbsp;Editar datos de
                         usuario</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                 </div>
                 <div class="modal-body">

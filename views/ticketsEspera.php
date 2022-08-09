@@ -64,16 +64,16 @@ $stmt->execute();
                         <?php
                         switch ($ticket['prioridad']) {
                             case 'baja':
-                                $style = "style='background-color:lightskyblue;color:white'";
+                                $style = "style='background-color:lightskyblue;color:white;text-align:center;'";
                                 break;
                             case 'media':
-                                $style = "style='background-color:lightsalmon;color:white'";
+                                $style = "style='background-color:lightsalmon;color:white;text-align:center;'";
                                 break;
                             case 'alta':
-                                $style = "style='background-color:orange;color:white'";
+                                $style = "style='background-color:orange;color:white;text-align:center;'";
                                 break;
                             case 'urgente':
-                                $style = "style='background-color:red;color:white'";
+                                $style = "style='background-color:red;color:white;text-align:center;'";
                                 break;
                         }
 
