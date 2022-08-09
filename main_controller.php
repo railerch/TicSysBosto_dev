@@ -653,9 +653,9 @@ if (@$_GET['respaldarBD']) {
 
     // REVISAR SI YA SE HA CREADO EL ARCHIVO DE RESPALDO
     `bd_bkp.bat`;
-    echo 'Se ha creado un nuevo respaldo';
     $fecha = date('Y_m_d-H_i_s');
     rename('database/BKP/Tickets_db_BKP.sql', "database/BKP/Tickets_db_BKP_{$fecha}.sql");
+    echo 'Se ha creado un nuevo respaldo';
 
     // CREAR LOG
     Log::registrar_log("Se ha respaldado la BD");
@@ -777,14 +777,16 @@ if (@$_GET['crearEmpresa']) {
         $empresaTmp = explode(' ', trim($_POST['empresa']));
 
         // Capitalizar o poner en mayusculas si es una palabra o siglas
-        $empresa = '';
+        $empresaCap = '';
         foreach ($empresaTmp as $val) {
             if (preg_match('/[AaEeIiOoUu]/', $val)) {
-                $empresa .= ucfirst($val) . ' ';
+                $empresaCap .= ucfirst($val) . ' ';
             } else {
-                $empresa .= strtoupper($val) . ' ';
+                $empresaCap .= strtoupper($val) . ' ';
             }
         }
+
+        $empresa = trim($empresaCap);
 
         $stmt_loc = $conn->prepare("INSERT INTO miscelaneos (id, descripcion, tipo) VALUES (NULL, '$empresa', 'empresa')");
         $stmt_loc->execute();
@@ -821,14 +823,16 @@ if (@$_GET['crearDepto']) {
     $deptoTmp = explode(' ', trim($_POST['departamento']));
 
     // Capitalizar o poner en mayusculas si es una palabra o siglas
-    $depto = '';
+    $deptoCap = '';
     foreach ($deptoTmp as $val) {
         if (preg_match('/[AaEeIiOoUu]/', $val)) {
-            $depto .= ucfirst($val) . ' ';
+            $deptoCap .= ucfirst($val) . ' ';
         } else {
-            $depto .= strtoupper($val) . ' ';
+            $deptoCap .= strtoupper($val) . ' ';
         }
     }
+
+    $depto = trim($deptoCap);
 
     try {
         $empresa  = $_POST['empresa'];
@@ -874,14 +878,16 @@ if (@$_GET['crearCat']) {
     $catTmp = explode(' ', trim($_POST['categoria']));
 
     // Capitalizar o poner en mayusculas si es una palabra o siglas
-    $cat = '';
+    $catCap = '';
     foreach ($catTmp as $val) {
         if (preg_match('/[AaEeIiOoUu]/', $val)) {
-            $cat .= ucfirst($val) . ' ';
+            $catCap .= ucfirst($val) . ' ';
         } else {
-            $cat .= strtoupper($val) . ' ';
+            $catCap .= strtoupper($val) . ' ';
         }
     }
+
+    $cat = trim($catCap);
 
     try {
         $empresa    = $_POST['empresa'];
@@ -909,8 +915,14 @@ if (@$_GET['crearCat']) {
 
 // CATEGORIAS SEGUN EL DEPTO
 if (@$_GET['deptoCats']) {
-    $empresa    = isset($_GET['empresa']) ? $_GET['empresa'] : $_SESSION['empresa'];
-    $depto      = isset($_GET['depto']) ? $_GET['depto'] : $_SESSION['depto'];
+    if ($_SESSION['nivel'] == 'admin') {
+        $empresa    = 'Lior Cosmetics';
+        $depto      = 'Tecnologia';
+    } else {
+        $empresa    = isset($_GET['empresa']) ? $_GET['empresa'] : $_SESSION['empresa'];
+        $depto      = isset($_GET['depto']) ? $_GET['depto'] : $_SESSION['depto'];
+    }
+
     $desc       =  $empresa . '-' . $depto;
     $stmt       = $conn->query("SELECT descripcion FROM miscelaneos WHERE descripcion LIKE '$desc%' AND tipo = 'cat' ORDER BY descripcion ASC");
 
