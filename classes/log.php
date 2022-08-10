@@ -34,12 +34,16 @@ class Log
         }
 
         // Registro
-        $conn->query("INSERT INTO logs 
-        (id, fecha, ip, usuario, plataforma, accion) 
-        VALUES 
-        (NULL, '$fecha', '$user_addr', '$user_name', '$user_agent', '$accion')");
+        try {
+            $conn->query("INSERT INTO logs 
+            (id, fecha, ip, usuario, plataforma, accion) 
+            VALUES 
+            (NULL, '$fecha', '$user_addr', '$user_name', '$user_agent', '$accion')");
 
-        $_SESSION['new_conn'] = $_SERVER['REMOTE_ADDR'];
+            $_SESSION['new_conn'] = $_SERVER['REMOTE_ADDR'];
+        } catch (PDOException $e) {
+            echo "HA OCURRIDO UN ERROR: " . $e->getMessage();
+        }
     }
 
     public function __destruct()

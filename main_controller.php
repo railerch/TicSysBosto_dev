@@ -647,25 +647,36 @@ if (@$_GET['revisarTareas']) {
 
 // RESPALDAR BD
 if (@$_GET['respaldarBD']) {
+    // EJECUTAR SCRIPT RESPALDO
+    if (@$_SERVER['HTTP_SEC_CH_UA_PLATFORM']) {
+        // WINDOWS OS
+        shell_exec('bd_bkp.bat');
+    } else if (@$_SERVER['SERVER_ADMIN']) {
+        // UNIX OS
+        echo 'UNIX';
+        # Se deben otorgar todos los privilegios sobre la base de datos del sistema de tickets al usuario TicSys en PhpMyAdmin para evitar
+        # el "mysqldump access denied process privilege error" o indicar la opcion "--no-tablespaces" en el "mysqldump" usado a continuacion
+        shell_exec('mysqldump --user=TicSys --password=TicSys_2040 --host=localhost TicSys > /var/www/html/ticsysbosto/database/BKP/Tickets_db_BKP.sql');
+    } else {
+        // OTHER OS
+        echo 'BKP no realizado, OS no identificado, ';
+        exit();
+    }
 
-    // ESTABLECER FECHA PARA LA BUSQUEDA
-    $fecha = date("d_m_Y");
-
-    // REVISAR SI YA SE HA CREADO EL ARCHIVO DE RESPALDO
-    `bd_bkp.bat`;
+    // RENOMBRAR BKP GENERADO
     $fecha = date('Y_m_d-H_i_s');
-    rename('database/BKP/Tickets_db_BKP.sql', "database/BKP/Tickets_db_BKP_{$fecha}.sql");
-    echo 'Se ha creado un nuevo respaldo';
-
-    // CREAR LOG
-    Log::registrar_log("Se ha respaldado la BD");
+    if (rename('database/BKP/Tickets_db_BKP.sql', "database/BKP/Tickets_db_BKP_{$fecha}.sql")) {
+        echo 'Respaldo creado exitosamente!';
+        Log::registrar_log("Se ha respaldado la BD");
+    } else {
+        echo 'Error al crear el respaldo, intente nuevamente.';
+    };
 
     exit();
 }
 
 // VER LISTA DE ARCHIVOS DE RESPALDO
 if (@$_GET['verRespaldos']) {
-
     $dir = 'database/BKP/';
     $scan = scandir($dir);
     $bkp = rsort($scan);
