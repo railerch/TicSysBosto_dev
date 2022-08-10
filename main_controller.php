@@ -653,7 +653,6 @@ if (@$_GET['respaldarBD']) {
         shell_exec('bd_bkp.bat');
     } else if (@$_SERVER['SERVER_ADMIN']) {
         // UNIX OS
-        echo 'UNIX';
         # Se deben otorgar todos los privilegios sobre la base de datos del sistema de tickets al usuario TicSys en PhpMyAdmin para evitar
         # el "mysqldump access denied process privilege error" o indicar la opcion "--no-tablespaces" en el "mysqldump" usado a continuacion
         shell_exec('mysqldump --user=TicSys --password=TicSys_2040 --host=localhost TicSys > /var/www/html/ticsysbosto/database/BKP/Tickets_db_BKP.sql');
