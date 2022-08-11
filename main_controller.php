@@ -925,16 +925,9 @@ if (@$_GET['crearCat']) {
 
 // CATEGORIAS SEGUN EL DEPTO
 if (@$_GET['deptoCats']) {
-    if ($_SESSION['nivel'] == 'admin') {
-        // Consultar la empresa y departamento de los admin
-        $stmt_adm   = $conn->query("SELECT empresa, depto FROM usuarios WHERE nivel = 'admin'");
-        $empresaAdm = $stmt_adm->fetch(PDO::FETCH_NUM);
-        $empresa    = $empresaAdm[0];
-        $depto      = $empresaAdm[1];
-    } else {
-        $empresa    = isset($_GET['empresa']) ? $_GET['empresa'] : $_SESSION['empresa'];
-        $depto      = isset($_GET['depto']) ? $_GET['depto'] : $_SESSION['depto'];
-    }
+
+    $empresa    = isset($_GET['empresa']) ? $_GET['empresa'] : $_SESSION['empresa'];
+    $depto      = isset($_GET['depto']) ? $_GET['depto'] : $_SESSION['depto'];
 
     $desc       =  $empresa . '-' . $depto;
     $stmt       = $conn->query("SELECT descripcion FROM miscelaneos WHERE descripcion LIKE '$desc%' AND tipo = 'cat' ORDER BY descripcion ASC");
