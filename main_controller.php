@@ -926,7 +926,7 @@ if (@$_GET['crearCat']) {
 // CATEGORIAS SEGUN EL DEPTO
 if (@$_GET['deptoCats']) {
     if ($_SESSION['nivel'] == 'admin') {
-        $empresa    = 'Lior Cosmetics';
+        $empresa    = 'Bosto Group';
         $depto      = 'Tecnologia';
     } else {
         $empresa    = isset($_GET['empresa']) ? $_GET['empresa'] : $_SESSION['empresa'];
