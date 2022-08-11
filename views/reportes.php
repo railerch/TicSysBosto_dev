@@ -48,14 +48,14 @@ if (!$conn) {
         <div id="data">
             <div id="tech-div">
                 <select id="analista" class="form-control" name="analista" style="width:50%">
-                    <option style="color:#aaa" value="NULL">Seleccione el analista</option>
+                    <option style="color:#aaa" value="">Seleccione el analista</option>
                     <!-- ANALISTAS DEL DEPTO -->
                 </select>
             </div>
 
             <div id="categoria-div">
                 <select id="categoria" class="form-control" name="categoria" style="width:50%">
-                    <option style="color:#aaa" value="NULL">Seleccione la categoría</option>
+                    <option style="color:#aaa" value="">Seleccione la categoría</option>
                     <!-- CATEGORIAS DEL DEPTO -->
                 </select>
             </div>
@@ -98,12 +98,13 @@ if (!$conn) {
             $("#categoria-div").hide();
             $("#depto-div").hide();
             $("#empresa-div").hide();
-            $("#generarReporte").attr("data-tipo", "analista");
+            $("#generarReporte").attr("data-tipo", "Analista");
 
             // Consultar analistas del departamento
             let datosPhp = ["analista", "Seleccione el analista", "analistasDepto"]
             opciones_select(...datosPhp)
 
+            localStorage.clear();
             localStorage.setItem("inputOK", 0);
         })
 
@@ -113,12 +114,13 @@ if (!$conn) {
             $("#categoria-div").hide();
             $("#depto-div").hide();
             $("#empresa-div").hide();
-            $("#generarReporte").attr("data-tipo", "tareas");
+            $("#generarReporte").attr("data-tipo", "Tareas");
 
             // Consultar analistas del departamento
             let datosPhp = ["analista", "Seleccione el analista", "analistasDepto"]
             opciones_select(...datosPhp)
 
+            localStorage.clear();
             localStorage.setItem("inputOK", 0);
         })
 
@@ -128,12 +130,13 @@ if (!$conn) {
             $("#categoria-div").show();
             $("#depto-div").hide();
             $("#empresa-div").hide();
-            $("#generarReporte").attr("data-tipo", "categoria");
+            $("#generarReporte").attr("data-tipo", "Categoria");
 
             // Consultar categorias del departamento
             let datosPhp = ["categoria", "Seleccione la categoría", "deptoCats"]
             opciones_select(...datosPhp)
 
+            localStorage.clear();
             localStorage.setItem("inputOK", 0);
         })
 
@@ -142,7 +145,9 @@ if (!$conn) {
             $("#tech-div").hide();
             $("#categoria-div").hide();
             $("#empresa-div").hide();
-            $("#generarReporte").attr("data-tipo", "depto");
+            $("#generarReporte").attr("data-tipo", "Depto");
+
+            localStorage.clear();
             localStorage.setItem("inputOK", 1);
         })
 
@@ -151,9 +156,10 @@ if (!$conn) {
             $("#tech-div").hide();
             $("#categoria-div").hide();
             $("#depto-div").hide();
-            $("#generarReporte").attr("data-tipo", "empresa");
+            $("#generarReporte").attr("data-tipo", "Empresa");
 
-            localStorage.setItem("inputOK", 0);
+            localStorage.clear();
+            localStorage.setItem("inputOK", 1);
         })
 
         $("input[value=Integral]").focus(function() {
@@ -162,7 +168,9 @@ if (!$conn) {
             $("#categoria-div").hide();
             $("#depto-div").hide();
             $("#empresa-div").hide();
-            $("#generarReporte").attr("data-tipo", "integral");
+            $("#generarReporte").attr("data-tipo", "Integral");
+
+            localStorage.clear();
             localStorage.setItem("inputOK", 1)
         })
 
@@ -174,18 +182,16 @@ if (!$conn) {
             console.log("TIPO REPORTE: " + tipo);
 
             // VALIDAR SELECCIONES
-            if (tipo == "analista" || tipo == "tareas") {
-                <?php echo validar_selecciones("analista", "NULL") ?>
-            } else if (tipo == "empresa") {
-                <?php echo validar_selecciones("empresa", "NULL") ?>
-            } else if (tipo == "categoria") {
-                <?php echo validar_selecciones("categoria", "NULL") ?>
+            if (tipo == "Analista" || tipo == "Tareas") {
+                <?php echo validar_selecciones("analista", "") ?>
+            } else if (tipo == "Categoria") {
+                <?php echo validar_selecciones("categoria", "") ?>
             }
 
             <?php echo validar_selecciones("fechaInicial", "") ?>
             <?php echo validar_selecciones("fechaFinal", "") ?>
 
-            if (localStorage.getItem("inputOK") >= 3) {
+            if (localStorage.getItem("inputOK") == 3) {
                 $.ajax({
                     type: "POST",
                     url: `views/reporte${tipo}.php`,
