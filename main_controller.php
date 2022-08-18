@@ -226,7 +226,7 @@ if (@$_GET['crearTicket']) {
 // CERRAR TICKET  
 if (@$_GET['cerrarTicket']) {
 
-    $ticket = new ticket($_GET);
+    $ticket = new Ticket($_GET);
     $ticket->cerrar_ticket();
 
     if ($ticket->estatus) {
