@@ -51,7 +51,7 @@ class Ticket
                 $descripcion = 'Sin descripción';
             }
 
-            $prioridad  = $this->info['prioridad'];
+            $prioridad  = isset($this->info['prioridad']) ? $this->info['prioridad'] : 'baja';
             $analista   = NULL;
 
             $estatus     = 'abierto';
