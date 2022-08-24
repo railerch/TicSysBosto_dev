@@ -19,8 +19,8 @@ $config = cargar_config(true);
 
         <!--
             <a class="forgot" href="#/">Olvidaste tu contraseña?</a>
-            -->
-        <a id="registrar" href="#/" class="forgot"><i class="fa fa-user-plus"></i>&nbsp;Registrarse</a>
+            <a id="registrar" href="#/" class="forgot"><i class="fa fa-user-plus"></i>&nbsp;Registrarse</a>
+        -->
 
     </form>
 </div>
