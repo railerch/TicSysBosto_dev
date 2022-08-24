@@ -335,7 +335,7 @@ ocultar_aviso();
                     // PREOLOADER
                     setTimeout(function() {
                         $("#contenido").html(
-                            "<figure style='display:block;width:100%;position:absolute;top:45%;text-align:center;'><img src='assets/img/preloader.gif'></figure>"
+                            "<figure style='display:block;width:100%;position:absolute;top:45%;text-align:center;'><img src='../assets/img/preloader.gif'></figure>"
                         );
                     }, 300);
 
@@ -404,7 +404,7 @@ ocultar_aviso();
         $(".ticketEspera").click(function() {
 
             // PREOLOADER
-            $("#contenido").html("<figure style='display:block;width:100%;position:absolute;top:45%;text-align:center;'><img src='assets/img/preloader.gif'></figure>");
+            $("#contenido").html("<figure style='display:block;width:100%;position:absolute;top:45%;text-align:center;'><img src='../assets/img/preloader.gif'></figure>");
 
             // IDENTIFICADOR UNICO DEL TICKET
             var id = $(this).attr("data-espera-id");
@@ -426,7 +426,7 @@ ocultar_aviso();
             // PREOLOADER
             setTimeout(function() {
                 $("#contenido").html(
-                    "<figure style='display:block;width:100%;position:absolute;top:45%;text-align:center;'><img src='assets/img/preloader.gif'></figure>"
+                    "<figure style='display:block;width:100%;position:absolute;top:45%;text-align:center;'><img src='../assets/img/preloader.gif'></figure>"
                 );
             }, 300);
 

@@ -328,7 +328,7 @@ ocultar_aviso();
             // PREOLOADER
             setTimeout(function() {
                 $("#contenido").html(
-                    "<figure style='display:block;width:100%;position:absolute;top:45%;text-align:center;'><img src='assets/img/preloader.gif'></figure>"
+                    "<figure style='display:block;width:100%;position:absolute;top:45%;text-align:center;'><img src='../assets/img/preloader.gif'></figure>"
                 );
             }, 300);
 
@@ -383,7 +383,7 @@ ocultar_aviso();
             // PREOLOADER
             setTimeout(function() {
                 $("#contenido").html(
-                    "<figure style='display:block;width:100%;position:absolute;top:45%;text-align:center;'><img src='assets/img/preloader.gif'></figure>"
+                    "<figure style='display:block;width:100%;position:absolute;top:45%;text-align:center;'><img src='../assets/img/preloader.gif'></figure>"
                 );
             }, 300);
 
