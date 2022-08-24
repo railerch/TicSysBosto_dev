@@ -133,7 +133,7 @@ ocultar_aviso();
             // PREOLOADER
             setTimeout(function() {
                 $("#contenido").html(
-                    "<figure style='display:block;width:100%;position:absolute;top:45%;text-align:center;'><img src='../assets/img/preloader.gif'></figure>"
+                    "<figure style='display:block;width:100%;position:absolute;top:45%;text-align:center;'><img src='assets/img/preloader.gif'></figure>"
                 );
             }, 300);
 
@@ -158,7 +158,7 @@ ocultar_aviso();
         $("#vaciar-papelera").click(function() {
             // PREOLOADER
             $("#contenido").html(
-                "<figure style='display:block;width:100%;position:absolute;top:45%;text-align:center;'><img src='../assets/img/preloader.gif'></figure>"
+                "<figure style='display:block;width:100%;position:absolute;top:45%;text-align:center;'><img src='assets/img/preloader.gif'></figure>"
             );
 
             fetch("main_controller.php?vaciarPapelera=true")
