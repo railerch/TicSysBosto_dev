@@ -267,7 +267,7 @@ function procesar_mensajes($mensajes, $id_ticket)
                 }
 
                 // Mostrar imagen o icono si es un documento o imagen
-                if ($type[1] == 'jpg' || $type[1] == 'jpeg' || $type[1] == 'png' || $type[1] == 'gif' || $type[1] == 'bmp') {
+                if (strtolower($type[1]) == 'jpg' || strtolower($type[1]) == 'jpeg' || strtolower($type[1]) == 'png' || strtolower($type[1]) == 'gif' || strtolower($type[1]) == 'bmp') {
                     $adjunto = "<a href='{$temp[1]}' target='_blank'><img src='{$temp[1]}' style='max-height:75px;width: auto;'><br>$tempF[1]</a>";
                 } else {
                     $adjunto = "<a href='{$temp[1]}' target='_blank'><img src='{$icono}' style='max-height:75px;width: auto;'><br>$tempF[1]</a>";
