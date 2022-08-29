@@ -122,17 +122,20 @@ ocultar_aviso();
         // CREAR TICKET
         $("button[type=submit]").click(function() {
             event.preventDefault();
+            console.log("Creando ticket...");
 
             // VALIDAR CAMPOS Y SELECCIONES
             <?php
-            echo validar_selecciones("depto_receptor", "Seleccione el departamento");
+            echo validar_selecciones("empresa-receptora", "");
+            echo validar_selecciones("depto-receptor", "");
+            echo validar_selecciones("categoria", "");
+            echo validar_selecciones("prioridad", "");
             echo validar_selecciones("asunto", "");
-            echo validar_selecciones("prioridad", "Prioridad");
             echo validar_selecciones("descripcion", "");
             ?>
 
             // ENVIAR DATOS
-            if (localStorage.getItem("inputOK") == 4) {
+            if (localStorage.getItem("inputOK") == 6) {
                 $.ajax({
                     type: "POST",
                     url: "main_controller.php?crearTicket=true",

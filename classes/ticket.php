@@ -42,7 +42,7 @@ class Ticket
             $usuario            = isset($usrTmp) ? $usrTmp : $_SESSION['usuario'];
             $empresa_receptora  = $this->info['empresa-receptora'];
             $depto_receptor     = $this->info['depto-receptor'];
-            $categoria          = $this->info['categoria'];
+            $categoria          = isset($this->info['categoria']) ? $this->info['categoria'] : 'Otros';
             $asunto             = ucfirst($this->info['asunto']);
 
             if ($this->info['descripcion'] != "") {
