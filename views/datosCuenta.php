@@ -43,7 +43,10 @@ $datos = $stmt->fetch();
                     <td><?php echo $datos['depto'] ?></td>
                     <td>
                         <div class="btn-toolbar d-flex flex-row justify-content-center">
-                            <div class="btn-group" role="group"><a class="btn btn-outline-primary btn-sm" role="button" data-toggle="modal" data-bs-tooltip="" title="Editar usuario" href="" data-target="#edicionUsuario"><i class="fa fa-edit"></i></a><button class="btn btn-outline-danger btn-sm" data-toggle="modal" data-bs-tooltip="" type="button" title="Eliminar usuario" data-target="#eliminar"><i class="fa fa-trash-o"></i></button></div>
+                            <i class="btn btn-outline-primary btn-sm fa fa-edit" role="button" data-toggle="modal" data-bs-tooltip="" title="Editar usuario" href="" data-target="#edicionUsuario"></i></a>
+                            <!--
+                                <i class="btn btn-outline-danger btn-sm fa fa-trash-o" data-toggle="modal" data-bs-tooltip="" type="button" title="Eliminar usuario" data-target="#eliminar"></i>
+                                -->
                         </div>
                     </td>
                 </tr>

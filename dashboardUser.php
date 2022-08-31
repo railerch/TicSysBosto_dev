@@ -44,7 +44,7 @@ $config = cargar_config();
                         <div id="msjCant"></div>
 
                         <div id="tiempoSesion">
-                            Tiempo de sesón <br><span id="timer"></span>
+                            Tiempo de sesión <br><span id="timer"></span>
                         </div>
 
                         <i id="userIcon" class="fa fa-user" style="margin-right:0.2em;color:lightgreen;cursor:pointer;" data-query="yes"></i>
