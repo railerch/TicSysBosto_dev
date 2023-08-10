@@ -68,7 +68,7 @@ class Usuario
 
             $empresa = "empresa = '{$this->info['empresa']}',";
 
-            if ($_SESSION['nivel'] != 'admin') {
+            if ($_SESSION['nivel'] != 'admin' && $_SESSION['nivel'] != 'tecnico') {
                 $_SESSION['empresa'] = $this->info['empresa'];
             }
         } else {
@@ -78,7 +78,7 @@ class Usuario
         if (isset($this->info['depto']) and $this->info['depto'] != '') {
             $depto = "depto = '{$this->info['depto']}',";
 
-            if ($_SESSION['nivel'] != 'admin') {
+            if ($_SESSION['nivel'] != 'admin' && $_SESSION['nivel'] != 'tecnico') {
                 $_SESSION['depto'] = $this->info['depto'];
             }
         } else {

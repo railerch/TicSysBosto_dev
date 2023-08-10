@@ -15,6 +15,7 @@ $stmt = $conn->prepare("SELECT fecha, estatus FROM tickets $area AND estatus <> 
 $stmt->setFetchMode(PDO::FETCH_ASSOC);
 $stmt->execute();
 
+
 // CONTADORES TICKETS
 $abierto = $espera = $precierre = $cerrado = 0;
 // CONTADORES TICKETS POR MES
@@ -43,7 +44,8 @@ while ($ticket = $stmt->fetch()) {
     }
 
     // TOTAL TICKETS MENSUALES
-    $mes = substr($ticket['fecha'], 5, 2);
+    $mes = substr($ticket['fecha'],5, 2);
+  
     switch ($mes) {
         case '01':
             $ene++;
@@ -151,7 +153,25 @@ if (isset($error)) {
     <div class="col-12 col-lg-5" style="background: #333333;padding: 0.5em;border-radius: 1em;box-shadow: 0px 0px 10px rgb(0,0,0);border-width: 1px;border-style: none;border-top-style: none;border-right-style: none;border-bottom-style: none;margin-top: 1em;width: 45%;">
         <h4 style="color: #d7d7d7;">Total tickets mensuales</h4>
         <hr style="background: #969696;">
-        <div class="text-warning"><canvas data-bs-chart="{&quot;type&quot;:&quot;bar&quot;,&quot;data&quot;:{&quot;labels&quot;:[&quot;Enero&quot;,&quot;Febrero&quot;,&quot;Marzo&quot;,&quot;Abril&quot;,&quot;Mayo&quot;,&quot;Junio&quot;,&quot;Julio&quot;,&quot;Agosto&quot;,&quot;Septiembre&quot;,&quot;Octubre&quot;,&quot;Noviembre&quot;,&quot;Diciembre&quot;],&quot;datasets&quot;:[{&quot;label&quot;:&quot;Tickets&quot;,&quot;backgroundColor&quot;:&quot;#3c7161&quot;,&quot;borderColor&quot;:&quot;&quot;,&quot;borderWidth&quot;:&quot;&quot;,&quot;data&quot;:[&quot;<?php echo isset($ene) ? $ene : 0 ?>&quot;,&quot;<?php echo isset($feb) ? $feb : 0 ?>&quot;,&quot;<?php echo isset($mar) ? $mar : 0 ?>&quot;,&quot;<?php echo isset($abr) ? $abr : 0 ?>&quot;,&quot;<?php echo isset($may) ? $may : 0 ?>&quot;,&quot;<?php echo isset($jun) ? $jun : 0 ?>&quot;,&quot;<?php echo isset($jul) ? $jul : 0 ?>&quot;,&quot;<?php echo isset($ago) ? $ago : 0 ?>&quot;,&quot;<?php echo isset($sep) ? $sep : 0 ?>&quot;,&quot;<?php echo isset($oct) ? $oct : 0 ?>&quot;,&quot;<?php echo isset($nov) ? $nov : 0 ?>&quot;,&quot;<?php echo isset($dic) ? $dic : 0 ?>&quot;]}]},&quot;options&quot;:{&quot;maintainAspectRatio&quot;:true,&quot;legend&quot;:{&quot;display&quot;:false,&quot;position&quot;:&quot;top&quot;},&quot;title&quot;:{&quot;fontColor&quot;:&quot;#ffffff&quot;},&quot;scales&quot;:{&quot;xAxes&quot;:[{&quot;gridLines&quot;:{&quot;drawBorder&quot;:true},&quot;ticks&quot;:{&quot;fontColor&quot;:&quot;#d7d7d7&quot;}}],&quot;yAxes&quot;:[{&quot;gridLines&quot;:{&quot;drawBorder&quot;:true},&quot;ticks&quot;:{&quot;fontColor&quot;:&quot;#d7d7d7&quot;}}]}}}"></canvas></div>
+        <div class="text-warning"><canvas data-bs-chart="{&quot;type&quot;:&quot;bar&quot;,&quot;data&quot;:{&quot;labels&quot;:
+            [&quot;Enero&quot;,&quot;Febrero&quot;,&quot;Marzo&quot;,&quot;Abril&quot;,&quot;Mayo&quot;,
+            &quot;Junio&quot;,&quot;Julio&quot;,&quot;Agosto&quot;,&quot;Septiembre&quot;,&quot;Octubre&quot;,&quot;Noviembre&quot;,&quot;Diciembre&quot;],
+            &quot;datasets&quot;:[{&quot;label&quot;:&quot;Tickets&quot;,&quot;backgroundColor&quot;:&quot;#3c7161&quot;,&quot;borderColor&quot;:&quot;&quot;,&quot;borderWidth&quot;:&quot;&quot;,&quot;data&quot;:
+               [&quot;<?php echo isset($ene) ? $ene : 0 ?>&quot;,
+                &quot;<?php echo isset($feb) ? $feb : 0 ?>&quot;,
+                &quot;<?php echo isset($mar) ? $mar : 0 ?>&quot;,
+                &quot;<?php echo isset($abr) ? $abr : 0 ?>&quot;,
+                &quot;<?php echo isset($may) ? $may : 0 ?>&quot;,
+                &quot;<?php echo isset($jun) ? $jun : 0 ?>&quot;,
+                &quot;<?php echo isset($jul) ? $jul : 0 ?>&quot;,
+                &quot;<?php echo isset($ago) ? $ago : 0 ?>&quot;, 
+                &quot;<?php echo isset($sep) ? $sep : 0 ?>&quot;,
+                &quot;<?php echo isset($oct) ? $oct : 0 ?>&quot;,
+                &quot;<?php echo isset($nov) ? $nov : 0 ?>&quot;,
+                &quot;<?php echo isset($dic) ? $dic : 0 ?>&quot;]}]},
+                &quot;options&quot;:{&quot;maintainAspectRatio&quot;:true,&quot;legend&quot;:{&quot;display&quot;:false,&quot;position&quot;:&quot;top&quot;},
+                &quot;title&quot;:{&quot;fontColor&quot;:&quot;#ffffff&quot;},&quot;scales&quot;:{&quot;xAxes&quot;:[{&quot;gridLines&quot;:{&quot;drawBorder&quot;:true},
+                &quot;ticks&quot;:{&quot;fontColor&quot;:&quot;#d7d7d7&quot;}}],&quot;yAxes&quot;:[{&quot;gridLines&quot;:{&quot;drawBorder&quot;:true},&quot;ticks&quot;:{&quot;fontColor&quot;:&quot;#d7d7d7&quot;}}]}}}"></canvas></div>
     </div>
     <div class="col-12 col-lg-5" style="background: #333333;padding: 0.5em;border-radius: 1em;box-shadow: 0px 0px 10px rgb(0,0,0);border-width: 1px;border-style: none;border-top-style: none;border-right-style: none;border-bottom-style: none;margin-top: 1em;width: 45%;">
         <h4 style="color: #d7d7d7;">Tickets resueltos por mes</h4>

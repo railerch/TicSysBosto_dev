@@ -10,12 +10,20 @@ if (!$conn) {
 }
 
 // CONSULTAR POR TICKETS DEL USUARIO
-$usuario = $_SESSION['usuario'];
-$stmt = $conn->prepare("SELECT * FROM tickets WHERE usuario = '$usuario' AND estatus <> 'eliminado'");
+$usuario        = $_SESSION['usuario'];
+$usuarioDepto   = $_SESSION['depto'];
+
+if ($_SESSION['nivel'] == 'admin' || $_SESSION['nivel'] == 'gerente') {
+    $stmt = $conn->prepare("SELECT * FROM tickets WHERE (depto = '$usuarioDepto' AND depto_receptor = 'Finanzas') OR usuario = '$usuario' AND estatus <> 'eliminado'");
+} else {
+    $stmt = $conn->prepare("SELECT * FROM tickets WHERE usuario = '$usuario' AND estatus <> 'eliminado'");
+}
+
 $stmt->setFetchMode(PDO::FETCH_ASSOC);
 $stmt->execute();
 
 ?>
+
 <style>
     #alertaDeCierre {
         padding-top: 150px;
@@ -223,6 +231,26 @@ ocultar_aviso();
 
         // ESTABLECER LA PAGINA ACTUAL
         sessionStorage.setItem("pagina_actual", "views/ticketsUsuario.php");
+
+        // CAMBIAR ESTATUS DE SOLICITUD O TICKET ENVIADO A FINANZAS (Solo gerentes/admin)
+        document.querySelectorAll(".autorizacion-btn").forEach(btn => {
+            btn.addEventListener("click", function() {
+                let ticketId = this.getAttribute("data-ticket");
+                let autorizar = this.getAttribute("data-autorizar");
+
+                fetch(`main_controller.php?autorizar_ticket=true&ticketId=${ticketId}&autorizado=${autorizar}`)
+                    .then(res => res.text())
+                    .then(res => {
+                        $(`#ver${ticketId}`).modal("hide");
+                        
+                        setTimeout(() => {
+                            $("#contenido").load("views/ticketsUsuario.php");
+                        }, 300)
+                    }).catch(err => {
+                        console.log("ERROR: " + err);
+                    })
+            })
+        })
 
         // ADJUNTAR ARCHIVO
         $(".adjuntarArchivo").click(function() {

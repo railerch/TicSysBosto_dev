@@ -63,6 +63,7 @@ $stmt_1->execute();
                                                 <option style="color:#aaa" value="Nivel de usuario" selected>Nivel de
                                                     usuario</option>
                                                 <option value="admin">Admin</option>
+                                                <option value="tecnico">Técnico</option>
                                                 <option value="gerente">Gerente</option>
                                                 <option value="analista">Analista</option>
                                                 <option value="usuario">Usuario comun</option>

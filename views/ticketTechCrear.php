@@ -25,7 +25,7 @@ if (!$conn) {
             <h4>Datos del ticket</h4>
             <div class="d-inline-flex flex-wrap" style="width:100%">
                 <select id="empresa-emisora" class="form-control" name="empresa-emisora" style="min-width:200px;max-width:20%;margin: 0 0.5em 0.5em 0;">
-                    <option style="color:#aaa" value="" selected>Empresa que emite</option>
+                    <option style="color:#aaa" value="" selected>Empresa emisora</option>
                 </select>
                 <select id="depto-emisor" class="form-control" name="depto-emisor" style="min-width:200px;max-width:20%;margin: 0 0.5em 0.5em 0;">
                     <option style="color:#aaa" value="" selected>Depto emisor</option>
@@ -34,7 +34,7 @@ if (!$conn) {
                     <option style="color:#aaa" value="" selected>Usuario emisor</option>
                 </select>
                 <select id="empresa-receptora" class="form-control" name="empresa-receptora" style="min-width:200px;max-width:20%;margin: 0 0.5em 0.5em 0;">
-                    <option style="color:#aaa" value="" selected>Empresa que recibe</option>
+                    <option style="color:#aaa" value="" selected>Empresa receptora</option>
                 </select>
                 <select id="depto-receptor" class="form-control" name="depto-receptor" style="min-width:200px;max-width:20%;margin: 0 0.5em 0.5em 0;">
                     <option style="color:#aaa" value="" selected>Depto receptor</option>
@@ -50,13 +50,23 @@ if (!$conn) {
                     <option value="urgente">Urgente</option>
                 </select>
             </div>
-            <h4>Asunto</h4>
-            <input id="asunto" class="form-control mb-2" type="text" name="asunto" placeholder="Breve encabezado de la solicitud" maxlength="50">
+
+            <div class="d-flex flex-wrap d-grid gap-2 mb-2">
+                <div class="mx-0 mx-sm-1" style="flex-grow: 1">
+                    <h4>Asunto</h4>
+                    <input id="asunto" class="form-control" type="text" name="asunto" placeholder="Breve encabezado de la solicitud" maxlength="50">
+                </div>
+                <div id="monto-div" style="display:none;flex-grow: 1">
+                    <h4>Monto</h4>
+                    <input id="monto" class="form-control" type="number" name="monto" min="0" placeholder="Monto estimado de la solicitud (opcional)" maxlength="50">
+                </div>
+            </div>
+
             <h4>Descripción</h4>
-            <textarea id="descripcion" class="form-control" name="descripcion" style="min-height: 5em;max-height: 5em;" placeholder="Describa su solicitud, de ser necesario habilite ANYDESK y envie los datos de conexión" maxlength="250" required></textarea>
+            <textarea id="descripcion" class="form-control" name="descripcion" style="min-height: 5em;max-height: 5em;" placeholder="Describa su solicitud" maxlength="250" required></textarea>
         </div>
         <div class="form-group d-md-flex justify-content-md-end">
-            <button class="btn btn-primary" type="submit">Crear ticket</button>
+            <button id="crear-ticket-btn" class="btn btn-primary" type="button">Crear ticket</button>
         </div>
     </form>
 </div>
@@ -115,10 +125,21 @@ ocultar_aviso();
             let depto = $(this).val();
             let datosPhp = ["categoria", "Categoria", "deptoCats", empresa, depto]
             opciones_select(...datosPhp)
+
+            // Mostrar campo de monto sugerido en caso de que el depto receptor sea finanzas
+            if ($(this).val() == "Finanzas") {
+                $("#monto-div").css({
+                    display: "block"
+                })
+            } else {
+                $("#monto-div").css({
+                    display: "none"
+                })
+            }
         })
 
         // CREAR TICKET
-        $("button[type=submit]").click(function() {
+        $("#crear-ticket-btn").click(function() {
             event.preventDefault();
 
             // VALIDAR CAMPOS Y SELECCIONES
@@ -130,13 +151,19 @@ ocultar_aviso();
             echo validar_selecciones("depto-receptor", "");
             echo validar_selecciones("categoria", "");
             echo validar_selecciones("asunto", "");
+            echo validar_selecciones("monto", "");
             echo validar_selecciones("prioridad", "");
             echo validar_selecciones("descripcion", "");
-
             ?>
 
             // ENVIAR DATOS
-            if (localStorage.getItem("inputOK") == 9) {
+            // Validar si el depto receptor es finanzas para modificar el conteo de verificaciones
+            let campos = 9;
+            if ($("#depto-receptor").val() == "Finanzas") {
+                campos = 10;
+            }
+
+            if (localStorage.getItem("inputOK") == campos) {
                 $.ajax({
                     type: "POST",
                     url: "main_controller.php?crearTicket=true",

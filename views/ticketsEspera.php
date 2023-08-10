@@ -346,7 +346,7 @@ ocultar_aviso();
                     // ESTABLECER EL COMENTARIO SEGUN EL TIPO DE SESION
                     if (sessionStorage.getItem("tipoSesion") == "usuario") {
                         var comentarioTxt = "Ticket cerrado por el usuario";
-                    } else if (sessionStorage.getItem("tipoSesion") == "admin") {
+                    } else if (sessionStorage.getItem("tipoSesion") == "tecnologia") {
                         var comentarioTxt = "Ticket cerrado por el analista";
                     };
 

@@ -6,7 +6,7 @@
     },
     {
         "host": "localhost",
-        "database": "TicSys",
+        "database": "TicSys_dev",
         "user": "TicSys",
         "pass": "TicSys_2040"
     },
@@ -26,6 +26,7 @@
     {
         "nivelUsuario": [
             "admin",
+            "tecnico",
             "gerente",
             "analista",
             "usuario"

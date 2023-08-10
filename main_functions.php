@@ -91,6 +91,9 @@ function estatus_de_sesion()
             case 'admin':
                 $token = $_SESSION['adm_token'];
                 break;
+            case 'tecnico':
+                $token = $_SESSION['adm_token'];
+                break;
             case 'analista':
                 $token = $_SESSION['anl_token'];
                 break;
@@ -360,7 +363,7 @@ function consultarMsjs($id_ticket)
 //  - ANALISTA: los auxiliares de un GERENTE en un depto determinado
 //  - USUARIO: todo aquel que solo haga peticiones
 // Dentro del depto de sistema todos deben ser:
-//  - ADMIN: Ccontrol total en la gestion de tickets
+//  - ADMIN/TECNICO: Control total en la gestion de tickets
 // de lo contrario se arrojara un error en el dashboard
 function filtrar_depto()
 {
@@ -372,7 +375,7 @@ function filtrar_depto()
             exit();
         }
     } else {
-        if (trim($_SESSION['nivel']) == 'admin') {
+        if (trim($_SESSION['nivel']) == 'admin' || trim($_SESSION['nivel']) == 'tecnico') {
             if (trim($_SESSION['usuario']) == 'root') {
                 return "WHERE depto_receptor = depto_receptor AND empresa = empresa";
             } else {

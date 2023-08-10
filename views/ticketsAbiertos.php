@@ -103,7 +103,6 @@ $stmt->execute();
                                             <i class="fa fa-hand-stop-o"></i>
                                         </button>
 
-
                                         <?php if ($ticket['estatus'] == 'precierre') { ?>
                                             <button class="btn btn-outline-success btn-sm cerrarTicket" data-toggle="modal" type="button" data-bs-tooltip="" title="Cerrar ticket" data-target="#cerrar<?php echo $ticket['id_ticket'] ?>" data-id-ticket="<?php echo $ticket['id_ticket'] ?>" data-analista="<?php echo $ticket['analista'] ?>" data-sesion="<?php echo $_SESSION['nombre'] ?>">
                                                 <i class="fa fa-check"></i>
@@ -348,7 +347,7 @@ ocultar_aviso();
                     // ESTABLECER EL COMENTARIO SEGUN EL TIPO DE SESION
                     if (sessionStorage.getItem("tipoSesion") == "usuario") {
                         var comentarioTxt = "Ticket cerrado por el usuario";
-                    } else if (sessionStorage.getItem("tipoSesion") == "admin") {
+                    } else if (sessionStorage.getItem("tipoSesion") == "tecnologia") {
                         var comentarioTxt = "Ticket cerrado por el analista";
                     };
 

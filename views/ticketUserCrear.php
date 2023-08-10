@@ -70,13 +70,20 @@ if (@$_SESSION['avisos'] != "Ticket creado exitosamente!") {
                 <option value="urgente">Urgente</option>
             </select>
         </div>
-        <div class="form-group">
-            <h4>Asunto</h4>
-            <input id="asunto" class="form-control mb-2" type="text" name="asunto" placeholder="Breve encabezado de su solicitud" maxlength="50" <?php echo $deshabilitar ?>>
 
-            <h4>Descripción</h4>
-            <textarea id="descripcion" class="form-control" name="descripcion" style="min-height: 5em; max-height: 5em;" placeholder="Describa su solicitud, de ser necesario habilite ANYDESK y envie los datos de conexión" maxlength="500" required <?php echo @$deshabilitar ?>></textarea>
+        <div class="d-flex flex-wrap d-grid gap-2 mb-2">
+            <div class="mx-0 mx-sm-1" style="flex-grow: 1">
+                <h4>Asunto</h4>
+                <input id="asunto" class="form-control" type="text" name="asunto" placeholder="Breve encabezado de la solicitud" maxlength="50">
+            </div>
+            <div id="monto-div" style="display:none;flex-grow: 1">
+                <h4>Monto</h4>
+                <input id="monto" class="form-control" type="number" name="monto" min="0" placeholder="Monto estimado de la solicitud (opcional)" maxlength="50">
+            </div>
         </div>
+
+        <h4>Descripción</h4>
+        <textarea id="descripcion" class="form-control" name="descripcion" style="min-height: 5em; max-height: 5em;" placeholder="Describa su solicitud, de ser necesario habilite ANYDESK y envie los datos de conexión" maxlength="500" required <?php echo @$deshabilitar ?>></textarea>
         <div class="form-group d-md-flex justify-content-md-end">
             <button class="btn btn-primary" type="submit" <?php echo $deshabilitar ?>>Crear ticket</button>
         </div>
@@ -117,7 +124,20 @@ ocultar_aviso();
             let depto = $(this).val();
             let datosPhp = ["categoria", "Categoria", "deptoCats", empresa, depto]
             opciones_select(...datosPhp)
+
+            // Mostrar campo de monto sugerido en caso de que el depto receptor sea finanzas
+            if ($(this).val() == "Finanzas") {
+                $("#monto-div").css({
+                    display: "block"
+                })
+            } else {
+                $("#monto-div").css({
+                    display: "none"
+                })
+            }
+
         })
+
 
         // CREAR TICKET
         $("button[type=submit]").click(function() {
@@ -131,18 +151,24 @@ ocultar_aviso();
             echo validar_selecciones("categoria", "");
             echo validar_selecciones("prioridad", "");
             echo validar_selecciones("asunto", "");
+            echo validar_selecciones("monto", "");
             echo validar_selecciones("descripcion", "");
             ?>
 
             // ENVIAR DATOS
-            if (localStorage.getItem("inputOK") == 6) {
+            // Validar si el depto receptor es finanzas para modificar el conteo de verificaciones
+            let campos = 6;
+            if ($("#depto-receptor").val() == "Finanzas") {
+                campos = 7;
+            }
+
+            if (localStorage.getItem("inputOK") == campos) {
                 $.ajax({
                     type: "POST",
                     url: "main_controller.php?crearTicket=true",
                     data: $("#ticketForm").serialize(),
                     success: function(data) {
                         $("#contenido").load("views/ticketUserCrear.php");
-                        console.log(data);
                     }
                 })
             }

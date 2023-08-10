@@ -23,7 +23,7 @@ class Ticket
         global $conn;
 
         try {
-            $stmt       = $conn->prepare("INSERT INTO tickets (id_ticket, fecha, empresa, depto, nombre, usuario, empresa_receptora, depto_receptor, categoria, asunto, descripcion, prioridad, analista, estatus, comentarios) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt       = $conn->prepare("INSERT INTO tickets (id_ticket, fecha, empresa, depto, nombre, usuario, empresa_receptora, depto_receptor, categoria, asunto, monto, autorizado, descripcion, prioridad, analista, estatus, comentarios) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             $id_ticket  = NULL;
             $fecha      = date('Y-m-d H:i:s');
             $empresa    = isset($this->info['empresa-emisora']) ? $this->info['empresa-emisora'] : $_SESSION['empresa'];
@@ -44,6 +44,8 @@ class Ticket
             $depto_receptor     = $this->info['depto-receptor'];
             $categoria          = isset($this->info['categoria']) ? $this->info['categoria'] : 'Otros';
             $asunto             = ucfirst($this->info['asunto']);
+            $monto              = isset($this->info['monto']) != '' ? $this->info['monto'] : 0;
+            $autorizado           = 'no';
 
             if ($this->info['descripcion'] != "") {
                 $descripcion = ucfirst($this->info['descripcion']);
@@ -67,16 +69,39 @@ class Ticket
             $stmt->bindParam(8, $depto_receptor);
             $stmt->bindParam(9, $categoria);
             $stmt->bindParam(10, $asunto);
-            $stmt->bindParam(11, $descripcion);
-            $stmt->bindParam(12, $prioridad);
-            $stmt->bindParam(13, $analista);
-            $stmt->bindParam(14, $estatus);
-            $stmt->bindParam(15, $comentarios);
+            $stmt->bindParam(11, $monto);
+            $stmt->bindParam(12, $autorizado);
+            $stmt->bindParam(13, $descripcion);
+            $stmt->bindParam(14, $prioridad);
+            $stmt->bindParam(15, $analista);
+            $stmt->bindParam(16, $estatus);
+            $stmt->bindParam(17, $comentarios);
 
             $stmt->execute();
 
             $this->estatus = true;
             Log::registrar_log('Nuevo ticket registrado');
+        } catch (PDOException $e) {
+
+            $this->exception = $e->getMessage();
+            Log::registrar_log('ERROR: Metodo: ' . __FUNCTION__ . ' | Clase: ' . __CLASS__ . ' | ' . $this->exception);
+        }
+    }
+
+    public function autorizar_ticket(): void
+    {
+        // Aprobar ticket de solicitud enviado a finanzas para la compra de equipos
+        global $conn;
+
+        try {
+            $id     = $this->info['ticketId'];
+            $acc    = $this->info['autorizado'];
+
+            $stmt = $conn->prepare("UPDATE tickets SET autorizado = '$acc' WHERE id_ticket = '$id'");
+            $stmt->execute();
+
+            $this->estatus = true;
+            Log::registrar_log("Ticket #{$id} autorizado por el gerente del area");
         } catch (PDOException $e) {
 
             $this->exception = $e->getMessage();

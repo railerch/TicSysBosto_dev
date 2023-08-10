@@ -17,10 +17,34 @@
                     <ul class="list-unstyled">
                         <li><strong>Categoria: </strong><?php echo $ticket['categoria'] ?></li>
                         <li><strong>Asunto: </strong><?php echo $ticket['asunto'] ?></li>
+
+                        <!-- Mostrar el estatus y el monto sugerido en caso de estar presente (cuando el ticket es para el depto finanzas) -->
+                        <?php if ($ticket['depto_receptor'] == 'Finanzas' && floatval($ticket['monto']) > 0) {
+                            // Indicar estatus de la solicitud
+                            if ($ticket['autorizado'] == 'no') {
+                                $autorizadoTxt = '<span style="color: red">No autorizado</span>';
+                            } else if ($ticket['autorizado'] == 'si') {
+                                $autorizadoTxt = '<span style="color: green">Autorizado</span>';
+                            }
+                        ?>
+                            <li><strong>Monto: </strong>$<?php echo $ticket['monto'] ?></li>
+                            <li><strong>Estatus: </strong><?php echo $autorizadoTxt . ' ' . @$botones ?></li>
+                        <?php } ?>
+                        <!-- ========================================================= -->
+
                         <li><strong>Descripción: </strong><?php echo $ticket['descripcion'] ?></li>
                     </ul>
 
-                    <hr>
+                    <!-- Aviso de estatus de solicitud -->
+                    <?php if ($ticket['depto_receptor'] == 'Finanzas' && ($ticket['autorizado'] == 0 || $ticket['autorizado'] > 1)) { ?>
+                        <hr class="mb-0">
+                        <small class="text-danger">
+                            <b>IMPORTANTE:</b> Evite procesar esta solicitud si el estatus de la misma es 'No autorizado'.
+                        </small>
+                        <hr>
+                    <?php } else { ?>
+                        <hr>
+                    <?php } ?>
 
                     <p style="margin: 0;color: #fff;background: #505050;padding: 2px;padding-left: 0.5em;padding-right: 0.5em;padding-top: 0.2em;padding-bottom: 0.2em;">
                         <i class="fa fa-wechat"></i>&nbsp;
@@ -131,13 +155,29 @@
                     <ul class="list-unstyled">
                         <li><strong>Categoria: </strong><?php echo $ticket['categoria'] ?></li>
                         <li><strong>Asunto: </strong><?php echo $ticket['asunto'] ?></li>
+
+                        <!-- Mostrar el estatus y el monto sugerido en caso de estar presente (cuando el ticket es para el depto finanzas) -->
+                        <?php if ($ticket['depto_receptor'] == 'Finanzas' && floatval($ticket['monto']) > 0) {
+                            // Indicar estatus de la solicitud
+                            if ($ticket['autorizado'] == 'no') {
+                                $autorizadoTxt = '<span style="color: red">No autorizado</span>';
+                            } else if ($ticket['autorizado'] == 'si') {
+                                $autorizadoTxt = '<span style="color: green">Autorizado</span>';
+                            }
+                        ?>
+                            <li><strong>Monto: </strong>$<?php echo $ticket['monto'] ?></li>
+                            <li><strong>Estatus: </strong><?php echo $autorizadoTxt . ' ' . @$botones ?></li>
+                        <?php } ?>
+                        <!-- ========================================================= -->
+
                         <li><strong>Descripción: </strong><?php echo $ticket['descripcion'] ?></li>
                     </ul>
+
                     <hr>
+
                     <p style="margin: 0;color: #fff;background: #505050;padding: 2px;padding-left: 0.5em;padding-right: 0.5em;padding-top: 0.2em;padding-bottom: 0.2em;">
                         <i class="fa fa-wechat"></i>&nbsp;
                         <strong>Chat directo</strong> [ Analista: <span id="analista<?php echo $ticket['id_ticket'] ?>"></span> ]
-
                     </p>
 
                     <div id="chat<?php echo $ticket['id_ticket'] ?>" class="chatWindow" style="padding: 0 0.5em; min-width: 100%;max-width: 100%;min-height: 200px;max-height: 300px;margin-bottom: 0.5em;border: 1px solid #ccc;overflow-y: scroll;background-color:gray; word-wrap:break-word">
@@ -181,6 +221,21 @@
                     <ul class="list-unstyled">
                         <li><strong>Categoria: </strong><?php echo $ticket['categoria'] ?></li>
                         <li><strong>Asunto: </strong><?php echo $ticket['asunto'] ?></li>
+
+                        <!-- Mostrar el estatus y el monto sugerido en caso de estar presente (cuando el ticket es para el depto finanzas) -->
+                        <?php if ($ticket['depto_receptor'] == 'Finanzas' && floatval($ticket['monto']) > 0) {
+                            // Indicar estatus de la solicitud
+                            if ($ticket['autorizado'] == 'no') {
+                                $autorizadoTxt = '<span style="color: red">No autorizado</span>';
+                            } else if ($ticket['autorizado'] == 'si') {
+                                $autorizadoTxt = '<span style="color: green">Autorizado</span>';
+                            }
+                        ?>
+                            <li><strong>Monto: </strong>$<?php echo $ticket['monto'] ?></li>
+                            <li><strong>Estatus: </strong><?php echo $autorizadoTxt . ' ' . @$botones ?></li>
+                        <?php } ?>
+                        <!-- ========================================================= -->
+
                         <li><strong>Descripción: </strong><?php echo $ticket['descripcion'] ?></li>
                     </ul>
                 </div>
@@ -224,9 +279,33 @@
                     <ul class="list-unstyled">
                         <li><strong>Categoria: </strong><?php echo $ticket['categoria'] ?></li>
                         <li><strong>Asunto: </strong><?php echo $ticket['asunto'] ?></li>
+
+                        <!-- Mostrar el monto sugerido en caso de estar presente (cuando el ticket es para el depto finanzas) -->
+                        <?php if ($ticket['depto_receptor'] == 'Finanzas' && floatval($ticket['monto']) > 0) {
+                            // Mostrar botones de control en caso de ser el gerente/admin del departamento emisor del ticket
+                            if (($_SESSION['nivel'] == 'admin' || $_SESSION['nivel'] == 'gerente') && $_SESSION['depto'] /* Depto del usuario emisor*/ == $ticket['depto'] /* Depto emisor*/ && $ticket['estatus'] != 'cerrado') {
+                                $botones = "<span><i class='btn btn-outline-success btn-sm fa fa-check autorizacion-btn' data-autorizar='si' data-ticket={$ticket['id_ticket']} title='Autorizar'></i> <i class='btn btn-outline-danger btn-sm fa fa-close autorizacion-btn' data-autorizar='no' data-ticket={$ticket['id_ticket']} title='No autorizar'></i></span>";
+                            } else {
+                                $botones = NULL;
+                            }
+
+                            // Indicar estatus de la solicitud
+                            if ($ticket['autorizado'] == 'no') {
+                                $autorizadoTxt = '<span style="color: red">No autorizado</span>';
+                            } else if ($ticket['autorizado'] == 'si') {
+                                $autorizadoTxt = '<span style="color: green">Autorizado</span>';
+                            }
+                        ?>
+                            <li><strong>Monto: </strong>$<?php echo $ticket['monto'] ?></li>
+                            <li><strong>Estatus: </strong><?php echo $autorizadoTxt . ' ' . @$botones ?></li>
+                        <?php } ?>
+                        <!-- ========================================================= -->
+
                         <li><strong>Descripción: </strong><?php echo $ticket['descripcion'] ?></li>
                     </ul>
+
                     <hr>
+
                     <p style="margin: 0;color: #fff;background: #505050;padding: 2px;padding-left: 0.5em;padding-right: 0.5em;padding-top: 0.2em;padding-bottom: 0.2em;">
                         <i class="fa fa-wechat"></i>&nbsp;
                         <?php
@@ -237,7 +316,6 @@
                         }
                         ?><br>
                     </p>
-
 
                     <div id="chat<?php echo $ticket['id_ticket'] ?>" class="chatWindow" style="padding: 0 0.5em; min-width: 100%;max-width: 100%;min-height: 200px;max-height: 300px;margin-bottom: 0.5em;border: 1px solid #ccc;overflow-y: scroll;background-color:gray; word-wrap:break-word">
                         <!-- CONVERSACION -->
@@ -380,6 +458,7 @@
                             <select id="editUsrNivel" class="form-control" name="nivel">
                                 <option style="color:#aaa" value="">Nivel de usuario</option>
                                 <option value="admin">Admin</option>
+                                <option value="tecnico">Técnico</option>
                                 <option value="gerente">Gerente</option>
                                 <option value="analista">Analista</option>
                                 <option value="usuario">Usuario comun</option>

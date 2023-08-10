@@ -94,7 +94,7 @@ class Sesion
                     }
 
                     // REDIRECCIONAR AL DASHBOARD CORRESPONDIENTE
-                    if ($datos['nivel'] == 'admin') {
+                    if ($datos['nivel'] == 'admin' || $datos['nivel'] == 'tecnico') {
                         $_SESSION['adm_token'] = md5(uniqid());
                         header('Location: dashboardTech.php?token=' . $_SESSION['adm_token']);
                     } else if ($datos['nivel'] == 'gerente' || $datos['nivel'] == 'analista') {

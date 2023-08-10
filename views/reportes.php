@@ -20,7 +20,7 @@ if (!$conn) {
         <div class="d-lg-flex justify-content-lg-" style="margin-bottom: 1em;">
             <fieldset>
                 <legend>Tipo de reporte</legend>
-                <?php if ($_SESSION['nivel'] == 'admin') { ?>
+                <?php if ($_SESSION['nivel'] == 'admin' || $_SESSION['nivel'] == 'tecnico') { ?>
                     <div class="form-check"><input class="form-check-input reporte" type="radio" name="reporte" value="Analista"><label class="form-check-label">Tickets por analista</label>
                     </div>
                     <div class="form-check"><input class="form-check-input reporte" type="radio" name="reporte" value="Tareas"><label class="form-check-label">Tareas por analista</label>

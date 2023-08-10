@@ -11,9 +11,10 @@ $config = json_decode(file_get_contents('config/config.json'));
 
 // Niveles de usuario
 $adminLvl      = $config[3]->nivelUsuario[0];
-$gerenteLvl    = $config[3]->nivelUsuario[1];
-$analistaLvl   = $config[3]->nivelUsuario[2];
-$usuarioLvl    = $config[3]->nivelUsuario[3];
+$techLvl       = $config[3]->nivelUsuario[1];
+$gerenteLvl    = $config[3]->nivelUsuario[2];
+$analistaLvl   = $config[3]->nivelUsuario[3];
+$usuarioLvl    = $config[3]->nivelUsuario[4];
 
 //---------------------------------------------------------------------------------------------
 //////////////////////////// CONEXION DB
@@ -181,7 +182,7 @@ if (@$_GET['eliminarCuenta']) {
     if ($cuenta->estatus) {
         $_SESSION['avisos'] = "Usuario eliminado correctamente!";
 
-        if ($_SESSION['nivel'] != 'admin') {
+        if ($_SESSION['nivel'] != 'admin' && $_SESSION['nivel'] != "tecnico") {
             header("Location: index.php");
         }
     } else if ($cuenta->exception) {
@@ -218,6 +219,21 @@ if (@$_GET['crearTicket']) {
         $_SESSION['avisos'] = 'Ticket creado exitosamente!';
     } else if ($ticket->exception) {
         $_SESSION['avisos'] = 'Error al momento del crear el ticket, intente nuevamente.';
+    }
+
+    exit();
+}
+
+// APROBAR TICKET DE SOLICITUD A FINANZAS
+if (@$_GET['autorizar_ticket']) {
+
+    $ticket = new Ticket($_GET);
+    $ticket->autorizar_ticket();
+
+    if ($ticket->estatus) {
+        $_SESSION['avisos'] = "Estatus de autorización actualizado correctamente!";
+    } else if ($ticket->exception) {
+        $_SESSION['avisos'] = "Error al autorizar el ticket, intente nuevamente.";
     }
 
     exit();
@@ -648,9 +664,10 @@ if (@$_GET['revisarTareas']) {
 // RESPALDAR BD
 if (@$_GET['respaldarBD']) {
     // EJECUTAR SCRIPT RESPALDO
+    shell_exec('bd_bkp.bat');
+    /*
     if (@$_SERVER['HTTP_SEC_CH_UA_PLATFORM']) {
         // WINDOWS OS
-        shell_exec('bd_bkp.bat');
     } else if (@$_SERVER['SERVER_ADMIN']) {
         // UNIX OS
         # Se deben otorgar todos los privilegios sobre la base de datos del sistema de tickets al usuario TicSys en PhpMyAdmin para evitar
@@ -661,7 +678,7 @@ if (@$_GET['respaldarBD']) {
         echo 'BKP no realizado, OS no identificado, ';
         exit();
     }
-
+    */
     // RENOMBRAR BKP GENERADO
     $fecha = date('Y_m_d-H_i_s');
     if (rename('database/BKP/Tickets_db_BKP.sql', "database/BKP/Tickets_db_BKP_{$fecha}.sql")) {
@@ -970,6 +987,9 @@ if (@$_GET['analistasDepto']) {
             break;
         case 'admin':
             $nivel = "= 'admin'";
+            break;
+        case 'tecnico':
+            $nivel = "= 'tecnico'";
             break;
     }
 

@@ -471,7 +471,7 @@ $_SESSION['dashboard'] = __FILE__;
 
                 // CARGAR CONTENIDO POR DEFECTO
                 if (!sessionStorage.getItem("pagina_actual")) {
-                    sessionStorage.setItem("tipoSesion", "admin");
+                    sessionStorage.setItem("tipoSesion", "tecnologia");
                     $("#contenido").load("views/dashboardStats.php");
                 } else {
                     var pagina = sessionStorage.getItem("pagina_actual");

@@ -14,7 +14,7 @@ Log::registrar_log('Reporte de tickets por categoria: ' . $_POST['categoria']);
 
 // DATOS PARA EL REPORTE
 $categoria    = isset($_POST['categoria']) ? $_POST['categoria'] : NULL;
-if ($_SESSION['nivel'] == 'admin') {
+if ($_SESSION['nivel'] == 'admin' || $_SESSION['nivel'] == 'tecnico') {
     $empresa = 'empresa';
 } else {
     $empresa = '\'' . $_SESSION['empresa'] . '\'';
