@@ -44,31 +44,84 @@ function ocultar_aviso()
     ';
 }
 
-// VALIDAR SELECCIONES CON JAVASCRIPT
+// VALIDAR SELECCIONES Y CAMPOS DE MONTOS CON JAVASCRIPT
 # NOTA: insertar en el evento click del boton submit
 function validar_selecciones(string $selector, string $valor)
 {
     echo '  
-            if(!localStorage.getItem("' . $selector . '")){
-                if ($("#' . $selector . '").val() == "' . $valor . '") {
-                    event.preventDefault();
-                    $("#' . $selector . '").css({"background" : "#720000", "color" : "#fff"});
-                    $("#' . $selector . ' option").css("color", "white");
-                } else {
-                    $("#' . $selector . '").css("background", "");
-                    $("#' . $selector . '").css("color", "#333");
-                    $("#' . $selector . ' option").css("color", "initial");
-                    localStorage.setItem("' . $selector . '","ok")
-                    var cont = localStorage.getItem("inputOK");
-                    if(cont){
-                        cont++;
-                        localStorage.setItem("inputOK",cont)
-                        cont = 0;
-                    }else{
-                        localStorage.setItem("inputOK",1)
-                    }
-                }
+    // VALIDAR SELECCIONES
+    if(!localStorage.getItem("' . $selector . '")){
+        if ($("#' . $selector . '").val() == "' . $valor . '") {
+
+            $("#' . $selector . '").css({"background" : "#720000", "color" : "#fff"});
+            $("#' . $selector . ' option").css("color", "white");
+
+            localStorage.removeItem("' . $selector . '")
+
+        } else {
+            $("#' . $selector . '").css("background", "");
+            $("#' . $selector . '").css("color", "#333");
+            $("#' . $selector . ' option").css("color", "initial");
+
+            localStorage.setItem("' . $selector . '","ok")
+
+            let cont = localStorage.getItem("inputOK");
+
+            if(cont > 0){
+                cont++;
+                localStorage.setItem("inputOK",cont)
+            }else{
+                localStorage.setItem("inputOK",1)
             }
+        }
+    }else{
+        if ($("#' . $selector . '").val() == "' . $valor . '") {
+
+            $("#' . $selector . '").css({"background" : "#720000", "color" : "#fff"});
+            $("#' . $selector . ' option").css("color", "white");
+
+            localStorage.removeItem("' . $selector . '")
+
+            let cont = localStorage.getItem("inputOK");
+
+            if(cont > 0){
+                cont--;
+                localStorage.setItem("inputOK",cont)
+            }
+        }
+    }
+    ';
+}
+
+function validar_montos(string $selector, string $valor)
+{
+    echo '
+    // VALIDAR MONTOS PARA FINANZAS
+    if(!localStorage.getItem("' . $selector . '") && $("#depto-receptor").val() == "Finanzas"){
+        if ($("#' . $selector . '").val() == "' . $valor . '") {
+            $("#' . $selector . ' option").val(0);
+        }
+
+        localStorage.setItem("' . $selector . '","ok")
+
+        if(localStorage.getItem("inputOK")){
+            let cont = parseInt(localStorage.getItem("inputOK"));
+            console.log(cont);
+            cont++;
+            localStorage.setItem("inputOK",cont);
+        }else{
+            localStorage.setItem("inputOK",1);
+        }
+    }else if(localStorage.getItem("' . $selector . '") && $("#depto-receptor").val() != "Finanzas"){
+        localStorage.removeItem("' . $selector . '")
+
+        let cont = localStorage.getItem("inputOK");
+
+        if(cont > 0){
+            cont--;
+            localStorage.setItem("inputOK",cont)
+        }
+    }       
     ';
 }
 

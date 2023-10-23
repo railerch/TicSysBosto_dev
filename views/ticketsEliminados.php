@@ -29,6 +29,7 @@ $stmt = $conn->query("SELECT * FROM tickets $area AND estatus = 'eliminado'");
                     <?php if ($_SESSION['usuario'] == 'root') { ?>
                         <th>Receptor</th>
                     <?php } ?>
+                    <th>Escalado</th>
                     <th>Categoria</th>
                     <th>Analista</th>
                     <th>Prioridad</th>
@@ -38,13 +39,14 @@ $stmt = $conn->query("SELECT * FROM tickets $area AND estatus = 'eliminado'");
             <tbody>
                 <?php while ($ticket = $stmt->fetch(PDO::FETCH_ASSOC)) { ?>
 
-                    <tr id="<?php echo $ticket['id_ticket'] ?>">
+                    <tr id="tk-<?php echo $ticket['id_ticket'] ?>">
                         <td style="text-align:center;"><?php echo $ticket['id_ticket'] ?></td>
                         <td style="text-align:center;"><?php echo $ticket['fecha'] ?></td>
                         <td><b><?php echo $ticket['empresa'] ?></b> - <?php echo $ticket['depto'] ?></td>
                         <?php if ($_SESSION['usuario'] == 'root') { ?>
                             <td><b><?php echo $ticket['empresa_receptora'] ?></b> - <?php echo $ticket['depto_receptor'] ?></td>
                         <?php } ?>
+                        <td><?php echo $ticket['escalado_a'] ?></td>
                         <td><?php echo $ticket['categoria'] ?>
                         <td><?php echo $ticket['analista'] ?></td>
                         </td>

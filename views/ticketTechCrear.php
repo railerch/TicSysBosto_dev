@@ -56,15 +56,26 @@ if (!$conn) {
                     <h4>Asunto</h4>
                     <input id="asunto" class="form-control" type="text" name="asunto" placeholder="Breve encabezado de la solicitud" maxlength="50">
                 </div>
-                <div id="monto-div" style="display:none;flex-grow: 1">
-                    <h4>Monto</h4>
-                    <input id="monto" class="form-control" type="number" name="monto" min="0" placeholder="Monto estimado de la solicitud (opcional)" maxlength="50">
+                <div id="monto-div" style="display:none; flex-grow: 1">
+                    <h4>Monto (<small>Tasa cambio: <span id="monto-tasa-cambio">0.00</span></small>)</h4>
+                    <div class="d-flex">
+                        <div class="input-group">
+                            <label class="input-group-text">USD</label>
+                            <input id="monto-usd" class="form-control mr-1" type="number" name="monto" min="0" placeholder="Consultando tasa de cambio..." maxlength="50" disabled>
+                        </div>
+
+                        <div class="input-group">
+                            <label class="input-group-text">BSD</label>
+                            <input id="monto-bs" class="form-control" type="number" name="monto" min="0" placeholder="Consultando tasa de cambio..." maxlength="50" disabled>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <h4>Descripción</h4>
             <textarea id="descripcion" class="form-control" name="descripcion" style="min-height: 5em;max-height: 5em;" placeholder="Describa su solicitud" maxlength="250" required></textarea>
         </div>
+
         <div class="form-group d-md-flex justify-content-md-end">
             <button id="crear-ticket-btn" class="btn btn-primary" type="button">Crear ticket</button>
         </div>
@@ -97,45 +108,107 @@ ocultar_aviso();
 
         // CARGAR DEPTO EMISOR SEGUN EMPRESA EMISORA
         $("#empresa-emisora").change(function() {
-            let empresa = $(this).val();
-            // Depto emisor
-            let datosPhpRt = ["depto-emisor", "Depto emisor", "empresaDeptos", empresa]
-            opciones_select(...datosPhpRt)
-        })
-
-        // CARGAR DEPTO RECEPTOR SEGUN EMPRESA RECEPTORA
-        $("#empresa-receptora").change(function() {
-            let empresa = $(this).val();
-            // Depto receptor
-            let datosPhpRx = ["depto-receptor", "Depto receptor", "empresaDeptos", empresa]
-            opciones_select(...datosPhpRx)
+            if ($("#empresa-emisora").val() != "") {
+                let empresa = $(this).val();
+                // Depto emisor
+                let datosPhpRt = ["depto-emisor", "Depto emisor", "empresaDeptos", empresa]
+                opciones_select(...datosPhpRt)
+            } else {
+                $("#depto-emisor").html("<option style='color:#aaa' value=''>Depto emisor</option>");
+                $("#nombre").html("<option style='color:#aaa' value=''>Usuario emisor</option>");
+            }
         })
 
         // FILTRAR USUARIOS EMISORES SEGUN EL DEPTO
         $("#depto-emisor").change(function() {
-            let empresa = $("#empresa-emisora").val();
-            let depto = $(this).val();
-            let datosPhp = ["nombre", "Usuario emisor", "deptoUsuarios", empresa, depto]
-            opciones_select(...datosPhp)
+            if ($("#depto-emisor").val() != "") {
+                let empresa = $("#empresa-emisora").val();
+                let depto = $(this).val();
+                let datosPhp = ["nombre", "Usuario emisor", "deptoUsuarios", empresa, depto]
+                opciones_select(...datosPhp)
+            } else {
+                $("#nombre").html("<option style='color:#aaa' value=''>Usuario emisor</option>");
+            }
         })
 
-        // FILTRAR CATEGORIAS SEGUN EL DEPTO SELECCIONADO
-        $("#depto-receptor").change(function() {
-            let empresa = $("#empresa-receptora").val();
-            let depto = $(this).val();
-            let datosPhp = ["categoria", "Categoria", "deptoCats", empresa, depto]
-            opciones_select(...datosPhp)
-
-            // Mostrar campo de monto sugerido en caso de que el depto receptor sea finanzas
-            if ($(this).val() == "Finanzas") {
-                $("#monto-div").css({
-                    display: "block"
-                })
+        // CARGAR DEPTO RECEPTOR SEGUN EMPRESA RECEPTORA
+        $("#empresa-receptora").change(function() {
+            if ($("#empresa-receptora").val() != "") {
+                let empresa = $(this).val();
+                // Depto receptor
+                let datosPhpRx = ["depto-receptor", "Depto receptor", "empresaDeptos", empresa]
+                opciones_select(...datosPhpRx)
             } else {
+                $("#depto-receptor").html("<option style='color:#aaa' value=''>Depto receptor</option>");
+                $("#categoria").html("<option style='color:#aaa' value=''>Categoría</option>");
                 $("#monto-div").css({
                     display: "none"
                 })
             }
+
+        })
+
+        // FILTRAR CATEGORIAS SEGUN EL DEPTO SELECCIONADO
+        $("#depto-receptor").change(function() {
+            $("#monto-tasa-cambio").text("0.00");
+            if ($("#depto-receptor").val() != "") {
+                let empresa = $("#empresa-receptora").val();
+                let depto = $(this).val();
+                let datosPhp = ["categoria", "Categoria", "deptoCats", empresa, depto]
+                opciones_select(...datosPhp)
+
+                // Mostrar campo de monto sugerido en caso de que el depto receptor sea finanzas
+                if ($(this).val() == "Finanzas") {
+                    $("#monto-usd, #monto-bs").val("");
+                    $("#monto-div").css({
+                        display: "block"
+                    })
+
+                    // Consultar tasa de cambio
+                    let cred = btoa("root:$ro123ot$");
+
+                    fetch("http://nodesrv.dnsalias.com:8185/divisas/bcv" /*, {headers: {Authorization: `Basic ${cred}`}}*/ )
+                        .then(res => res.json())
+                        .then(res => {
+                            sessionStorage.setItem("tasaCambioUSD", res);
+                            $("#monto-usd, #monto-bs").attr("placeholder", "Monto estimado (opcional)")
+                            $("#monto-usd, #monto-bs").removeAttr("disabled");
+                            $("#monto-tasa-cambio").text(res);
+                            $("#monto-usd, #monto-bs").css({
+                                border: "1px solid #ced4da"
+                            })
+                        }).catch(err => {
+                            console.error("ERROR AL CONSULTAR TASA DE CAMBIO: " + err);
+                            $("#monto-usd, #monto-bs").attr("placeholder", "Error en tasa de cambio")
+                            $("#monto-usd, #monto-bs").css({
+                                border: "2px solid red"
+                            })
+                            sessionStorage.setItem("tasaCambioUSD", 1);
+                        })
+                } else {
+                    $("#monto-div").css({
+                        display: "none"
+                    })
+                }
+            } else {
+                $("#categoria").html("<option style='color:#aaa' value=''>Categoría</option>");
+                $("#monto-div").css({
+                    display: "none"
+                })
+            }
+        })
+
+        // REALIZAR CONVERSION ENTRE MONTOS USD/BS
+        $("#monto-usd").blur(function() {
+            let montoUSD = parseFloat($(this).val());
+            let tasaUSD = parseFloat(sessionStorage.getItem("tasaCambioUSD"));
+            $("#monto-bs").val((montoUSD * tasaUSD).toFixed(2));
+        })
+
+        $("#monto-bs").blur(function() {
+            let montoBS = parseFloat($(this).val());
+            let tasaUSD = parseFloat(sessionStorage.getItem("tasaCambioUSD"));
+            $("#monto-usd").val((montoBS / tasaUSD).toFixed(2));
         })
 
         // CREAR TICKET
@@ -151,7 +224,8 @@ ocultar_aviso();
             echo validar_selecciones("depto-receptor", "");
             echo validar_selecciones("categoria", "");
             echo validar_selecciones("asunto", "");
-            echo validar_selecciones("monto", "");
+            echo validar_montos("monto-usd", "");
+            echo validar_montos("monto-bs", "");
             echo validar_selecciones("prioridad", "");
             echo validar_selecciones("descripcion", "");
             ?>
@@ -160,7 +234,7 @@ ocultar_aviso();
             // Validar si el depto receptor es finanzas para modificar el conteo de verificaciones
             let campos = 9;
             if ($("#depto-receptor").val() == "Finanzas") {
-                campos = 10;
+                campos = 11;
             }
 
             if (localStorage.getItem("inputOK") == campos) {

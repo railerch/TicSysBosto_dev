@@ -135,7 +135,7 @@ class Tarea
             $stmt = $conn->prepare("SELECT id_tarea, fecha FROM tareas ORDER BY fecha DESC");
             $stmt->execute();
             $ultimaTarea = $stmt->fetch(PDO::FETCH_ASSOC);
-            return $ultimaTarea['id_tarea'];
+            return @$ultimaTarea['id_tarea'];
         } catch (PDOException $e) {
             $this->exception = $e->getMessage();
         }

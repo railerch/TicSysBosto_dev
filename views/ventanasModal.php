@@ -6,17 +6,19 @@
                 <div class="modal-header">
                     <h5 class="modal-title" style="color: #333;"><strong>TICKET:
                             #<?php echo $ticket['id_ticket'] ?></strong>
-                        <br>
-                        <?php echo $ticket['nombre'] ?>
-                        <br>
-                        <?php echo $ticket['empresa'] . ' - ' . $ticket['depto'] ?>
                     </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                 </div>
                 <div class="modal-body" style="color: #333;">
                     <ul class="list-unstyled">
+                        <li><strong>Remitente: </strong><?php echo $ticket['nombre'] ?> [<small><?php echo $ticket['empresa'] . ' - ' . $ticket['depto'] ?></small>]</li>
                         <li><strong>Categoria: </strong><?php echo $ticket['categoria'] ?></li>
                         <li><strong>Asunto: </strong><?php echo $ticket['asunto'] ?></li>
+                        <li>
+                            <strong>Escalado a: </strong>
+                            <?php echo $ticket['escalado_a'] != '' ? $ticket['escalado_a'] : 'Sin escalar' ?>
+                            <small id="detalles-escalado-btn"><a href="" title="<?php echo $ticket['traza'] ?>" data-toggle="modal" data-target="#detalles-<?php echo $ticket['id_ticket'] ?>">(Detalles)</a></small>
+                        </li>
 
                         <!-- Mostrar el estatus y el monto sugerido en caso de estar presente (cuando el ticket es para el depto finanzas) -->
                         <?php if ($ticket['depto_receptor'] == 'Finanzas' && floatval($ticket['monto']) > 0) {
@@ -103,6 +105,31 @@
         </div>
     </div>
 
+    <!-- DETALLES DE TRAZA -->
+    <div class="modal fade" role="dialog" tabindex="-1" id="detalles-<?php echo $ticket['id_ticket'] ?>" style="color: #212529;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title"><i class="fa fa-list"></i> Detalles</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="modal-body" style="max-height:200px;overflow-y:auto">
+                    <?php if ($ticket['traza'] != '') { ?>
+                        <ol>
+                            <?php
+                            $traza = explode(',', $ticket['traza']);
+                            foreach ($traza as $t) { ?>
+                                <li><?php echo $t ?></li>
+                            <?php } ?>
+                        </ol>
+                    <?php } else { ?>
+                        <p>Sin trazas que mostrar.</p>
+                    <?php } ?>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- CERRAR TICKET -->
     <div class="modal fade" role="dialog" tabindex="-1" id="cerrar<?php echo $ticket['id_ticket'] ?>" style="color: #212529;">
         <div class="modal-dialog" role="document">
@@ -146,15 +173,20 @@
                 <div class="modal-header">
                     <h5 class="modal-title" style="color: #333;"><strong>TICKET:
                             #<?php echo $ticket['id_ticket'] ?></strong>
-                        <br>
-                        <?php echo $ticket['nombre'] ?> (<?php echo $ticket['empresa'] ?>)
                     </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                 </div>
                 <div class="modal-body" style="color: #333;">
                     <ul class="list-unstyled">
+                        <li><strong>Remitente: </strong><?php echo $ticket['nombre'] ?> [<small><?php echo $ticket['empresa'] . ' - ' . $ticket['depto'] ?></small>]</li>
                         <li><strong>Categoria: </strong><?php echo $ticket['categoria'] ?></li>
                         <li><strong>Asunto: </strong><?php echo $ticket['asunto'] ?></li>
+
+                        <li>
+                            <strong>Escalado a: </strong>
+                            <?php echo $ticket['escalado_a'] != '' ? $ticket['escalado_a'] : 'Sin escalar' ?>
+                            <small id="detalles-escalado-btn"><a href="" title="<?php echo $ticket['traza'] ?>" data-toggle="modal" data-target="#detalles-<?php echo $ticket['id_ticket'] ?>">(Detalles)</a></small>
+                        </li>
 
                         <!-- Mostrar el estatus y el monto sugerido en caso de estar presente (cuando el ticket es para el depto finanzas) -->
                         <?php if ($ticket['depto_receptor'] == 'Finanzas' && floatval($ticket['monto']) > 0) {
@@ -202,6 +234,31 @@
             </div>
         </div>
     </div>
+
+    <!-- DETALLES DE TRAZA -->
+    <div class="modal fade" role="dialog" tabindex="-1" id="detalles-<?php echo $ticket['id_ticket'] ?>" style="color: #212529;">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title"><i class="fa fa-list"></i> Detalles</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="modal-body" style="max-height:200px;overflow-y:auto">
+                    <?php if ($ticket['traza'] != '') { ?>
+                        <ol>
+                            <?php
+                            $traza = explode(',', $ticket['traza']);
+                            foreach ($traza as $t) { ?>
+                                <li><?php echo $t ?></li>
+                            <?php } ?>
+                        </ol>
+                    <?php } else { ?>
+                        <p>Sin trazas que mostrar.</p>
+                    <?php } ?>
+                </div>
+            </div>
+        </div>
+    </div>
 <?php } else if ($pagina == 'ticketsEliminados.php') { ?>
     <!-- VER TICKET -->
     <div class="modal fade" role="dialog" tabindex="-1" id="ver<?php echo $ticket['id_ticket'] ?>">
@@ -210,15 +267,12 @@
                 <div class="modal-header">
                     <h5 class="modal-title" style="color: #333;"><strong>TICKET:
                             #<?php echo $ticket['id_ticket'] ?></strong>
-                        <br>
-                        <?php echo $ticket['nombre'] ?>
-                        <br>
-                        <?php echo $ticket['empresa'] . ' - ' . $ticket['depto'] ?>
                     </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                 </div>
                 <div class="modal-body" style="color: #333;">
                     <ul class="list-unstyled">
+                        <li><strong>Remitente: </strong><?php echo $ticket['nombre'] ?> [<small><?php echo $ticket['empresa'] . ' - ' . $ticket['depto'] ?></small>]</li>
                         <li><strong>Categoria: </strong><?php echo $ticket['categoria'] ?></li>
                         <li><strong>Asunto: </strong><?php echo $ticket['asunto'] ?></li>
 
@@ -268,17 +322,18 @@
                 <div class="modal-header">
                     <h5 class="modal-title" style="color: #333;"><strong>TICKET:
                             #<?php echo $ticket['id_ticket'] ?></strong>
-                        <br>
-                        <?php echo $ticket['nombre'] ?>
-                        <br>
-                        <?php echo $ticket['empresa'] . ' - ' . $ticket['depto'] ?>
                     </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                 </div>
                 <div class="modal-body" style="color: #333;">
                     <ul class="list-unstyled">
+                        <li><strong>Remitente: </strong><?php echo $ticket['nombre'] ?> [<small><?php echo $ticket['empresa'] . ' - ' . $ticket['depto'] ?></small>]</li>
                         <li><strong>Categoria: </strong><?php echo $ticket['categoria'] ?></li>
                         <li><strong>Asunto: </strong><?php echo $ticket['asunto'] ?></li>
+                        <li>
+                            <strong>Escalado a: </strong>
+                            <?php echo $ticket['escalado_a'] != '' ? $ticket['escalado_a'] : 'Sin escalar' ?>
+                        </li>
 
                         <!-- Mostrar el monto sugerido en caso de estar presente (cuando el ticket es para el depto finanzas) -->
                         <?php if ($ticket['depto_receptor'] == 'Finanzas' && floatval($ticket['monto']) > 0) {

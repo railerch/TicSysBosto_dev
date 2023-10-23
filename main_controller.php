@@ -239,6 +239,36 @@ if (@$_GET['autorizar_ticket']) {
     exit();
 }
 
+// ACTUALIZAR PRIORIDAD DE TICKET
+if (@$_GET['actualizarPrioridadTicket']) {
+
+    $ticket = new Ticket($_GET);
+    $ticket->actualizar_prioridad();
+
+    if ($ticket->estatus) {
+        echo json_encode(['stmt' => 'Prioridad del ticket actualizada correctamente!']);
+    } else if ($ticket->exception) {
+        echo json_encode(['stmt' => 'Error al actualizar el ticket, intente nuevamente.']);
+    }
+
+    exit();
+}
+
+// ESCALAR TICKET
+if (@$_GET['escalarTicket']) {
+
+    $ticket = new Ticket($_GET);
+    $ticket->escalar_ticket();
+
+    if ($ticket->estatus) {
+        echo json_encode(['stmt' => 'Ticket escalado correctamente!']);
+    } else if ($ticket->exception) {
+        echo json_encode(['stmt' => 'Error al escalar el ticket, intente nuevamente.']);
+    }
+
+    exit();
+}
+
 // CERRAR TICKET  
 if (@$_GET['cerrarTicket']) {
 

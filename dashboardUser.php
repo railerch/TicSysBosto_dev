@@ -167,11 +167,11 @@ $config = cargar_config();
                                         var tic = tickets[i].substring(2);
 
                                         if (msj > 0) {
-                                            $("tr[id=" + tic + "]").css("background-color",
+                                            $("tr[id=tk-" + tic + "]").css("background-color",
                                                 "#ffd373");
                                             contador++;
                                         } else {
-                                            $("tr[id=" + tic + "]").css("background-color",
+                                            $("tr[id=tk-" + tic + "]").css("background-color",
                                                 "unset");
                                         }
                                     }

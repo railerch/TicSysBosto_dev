@@ -48,44 +48,57 @@ if (@$_SESSION['avisos'] != "Ticket creado exitosamente!") {
     <h1 class="d-inline-block">Crear Ticket</h1>
     <hr>
     <form id="ticketForm">
-        <h4>Ticket para:</h4>
-        <div class="form-group d-inline-flex flex-wrap" style="width:100%">
-            <select id="empresa-receptora" class="form-control" name="empresa-receptora" style="min-width:200px;max-width:20%;margin: 0 0.5em 0.5em 0;">
-                <option style="color:#aaa" value="" selected>Empresa receptora</option>
-            </select>
+        <div class="form-group">
+            <h4>Ticket para:</h4>
+            <div class="form-group d-inline-flex flex-wrap" style="width:100%">
+                <select id="empresa-receptora" class="form-control" name="empresa-receptora" style="min-width:200px;max-width:20%;margin: 0 0.5em 0.5em 0;">
+                    <option style="color:#aaa" value="" selected>Empresa receptora</option>
+                </select>
 
-            <select id="depto-receptor" class="form-control" name="depto-receptor" style="min-width:200px;max-width:30%;margin: 0 0.5em 0.5em 0;" <?php echo $deshabilitar ?>>
-                <option style="color:#aaa" value="" selected>Depto receptor</option>
-            </select>
+                <select id="depto-receptor" class="form-control" name="depto-receptor" style="min-width:200px;max-width:30%;margin: 0 0.5em 0.5em 0;" <?php echo $deshabilitar ?>>
+                    <option style="color:#aaa" value="" selected>Depto receptor</option>
+                </select>
 
-            <select id="categoria" class="form-control" name="categoria" style="min-width:200px;max-width:30%;margin: 0 0.5em 0.5em 0;" <?php echo $deshabilitar ?>>
-                <option style="color:#aaa" value="" selected>Categoría</option>
-            </select>
+                <select id="categoria" class="form-control" name="categoria" style="min-width:200px;max-width:30%;margin: 0 0.5em 0.5em 0;" <?php echo $deshabilitar ?>>
+                    <option style="color:#aaa" value="" selected>Categoría</option>
+                </select>
 
-            <select id="prioridad" class="form-control" name="prioridad" style="min-width:200px;max-width:20%;margin: 0 0.5em 0.5em 0;" <?php echo $deshabilitar ?>>
-                <option value="" selected>Prioridad</option>
-                <option value="baja">Baja</option>
-                <option value="media">Media</option>
-                <option value="alta">Alta</option>
-                <option value="urgente">Urgente</option>
-            </select>
+                <select id="prioridad" class="form-control" name="prioridad" style="min-width:200px;max-width:20%;margin: 0 0.5em 0.5em 0;" <?php echo $deshabilitar ?>>
+                    <option value="" selected>Prioridad</option>
+                    <option value="baja">Baja</option>
+                    <option value="media">Media</option>
+                    <option value="alta">Alta</option>
+                    <option value="urgente">Urgente</option>
+                </select>
+            </div>
+
+            <div class="d-flex flex-wrap d-grid gap-2 mb-2">
+                <div class="mx-0 mx-sm-1" style="flex-grow: 1">
+                    <h4>Asunto</h4>
+                    <input id="asunto" class="form-control" type="text" name="asunto" placeholder="Breve encabezado de la solicitud" maxlength="50">
+                </div>
+                <div id="monto-div" style="display:none; flex-grow: 1">
+                    <h4>Monto (<small>Tasa cambio: <span id="monto-tasa-cambio">0.00</span></small>)</h4>
+                    <div class="d-flex">
+                        <div class="input-group">
+                            <label class="input-group-text">USD</label>
+                            <input id="monto-usd" class="form-control mr-1" type="number" name="monto" min="0" placeholder="Consultando tasa de cambio..." maxlength="50" disabled>
+                        </div>
+
+                        <div class="input-group">
+                            <label class="input-group-text">BSD</label>
+                            <input id="monto-bs" class="form-control" type="number" name="monto" min="0" placeholder="Consultando tasa de cambio..." maxlength="50" disabled>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h4>Descripción</h4>
+            <textarea id="descripcion" class="form-control" name="descripcion" style="min-height: 5em; max-height: 5em;" placeholder="Describa su solicitud, de ser necesario habilite ANYDESK y envie los datos de conexión" maxlength="500" required <?php echo @$deshabilitar ?>></textarea>
         </div>
 
-        <div class="d-flex flex-wrap d-grid gap-2 mb-2">
-            <div class="mx-0 mx-sm-1" style="flex-grow: 1">
-                <h4>Asunto</h4>
-                <input id="asunto" class="form-control" type="text" name="asunto" placeholder="Breve encabezado de la solicitud" maxlength="50">
-            </div>
-            <div id="monto-div" style="display:none;flex-grow: 1">
-                <h4>Monto</h4>
-                <input id="monto" class="form-control" type="number" name="monto" min="0" placeholder="Monto estimado de la solicitud (opcional)" maxlength="50">
-            </div>
-        </div>
-
-        <h4>Descripción</h4>
-        <textarea id="descripcion" class="form-control" name="descripcion" style="min-height: 5em; max-height: 5em;" placeholder="Describa su solicitud, de ser necesario habilite ANYDESK y envie los datos de conexión" maxlength="500" required <?php echo @$deshabilitar ?>></textarea>
         <div class="form-group d-md-flex justify-content-md-end">
-            <button class="btn btn-primary" type="submit" <?php echo $deshabilitar ?>>Crear ticket</button>
+            <button id="crear-ticket-btn" class="btn btn-primary" type="submit" <?php echo $deshabilitar ?>>Crear ticket</button>
         </div>
     </form>
 </div>
@@ -112,32 +125,82 @@ ocultar_aviso();
 
         // CARGAR DEPTO RECEPTOR SEGUN EMPRESA 
         $("#empresa-receptora").change(function() {
-            let empresa = $(this).val();
-            // Depto emisor
-            let datosPhpRt = ["depto-receptor", "Depto receptor", "empresaDeptos", empresa]
-            opciones_select(...datosPhpRt)
-        })
-
-        // FILTRAR CATEGORIAS SEGUN EL DEPTO SELECCIONADO
-        $("#depto-receptor").change(function() {
-            let empresa = $("#empresa-receptora").val();
-            let depto = $(this).val();
-            let datosPhp = ["categoria", "Categoria", "deptoCats", empresa, depto]
-            opciones_select(...datosPhp)
-
-            // Mostrar campo de monto sugerido en caso de que el depto receptor sea finanzas
-            if ($(this).val() == "Finanzas") {
-                $("#monto-div").css({
-                    display: "block"
-                })
+            if ($("#empresa-receptora").val() != "") {
+                let empresa = $(this).val();
+                // Depto emisor
+                let datosPhpRt = ["depto-receptor", "Depto receptor", "empresaDeptos", empresa]
+                opciones_select(...datosPhpRt)
             } else {
+                $("#depto-receptor").html("<option style='color:#aaa' value=''>Depto receptor</option>");
+                $("#categoria").html("<option style='color:#aaa' value=''>Categoría</option>");
                 $("#monto-div").css({
                     display: "none"
                 })
             }
-
         })
 
+        // FILTRAR CATEGORIAS SEGUN EL DEPTO SELECCIONADO
+        $("#depto-receptor").change(function() {
+            $("#monto-tasa-cambio").text("0.00");
+            if ($("#depto-receptor").val() != "") {
+                let empresa = $("#empresa-receptora").val();
+                let depto = $(this).val();
+                let datosPhp = ["categoria", "Categoria", "deptoCats", empresa, depto]
+                opciones_select(...datosPhp)
+
+                // Mostrar campo de monto sugerido en caso de que el depto receptor sea finanzas
+                if ($(this).val() == "Finanzas") {
+                    $("#monto-usd, #monto-bs").val("");
+                    $("#monto-div").css({
+                        display: "block"
+                    })
+
+                    // Consultar tasa de cambio
+                    let cred = btoa("root:$ro123ot$");
+                    
+                    fetch("http://nodesrv.dnsalias.com:8185/divisas/bcv" /*, {headers: {Authorization: `Basic ${cred}`}}*/ )
+                        .then(res => res.json())
+                        .then(res => {
+                            sessionStorage.setItem("tasaCambioUSD", res);
+                            $("#monto-usd, #monto-bs").attr("placeholder", "Monto estimado (opcional)");
+                            $("#monto-usd, #monto-bs").removeAttr("disabled");
+                            $("#monto-tasa-cambio").text(res);
+                            $("#monto-usd, #monto-bs").css({
+                                border: "1px solid #ced4da"
+                            })
+                        }).catch(err => {
+                            console.error("ERROR AL CONSULTAR TASA DE CAMBIO: " + err);
+                            $("#monto-usd, #monto-bs").attr("placeholder", "Error en tasa de cambio")
+                            $("#monto-usd, #monto-bs").css({
+                                border: "2px solid red"
+                            })
+                            sessionStorage.setItem("tasaCambioUSD", 1);
+                        })
+                } else {
+                    $("#monto-div").css({
+                        display: "none"
+                    })
+                }
+            } else {
+                $("#categoria").html("<option style='color:#aaa' value=''>Categoría</option>");
+                $("#monto-div").css({
+                    display: "none"
+                })
+            }
+        })
+
+        // REALIZAR CONVERSION ENTRE MONTOS USD/BS
+        $("#monto-usd").blur(function() {
+            let montoUSD = parseFloat($(this).val());
+            let tasaUSD = parseFloat(sessionStorage.getItem("tasaCambioUSD"));
+            $("#monto-bs").val((montoUSD * tasaUSD).toFixed(2));
+        })
+
+        $("#monto-bs").blur(function() {
+            let montoBS = parseFloat($(this).val());
+            let tasaUSD = parseFloat(sessionStorage.getItem("tasaCambioUSD"));
+            $("#monto-usd").val((montoBS / tasaUSD).toFixed(2));
+        })
 
         // CREAR TICKET
         $("button[type=submit]").click(function() {
@@ -151,7 +214,8 @@ ocultar_aviso();
             echo validar_selecciones("categoria", "");
             echo validar_selecciones("prioridad", "");
             echo validar_selecciones("asunto", "");
-            echo validar_selecciones("monto", "");
+            echo validar_montos("monto-usd", "");
+            echo validar_montos("monto-bs", "");
             echo validar_selecciones("descripcion", "");
             ?>
 
@@ -159,7 +223,7 @@ ocultar_aviso();
             // Validar si el depto receptor es finanzas para modificar el conteo de verificaciones
             let campos = 6;
             if ($("#depto-receptor").val() == "Finanzas") {
-                campos = 7;
+                campos = 8;
             }
 
             if (localStorage.getItem("inputOK") == campos) {

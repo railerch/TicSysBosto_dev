@@ -23,7 +23,7 @@ class Ticket
         global $conn;
 
         try {
-            $stmt       = $conn->prepare("INSERT INTO tickets (id_ticket, fecha, empresa, depto, nombre, usuario, empresa_receptora, depto_receptor, categoria, asunto, monto, autorizado, descripcion, prioridad, analista, estatus, comentarios) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            $stmt       = $conn->prepare("INSERT INTO tickets (id_ticket, fecha, empresa, depto, nombre, usuario, empresa_receptora, depto_receptor, escalado_a, traza, categoria, asunto, monto, autorizado, descripcion, prioridad, analista, estatus, comentarios) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             $id_ticket  = NULL;
             $fecha      = date('Y-m-d H:i:s');
             $empresa    = isset($this->info['empresa-emisora']) ? $this->info['empresa-emisora'] : $_SESSION['empresa'];
@@ -42,6 +42,8 @@ class Ticket
             $usuario            = isset($usrTmp) ? $usrTmp : $_SESSION['usuario'];
             $empresa_receptora  = $this->info['empresa-receptora'];
             $depto_receptor     = $this->info['depto-receptor'];
+            $escalado_a         = '--';
+            $traza              = '';
             $categoria          = isset($this->info['categoria']) ? $this->info['categoria'] : 'Otros';
             $asunto             = ucfirst($this->info['asunto']);
             $monto              = isset($this->info['monto']) != '' ? $this->info['monto'] : 0;
@@ -67,15 +69,17 @@ class Ticket
             $stmt->bindParam(6, $usuario);
             $stmt->bindParam(7, $empresa_receptora);
             $stmt->bindParam(8, $depto_receptor);
-            $stmt->bindParam(9, $categoria);
-            $stmt->bindParam(10, $asunto);
-            $stmt->bindParam(11, $monto);
-            $stmt->bindParam(12, $autorizado);
-            $stmt->bindParam(13, $descripcion);
-            $stmt->bindParam(14, $prioridad);
-            $stmt->bindParam(15, $analista);
-            $stmt->bindParam(16, $estatus);
-            $stmt->bindParam(17, $comentarios);
+            $stmt->bindParam(9, $escalado_a);
+            $stmt->bindParam(10, $traza);
+            $stmt->bindParam(11, $categoria);
+            $stmt->bindParam(12, $asunto);
+            $stmt->bindParam(13, $monto);
+            $stmt->bindParam(14, $autorizado);
+            $stmt->bindParam(15, $descripcion);
+            $stmt->bindParam(16, $prioridad);
+            $stmt->bindParam(17, $analista);
+            $stmt->bindParam(18, $estatus);
+            $stmt->bindParam(19, $comentarios);
 
             $stmt->execute();
 
@@ -102,6 +106,56 @@ class Ticket
 
             $this->estatus = true;
             Log::registrar_log("Ticket #{$id} autorizado por el gerente del area");
+        } catch (PDOException $e) {
+
+            $this->exception = $e->getMessage();
+            Log::registrar_log('ERROR: Metodo: ' . __FUNCTION__ . ' | Clase: ' . __CLASS__ . ' | ' . $this->exception);
+        }
+    }
+
+    public function actualizar_prioridad(): void
+    {
+        global $conn;
+
+        try {
+            $id         = $this->info['ticket'];
+            $prioridad  = $this->info['prioridad'];
+
+            $stmt = $conn->prepare("UPDATE tickets SET prioridad = '$prioridad' WHERE id_ticket = '$id'");
+            $stmt->execute();
+
+            $this->estatus = true;
+            Log::registrar_log("Ticket #{$id} prioridad actualizada a $prioridad");
+        } catch (PDOException $e) {
+
+            $this->exception = $e->getMessage();
+            Log::registrar_log('ERROR: Metodo: ' . __FUNCTION__ . ' | Clase: ' . __CLASS__ . ' | ' . $this->exception);
+        }
+    }
+
+    public function escalar_ticket(): void
+    {
+        global $conn;
+
+        try {
+            $id         = $this->info['ticket'];
+            $division   = $this->info['division'];
+
+            $stmt_traza = $conn->query("SELECT traza FROM tickets WHERE id_ticket = '$id'");
+            $stmt_traza->execute();
+            $tmp    = $stmt_traza->fetch(PDO::FETCH_ASSOC);
+
+            if ($tmp['traza'] == '') {
+                $traza  = "Escalado a {$division} por {$_SESSION['nombre']}";
+            } else {
+                $traza  = $tmp['traza'] . ",Escalado a {$division} por {$_SESSION['nombre']}";
+            }
+
+            $stmt   = $conn->prepare("UPDATE tickets SET escalado_a = '$division', traza = '$traza', analista = '' WHERE id_ticket = '$id'");
+            $stmt->execute();
+
+            $this->estatus = true;
+            Log::registrar_log("Ticket #{$id} escalado a $division");
         } catch (PDOException $e) {
 
             $this->exception = $e->getMessage();

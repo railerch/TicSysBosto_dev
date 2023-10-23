@@ -15,6 +15,12 @@ $stmt = $conn->prepare("SELECT * FROM tickets $area AND estatus = 'espera'");
 $stmt->setFetchMode(PDO::FETCH_ASSOC);
 $stmt->execute();
 
+// DIVISIONES DEL DEPTO
+$depto = $_SESSION['depto'];
+$stmt_div = $conn->prepare("SELECT * FROM miscelaneos WHERE tipo = 'depto' AND descripcion LIKE '%$depto%'");
+$stmt_div->execute();
+$row = $stmt_div->fetch(PDO::FETCH_ASSOC);
+$div = explode(',', str_replace(']', '', str_replace('[', '', explode('-', $row['descripcion'])[2])));
 ?>
 
 <div style="background: #505050;padding: 0.5em;border-radius: 1em;box-shadow: 0px 0px 10px rgb(0,0,0);border-width: 1px;border-style: none;border-top-style: none;border-right-style: none;border-bottom-style: none;color: #d7d7d7;">
@@ -31,6 +37,7 @@ $stmt->execute();
                     <?php if ($_SESSION['usuario'] == 'root') { ?>
                         <th>Receptor</th>
                     <?php } ?>
+                    <th>Escalado</th>
                     <th>Categoria</th>
                     <th>Analista</th>
                     <th>Prioridad</th>
@@ -52,33 +59,71 @@ $stmt->execute();
 
                 ?>
 
-                    <tr id="<?php echo $ticket['id_ticket'] ?>" class="ticketRow" style="<?php echo $pointer ?>background-color:<?php echo $color ?>" title="<?php echo $title ?>">
+                    <tr id="tk-<?php echo $ticket['id_ticket'] ?>" class="ticketRow" style="<?php echo $pointer ?>background-color:<?php echo $color ?>" title="<?php echo $title ?>">
                         <td style="text-align:center;"><?php echo $ticket['id_ticket'] ?></td>
                         <td style="text-align:center;"><?php echo $ticket['fecha'] ?></td>
                         <td><b><?php echo $ticket['empresa'] ?></b> - <?php echo $ticket['depto'] ?></td>
                         <?php if ($_SESSION['usuario'] == 'root') { ?>
                             <td><b><?php echo $ticket['empresa_receptora'] ?></b> - <?php echo $ticket['depto_receptor'] ?></td>
                         <?php } ?>
+
+                        <!-- ESCALAR TICKET -->
+                        <td>
+                            <?php if ($ticket['analista'] != '') {
+                                $disabled = '';
+                            } else {
+                                $disabled = 'disabled';
+                            } ?>
+                            <select class="form-select escalar-select-tbl" data-ticket="<?php echo $ticket['id_ticket'] ?>" style="border:0;background-color:transparent;width:200px" <?php echo $disabled ?>>
+                                <option value="Sin escalar">Sin escalar</option>
+                                <?php foreach ($div as $d) {
+                                    if (trim($d) == $ticket['escalado_a']) {
+                                        $selected = 'selected';
+                                    } else {
+                                        $selected = '';
+                                    }
+                                ?>
+                                    <option value="<?php echo trim($d) ?>" <?php echo $selected ?>><?php echo trim($d) ?></option>
+                                <?php } ?>
+                            </select>
+                        </td>
+                        <!-- ============================ -->
+
                         <td><?php echo $ticket['categoria'] ?></td>
                         <td><?php echo $ticket['analista'] ?></td>
+
+                        <!-- PRIORIDAD -->
                         <?php
                         switch ($ticket['prioridad']) {
                             case 'baja':
+                                $baja = "selected";
                                 $style = "style='background-color:lightskyblue;color:white;text-align:center;'";
                                 break;
                             case 'media':
+                                $media = "selected";
                                 $style = "style='background-color:lightsalmon;color:white;text-align:center;'";
                                 break;
                             case 'alta':
+                                $alta = "selected";
                                 $style = "style='background-color:orange;color:white;text-align:center;'";
                                 break;
                             case 'urgente':
+                                $urgente = "selected";
                                 $style = "style='background-color:red;color:white;text-align:center;'";
                                 break;
                         }
-
                         ?>
-                        <td <?php echo $style ?>><?php echo $ticket['prioridad'] ?></td>
+                        <td <?php echo $style ?>>
+                            <select class="form-select prioridad-select-tbl" data-ticket="<?php echo $ticket['id_ticket'] ?>" style="border:0;background-color:transparent;width:85px">
+                                <option value="baja" data-color="lightskyblue" <?php echo $baja ?>>Baja</option>
+                                <option value="media" data-color="lightsalmon" <?php echo $media ?>>Media</option>
+                                <option value="alta" data-color="orange" <?php echo $alta ?>>Alta</option>
+                                <option value="urgente" data-color="red" <?php echo $urgente ?>>Urgente</option>
+                            </select>
+                            <?php $baja = $media = $alta = $urgente = NULL ?>
+                        </td>
+                        <!-- =============================== -->
+
                         <td>
                             <div class="btn-toolbar d-flex flex-row justify-content-center">
                                 <div class="btn-group" role="group">
@@ -148,7 +193,7 @@ ocultar_aviso();
 
         // AUTOASIGNACION DE TICKET MEDIANTE DOBLE CLIC
         $(".ticketRow").dblclick(function() {
-            var id = $(this).attr("id");
+            var id = $(this).attr("id").split("-")[1];
             $.ajax({
                 type: "GET",
                 url: `main_controller.php?asignarTicket=true&id_ticket=${id}`,
@@ -157,6 +202,33 @@ ocultar_aviso();
                 }
             })
         });
+
+        // CAMBIAR PRIORIDAD DEL TICKET
+        document.querySelectorAll(".prioridad-select-tbl").forEach(select => {
+            select.addEventListener("change", function() {
+                let ticket = this.getAttribute("data-ticket");
+                this.parentElement.style.backgroundColor = this.options[select.selectedIndex].getAttribute("data-color");
+
+                fetch(`main_controller.php?actualizarPrioridadTicket=true&ticket=${ticket}&prioridad=${this.value}`)
+                    .then(res => res.text())
+                    .then(res => {
+                        console.log(res)
+                    }).catch(err => console.log("HA OCURRIDO UN ERROR: " + err))
+            })
+        })
+
+        // ESCALAR TICKET
+        document.querySelectorAll(".escalar-select-tbl").forEach(select => {
+            select.addEventListener("change", function() {
+                let ticket = this.getAttribute("data-ticket");
+
+                fetch(`main_controller.php?escalarTicket=true&ticket=${ticket}&division=${this.value}`)
+                    .then(res => res.text())
+                    .then(res => {
+                        $("#contenido").load("views/ticketsEspera.php");
+                    }).catch(err => console.log("HA OCURRIDO UN ERROR: " + err))
+            })
+        })
 
         // VER TICKET
         $(".verTicket").click(function() {
