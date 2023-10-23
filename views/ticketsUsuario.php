@@ -88,6 +88,7 @@ $stmt->execute();
                     <th>ID</th>
                     <th>Fecha</th>
                     <th>Receptor</th>
+                    <th>Escalado a</th>
                     <th>Asunto</th>
                     <th>Prioridad</th>
                     <th>Analista</th>
@@ -106,6 +107,7 @@ $stmt->execute();
                         <td style="text-align:center;"><?php echo $ticket['id_ticket'] ?></td>
                         <td style="text-align:center;"><?php echo $ticket['fecha'] ?></td>
                         <td><b><?php echo $ticket['empresa_receptora'] ?></b> - <?php echo $ticket['depto_receptor'] ?></td>
+                        <td><?php echo $ticket['escalado_a'] ?></td>
                         <td><?php echo $ticket['asunto'] ?></td>
                         <?php
                         switch ($ticket['prioridad']) {
@@ -121,9 +123,7 @@ $stmt->execute();
                             case 'urgente':
                                 $style = "style='background-color:red;color:white;text-align:center;'";
                                 break;
-                        }
-
-                        ?>
+                        } ?>
                         <td <?php echo $style ?>><?php echo $ticket['prioridad'] ?></td>
                         <td><?php echo $ticket['analista'] ?></td>
                         <?php switch ($ticket['estatus']) {
@@ -242,7 +242,7 @@ ocultar_aviso();
                     .then(res => res.text())
                     .then(res => {
                         $(`#ver${ticketId}`).modal("hide");
-                        
+
                         setTimeout(() => {
                             $("#contenido").load("views/ticketsUsuario.php");
                         }, 300)

@@ -198,7 +198,7 @@ $config = cargar_config();
 
                                         // ALERTAS DE COLOR EN FILAS DE TICKETS
                                         if (msj > 0) {
-                                            $("tr[id=" + tic + "]").css("background-color",
+                                            $("tr[id=tk-" + tic + "]").css("background-color",
                                                 "#ffd373");
                                             if (stm == "A") {
                                                 abierto++;
@@ -206,7 +206,7 @@ $config = cargar_config();
                                                 espera++;
                                             }
                                         } else {
-                                            $("tr[id=" + tic + "]").css("background-color",
+                                            $("tr[id=tk-" + tic + "]").css("background-color",
                                                 "unset");
                                         }
 

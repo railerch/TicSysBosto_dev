@@ -213,7 +213,7 @@ $_SESSION['dashboard'] = __FILE__;
 
                                         // ALERTAS DE COLOR EN TICKETS
                                         if (msj > 0) {
-                                            $("tr[id=" + tic + "]").css("background-color",
+                                            $("tr[id=tk-" + tic + "]").css("background-color",
                                                 "#ffd373");
                                             if (stm == "A" || stm == "P") {
                                                 abierto++;
@@ -221,7 +221,7 @@ $_SESSION['dashboard'] = __FILE__;
                                                 espera++;
                                             }
                                         } else {
-                                            $("tr[id=" + tic + "]").css("background-color",
+                                            $("tr[id=tk-" + tic + "]").css("background-color",
                                                 "unset");
                                         }
 
